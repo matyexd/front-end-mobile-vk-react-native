@@ -6,6 +6,7 @@
  * @flow strict-local
  */
 
+import {TOKEN} from '@env';
 import React from 'react';
 import {
   SafeAreaView,
@@ -29,7 +30,7 @@ const App = () => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <Text style={styles.title}>Привет</Text>
+        <Text style={styles.title}>{TOKEN}</Text>
       </ScrollView>
     </SafeAreaView>
   );
