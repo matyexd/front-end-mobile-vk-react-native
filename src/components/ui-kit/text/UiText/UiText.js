@@ -1,6 +1,8 @@
 import React from 'react';
 import {StyleSheet, Text} from 'react-native';
 import {sp} from '../../../../utils/Responsive';
+import PropTypes from 'prop-types';
+import {ViewPropTypes} from 'react-native';
 
 const UiText = ({
   children,
@@ -39,6 +41,14 @@ const UiText = ({
       {children}
     </Text>
   );
+};
+
+UiText.propTypes = {
+  children: PropTypes.node.isRequired,
+  size: PropTypes.number,
+  color: PropTypes.string,
+  weight: PropTypes.number,
+  style: ViewPropTypes.style,
 };
 
 export default UiText;
