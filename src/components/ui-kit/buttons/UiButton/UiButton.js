@@ -1,33 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Button, View, StyleSheet, Pressable, Text} from 'react-native';
+import {UiText} from '../../text';
+import {
+  Button,
+  View,
+  StyleSheet,
+  Pressable,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
+import {height, width} from '../../../../utils/Responsive';
 
-const UiButton = ({onPress, title, color}) => {
+const UiButton = ({children, onPress}) => {
   return (
     <View>
-      <Pressable style={styles.button} onPress={onPress}>
-        <Text style={styles.text}>{title}</Text>
-      </Pressable>
+      <TouchableOpacity style={styles.button}>
+        <UiText color={'white'} weight={700}>
+          {children}
+        </UiText>
+      </TouchableOpacity>
     </View>
   );
 };
 
-UiButton.propTypes = {};
+UiText.propTypes = {
+  children: PropTypes.node.isRequired,
+  onPress: PropTypes.func,
+};
 
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 6,
-    paddingHorizontal: 32,
+    paddingVertical: height(6),
+    paddingHorizontal: width(32),
     borderRadius: 30,
+    borderWidth: 1,
     borderColor: '#3B2D5F',
     backgroundColor: '#2B2146',
-  },
-  text: {
-    fontSize: 14,
-    fontFamily: 'hk_grotesk_bold',
-    color: 'white',
   },
 });
 
