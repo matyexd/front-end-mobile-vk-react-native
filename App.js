@@ -25,23 +25,22 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import {UiButton, UiText} from './src/components/ui-kit';
 
 const App = () => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <Text style={styles.title}>{TOKEN}</Text>
+        <UiButton title={'Нажми меня'} />
+        <UiText weight={400} size={14}>
+          Привет
+        </UiText>
+        <UiText size={15}>Привет2</UiText>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  title: {
-    color: 'black',
-    fontSize: 40,
-    fontFamily: 'hk_grotesk_medium',
-  },
-});
+const styles = StyleSheet.create({});
 
 export default App;
