@@ -21,13 +21,11 @@ const ImageAvatar = ({src, size = 150, style, ...props}) => {
     style,
   ]);
 
-  return (
-    <Image source={require('assets/images/ava.jpg')} style={imageAvatar} />
-  );
+  return <Image source={src} style={imageAvatar} />;
 };
 
 ImageAvatar.propTypes = {
-  src: PropTypes.string.isRequired,
+  src: PropTypes.number.isRequired,
   size: PropTypes.number,
   style: ViewPropTypes.style,
 };

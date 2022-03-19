@@ -32,6 +32,7 @@ import {
   ImageAvatar,
   UiIcon,
 } from './src/components/ui-kit';
+import Images from '@assets/images';
 
 const App = () => {
   return (
@@ -46,7 +47,7 @@ const App = () => {
         <UiText size={15} color={'white'}>
           Привет2
         </UiText>
-        <ImageAvatar src={'df'} />
+        <ImageAvatar src={Images.ava} />
 
         <UiIcon iconName="location-outline" iconSize={40} />
       </ScrollView>
