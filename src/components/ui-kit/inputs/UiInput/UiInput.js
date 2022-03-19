@@ -8,11 +8,12 @@ import {
   Pressable,
   Text,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
 import {height, width} from '../../../../utils/Responsive';
 
 const UiInput = () => {
-  return <View></View>;
+  return <TextInput></TextInput>;
 };
 
 UiText.propTypes = {};

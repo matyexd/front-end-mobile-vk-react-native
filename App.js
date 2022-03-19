@@ -25,7 +25,13 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import {UiButton, UiText, UiInput} from './src/components/ui-kit';
+import {
+  UiButton,
+  UiText,
+  UiInput,
+  ImageAvatar,
+  UiIcon,
+} from './src/components/ui-kit';
 
 const App = () => {
   return (
@@ -40,6 +46,9 @@ const App = () => {
         <UiText size={15} color={'white'}>
           Привет2
         </UiText>
+        <ImageAvatar src={'df'} />
+
+        <UiIcon iconName="location-outline" iconSize={40} />
       </ScrollView>
     </SafeAreaView>
   );
