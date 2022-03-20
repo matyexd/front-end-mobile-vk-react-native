@@ -1,3 +1,5 @@
 import UiButton from './UiButton';
+import UiModalElementsButton from './UiModalElementsButton';
+import UiModalButton from './UiModalButton';
 
-export {UiButton};
+export {UiButton, UiModalElementsButton, UiModalButton};

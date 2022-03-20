@@ -15,17 +15,18 @@ import {
 import {height, width, sp} from '../../../../utils/Responsive';
 import UiImageGalleryItem from '../UiImageGalleryItem';
 
-const UiImageGalley = ({children}) => {
-  return <View style={styles.viewGallery}>{children}</View>;
+const UiImageGallery = ({children, style}) => {
+  const UiImageGallery = StyleSheet.flatten([
+    {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+    },
+    style,
+  ]);
+
+  return <View style={UiImageGallery}>{children}</View>;
 };
 
-UiImageGalley.propTypes = {};
+UiImageGallery.propTypes = {};
 
-export default UiImageGalley;
-
-const styles = StyleSheet.create({
-  viewGallery: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-});
+export default UiImageGallery;

@@ -14,15 +14,16 @@ import {
 } from 'react-native';
 import {height, width, sp} from '../../../../utils/Responsive';
 
-const UiImageGalleryItem = ({src, size}) => {
-  const UiImageGalleyItem = StyleSheet.flatten([
+const UiImageGalleryItem = ({src, size, style}) => {
+  const UiImageGalleryItem = StyleSheet.flatten([
     size !== undefined
       ? {width: width(size), height: width(size)}
       : {width: width(113), height: width(113)},
     {margin: 1, flexGrow: 0, flexBasis: size},
+    style,
   ]);
 
-  return <Image source={src} style={UiImageGalleyItem} />;
+  return <Image source={src} style={UiImageGalleryItem} />;
 };
 
 UiImageGalleryItem.propTypes = {};

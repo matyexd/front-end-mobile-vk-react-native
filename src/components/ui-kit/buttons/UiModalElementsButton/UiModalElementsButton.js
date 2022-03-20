@@ -1,35 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {UiText} from '../../text';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {UiListElement} from '@ui-kit';
 import {height, width} from '../../../../utils/Responsive';
 
-const UiButton = ({children, onPress}) => {
+const UiModalElementsButton = ({children, iconName, onPress}) => {
   return (
     <View>
       <TouchableOpacity style={styles.button}>
-        <UiText color={'white'} weight={700}>
+        <UiListElement
+          iconName={iconName}
+          textSize={18}
+          textColor="white"
+          textWidth={600}>
           {children}
-        </UiText>
+        </UiListElement>
       </TouchableOpacity>
     </View>
   );
 };
 
-UiText.propTypes = {
+UiModalElementsButton.propTypes = {
   children: PropTypes.node.isRequired,
+  iconName: PropTypes.string.isRequired,
   onPress: PropTypes.func,
 };
 
 const styles = StyleSheet.create({
   button: {
-    alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: height(6),
-    borderRadius: 30,
-    borderWidth: 1,
-    borderColor: '#3B2D5F',
+    paddingVertical: height(15),
+    paddingHorizontal: width(15),
+    backgroundColor: '#2B2146',
   },
 });
 
-export default UiButton;
+export default UiModalElementsButton;

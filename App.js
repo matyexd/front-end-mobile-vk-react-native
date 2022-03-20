@@ -16,6 +16,7 @@ import {
   Text,
   useColorScheme,
   View,
+  TouchableWithoutFeedback,
 } from 'react-native';
 
 import {
@@ -27,47 +28,71 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import {
   UiButton,
+  UiModalElementsButton,
+  UiModalButton,
   UiText,
   UiInput,
   UiImageAvatar,
   UiImageGalleryItem,
   UiImageGallery,
   UiIcon,
-} from './src/components/ui-kit';
+  UiListElement,
+  UiDivider,
+} from '@ui-kit';
 import Images from '@assets/images';
+import {height, width} from './src/utils/Responsive';
 
 const App = () => {
   return (
     <SafeAreaView style={styles.app}>
       <ScrollView>
-        <View style={styles.button}>
-          <UiButton>Текст</UiButton>
-        </View>
-        <UiText weight={400} size={14}>
-          Привет
-        </UiText>
-        <UiText size={15} color={'white'}>
-          Привет2
-        </UiText>
-        <UiImageAvatar src={Images.ava} size={100} />
+        <View style={styles.container}>
+          <View style={styles.button}>
+            <UiButton>Текст</UiButton>
+          </View>
+          <UiText weight={400} size={14}>
+            Привет
+          </UiText>
+          <UiText size={15} color={'white'}>
+            Привет2
+          </UiText>
 
-        <UiIcon iconName="location-outline" iconSize={40} />
-        <UiImageGallery>
-          <UiImageGalleryItem src={Images.gallery1} />
-          <UiImageGalleryItem src={Images.gallery5} />
-          <UiImageGalleryItem src={Images.gallery2} />
-          <UiImageGalleryItem src={Images.gallery3} />
-          <UiImageGalleryItem src={Images.gallery4} />
-        </UiImageGallery>
+          <UiImageAvatar src={Images.ava} size={100} />
+
+          <UiImageGallery>
+            <UiImageGalleryItem src={Images.gallery1} />
+            <UiImageGalleryItem src={Images.gallery5} />
+            <UiImageGalleryItem src={Images.gallery2} />
+            <UiImageGalleryItem src={Images.gallery3} />
+            <UiImageGalleryItem src={Images.gallery4} />
+          </UiImageGallery>
+
+          <UiListElement iconName="chat" style={{marginBottom: height(15)}}>
+            They never ask people to do things they wouldn’t do themselves.
+          </UiListElement>
+          <UiListElement iconName="cake" style={{marginBottom: height(15)}}>
+            День рождения: 08 октября 1992
+          </UiListElement>
+        </View>
+
+        <UiDivider style={{marginHorizontal: width(15)}} />
+        <UiModalElementsButton iconName="duplicate">
+          Поделиться
+        </UiModalElementsButton>
+        <UiDivider style={{marginHorizontal: width(15)}} />
+        <UiModalButton>Отмена</UiModalButton>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: width(15),
+  },
   app: {
     backgroundColor: '#2B2146',
-    height: 600,
+    height: '100%',
   },
   button: {
     marginTop: 10,
