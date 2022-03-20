@@ -29,7 +29,9 @@ import {
   UiButton,
   UiText,
   UiInput,
-  ImageAvatar,
+  UiImageAvatar,
+  UiImageGalleryItem,
+  UiImageGallery,
   UiIcon,
 } from './src/components/ui-kit';
 import Images from '@assets/images';
@@ -47,9 +49,16 @@ const App = () => {
         <UiText size={15} color={'white'}>
           Привет2
         </UiText>
-        <ImageAvatar src={Images.ava} />
+        <UiImageAvatar src={Images.ava} size={100} />
 
         <UiIcon iconName="location-outline" iconSize={40} />
+        <UiImageGallery>
+          <UiImageGalleryItem src={Images.gallery1} />
+          <UiImageGalleryItem src={Images.gallery5} />
+          <UiImageGalleryItem src={Images.gallery2} />
+          <UiImageGalleryItem src={Images.gallery3} />
+          <UiImageGalleryItem src={Images.gallery4} />
+        </UiImageGallery>
       </ScrollView>
     </SafeAreaView>
   );

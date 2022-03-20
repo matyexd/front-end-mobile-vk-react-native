@@ -1,3 +1,5 @@
-import ImageAvatar from './ImageAvatar';
+import UiImageAvatar from './UiImageAvatar';
+import UiImageGalleryItem from './UiImageGalleryItem';
+import UiImageGallery from './UiImageGallery';
 
-export {ImageAvatar};
+export {UiImageAvatar, UiImageGalleryItem, UiImageGallery};

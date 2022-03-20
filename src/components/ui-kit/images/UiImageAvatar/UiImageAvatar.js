@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import {height, width, sp} from '../../../../utils/Responsive';
 
-const ImageAvatar = ({src, size = 150, style, ...props}) => {
+const UiImageAvatar = ({src, size = 150, style, ...props}) => {
   const imageAvatar = StyleSheet.flatten([
     {width: width(size), height: width(size)},
     {borderRadius: width(size) / 2},
@@ -24,10 +24,10 @@ const ImageAvatar = ({src, size = 150, style, ...props}) => {
   return <Image source={src} style={imageAvatar} />;
 };
 
-ImageAvatar.propTypes = {
+UiImageAvatar.propTypes = {
   src: PropTypes.number.isRequired,
   size: PropTypes.number,
   style: ViewPropTypes.style,
 };
 
-export default ImageAvatar;
+export default UiImageAvatar;
