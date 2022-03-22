@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {
   UiButton,
   UiModalElementsButton,
@@ -17,9 +17,11 @@ import {
 import Images from '@assets/images';
 import {height, width} from '@utils';
 import PopUpMoreDetails from '../components/PopUpMoreDetails';
+import PopUpMenu from '../components/PopUpMenu';
 
 const ProfileScreen = () => {
   const [showModalMoreDetails, setShowModalMoreDetails] = useState(false);
+  const [showModalMenu, setShowModalMenu] = useState(false);
 
   const changeModalVisible = value => {
     setShowModalMoreDetails(value);
@@ -29,15 +31,24 @@ const ProfileScreen = () => {
     <View style={styles.container}>
       <View style={styles.topIcon}>
         <UiIcon iconName="arrowleft" iconColor="white" />
-        <UiIcon
-          iconName="dotsvertical"
-          iconColor="white"
-          style={[
-            {
-              transform: [{rotate: '90deg'}],
-            },
-          ]}
-        />
+
+        <TouchableOpacity onPress={() => setShowModalMenu(true)}>
+          <UiIcon
+            iconName="dotsvertical"
+            iconColor="white"
+            style={[
+              {
+                transform: [{rotate: '90deg'}],
+              },
+            ]}
+          />
+        </TouchableOpacity>
+
+        <UiBottomPopup
+          visible={showModalMenu}
+          onTouchOutside={setShowModalMenu}>
+          <PopUpMenu setShowModalMenu={setShowModalMenu} />
+        </UiBottomPopup>
       </View>
       <View style={styles.infoProfile}>
         <View style={[styles.centerItem, {paddingBottom: height(17)}]}>

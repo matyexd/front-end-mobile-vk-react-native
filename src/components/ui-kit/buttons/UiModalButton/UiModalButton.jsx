@@ -19,7 +19,7 @@ const UiModalButton = ({children, onPress}) => {
 
   return (
     <View>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={onPress}>
         <UiText color="white" width={700} size={18}>
           {children}
         </UiText>
