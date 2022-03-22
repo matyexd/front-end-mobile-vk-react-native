@@ -5,6 +5,7 @@ import {UiImageAvatar, UiImageGalleryItem, UiImageGallery} from './images';
 import {UiIcon} from './icons';
 import {UiListElement} from './lists';
 import {UiDivider} from './dividers';
+import {UiBottomPopup} from './popups';
 
 export {
   UiButton,
@@ -18,4 +19,5 @@ export {
   UiImageGallery,
   UiListElement,
   UiDivider,
+  UiBottomPopup,
 };

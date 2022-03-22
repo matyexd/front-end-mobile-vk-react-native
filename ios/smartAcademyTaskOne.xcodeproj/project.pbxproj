@@ -83,6 +83,7 @@
 		0BB036FB8A984C389F704771 /* hk_grotesk_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8AB710265BF246EFBD852D0F /* hk_grotesk_regular.ttf */; };
 		D2BA659CC5014971B98F8CCA /* hk_grotesk_semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 204881F5A54E47789F5662DD /* hk_grotesk_semibold.ttf */; };
 		607A3B45E6354E52A168BB2A /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25A33B78A5CE47E6821602EB /* icomoon.ttf */; };
+		D22E58C7D10B4CBCB4D1F3D6 /* messenger.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 15834DD3862C42118BB54469 /* messenger.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -178,6 +179,7 @@
 		8AB710265BF246EFBD852D0F /* hk_grotesk_regular.ttf */ = {isa = PBXFileReference; name = "hk_grotesk_regular.ttf"; path = "../src/assets/fonts/hk_grotesk_regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		204881F5A54E47789F5662DD /* hk_grotesk_semibold.ttf */ = {isa = PBXFileReference; name = "hk_grotesk_semibold.ttf"; path = "../src/assets/fonts/hk_grotesk_semibold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		25A33B78A5CE47E6821602EB /* icomoon.ttf */ = {isa = PBXFileReference; name = "icomoon.ttf"; path = "../src/assets/fonts/icomoon.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		15834DD3862C42118BB54469 /* messenger.ttf */ = {isa = PBXFileReference; name = "messenger.ttf"; path = "../src/assets/fonts/messenger.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -341,6 +343,7 @@
 				8AB710265BF246EFBD852D0F /* hk_grotesk_regular.ttf */,
 				204881F5A54E47789F5662DD /* hk_grotesk_semibold.ttf */,
 				25A33B78A5CE47E6821602EB /* icomoon.ttf */,
+				15834DD3862C42118BB54469 /* messenger.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -507,6 +510,7 @@
 				0BB036FB8A984C389F704771 /* hk_grotesk_regular.ttf in Resources */,
 				D2BA659CC5014971B98F8CCA /* hk_grotesk_semibold.ttf in Resources */,
 				607A3B45E6354E52A168BB2A /* icomoon.ttf in Resources */,
+				D22E58C7D10B4CBCB4D1F3D6 /* messenger.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

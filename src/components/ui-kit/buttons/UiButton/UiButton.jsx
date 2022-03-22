@@ -4,10 +4,10 @@ import {UiText} from '../../text';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {height, width} from '../../../../utils/Responsive';
 
-const UiButton = ({children, onPress}) => {
+const UiButton = ({children, onPress, style}) => {
   return (
     <View>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
         <UiText color={'white'} weight={700}>
           {children}
         </UiText>
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: height(6),
+    paddingVertical: height(9),
     borderRadius: 30,
     borderWidth: 1,
     borderColor: '#3B2D5F',
