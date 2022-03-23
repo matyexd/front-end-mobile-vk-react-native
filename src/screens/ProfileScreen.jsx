@@ -5,7 +5,6 @@ import {
   UiModalElementsButton,
   UiModalButton,
   UiText,
-  UiInput,
   UiImageAvatar,
   UiImageGalleryItem,
   UiImageGallery,
@@ -18,21 +17,18 @@ import Images from '@assets/images';
 import {height, width} from '@utils';
 import PopUpMoreDetails from '../components/PopUpMoreDetails';
 import PopUpMenu from '../components/PopUpMenu';
+import {useModalState} from '@hooks';
 
 const ProfileScreen = () => {
-  const [showModalMoreDetails, setShowModalMoreDetails] = useState(false);
-  const [showModalMenu, setShowModalMenu] = useState(false);
-
-  const changeModalVisible = value => {
-    setShowModalMoreDetails(value);
-  };
+  const [showModalMoreDetails, setShowModalMoreDetails] = useModalState();
+  const [showModalMenu, setShowModalMenu] = useModalState();
 
   return (
     <View style={styles.container}>
       <View style={styles.topIcon}>
         <UiIcon iconName="arrowleft" iconColor="white" />
 
-        <TouchableOpacity onPress={() => setShowModalMenu(true)}>
+        <TouchableOpacity onPress={setShowModalMenu}>
           <UiIcon
             iconName="dotsvertical"
             iconColor="white"
@@ -44,9 +40,7 @@ const ProfileScreen = () => {
           />
         </TouchableOpacity>
 
-        <UiBottomPopup
-          visible={showModalMenu}
-          onTouchOutside={setShowModalMenu}>
+        <UiBottomPopup visible={showModalMenu} closeModal={setShowModalMenu}>
           <PopUpMenu setShowModalMenu={setShowModalMenu} />
         </UiBottomPopup>
       </View>
@@ -93,13 +87,11 @@ const ProfileScreen = () => {
             </UiText>
           </View>
           <View style={styles.moreDetailsButton}>
-            <UiButton onPress={() => changeModalVisible(true)}>
-              Подробнее
-            </UiButton>
+            <UiButton onPress={setShowModalMoreDetails}>Подробнее</UiButton>
             {/* Открываем модальное окно с подробной информацией */}
             <UiBottomPopup
               visible={showModalMoreDetails}
-              onTouchOutside={setShowModalMoreDetails}>
+              closeModal={setShowModalMoreDetails}>
               <PopUpMoreDetails
                 setShowModalMoreDetails={setShowModalMoreDetails}
               />

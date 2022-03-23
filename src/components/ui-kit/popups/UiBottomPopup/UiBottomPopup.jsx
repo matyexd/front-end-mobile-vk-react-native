@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {height} from '../../../../utils/Responsive';
 
-const UiBottomPopup = ({children, onTouchOutside, visible}) => {
+const UiBottomPopup = ({children, closeModal, visible}) => {
   const renderOutsideTouchable = onTouch => {
     const view = <View style={{flex: 1, width: '100%'}} />;
     if (!onTouch) {
@@ -18,7 +18,7 @@ const UiBottomPopup = ({children, onTouchOutside, visible}) => {
     }
     return (
       <TouchableWithoutFeedback
-        onPress={() => onTouchOutside(false)}
+        onPress={closeModal}
         style={{flex: 1, width: '100%'}}>
         {view}
       </TouchableWithoutFeedback>
@@ -26,7 +26,11 @@ const UiBottomPopup = ({children, onTouchOutside, visible}) => {
   };
 
   return (
-    <Modal animationType={'fade'} transparent={true} visible={visible}>
+    <Modal
+      animationType={'fade'}
+      transparent={true}
+      visible={visible}
+      onRequestClose={closeModal}>
       <View style={styles.viewOutside}>
         {renderOutsideTouchable(visible)}
         {children}

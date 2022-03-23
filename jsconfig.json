@@ -1,0 +1,23 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@hooks/*": [
+				"./src/hooks/*"
+			],
+			"@assets/*": [
+				"./src/assets/*"
+			],
+			"@ui-kit/*": [
+				"./src/components/ui-kit/*"
+			],
+			"@utils/*": [
+				"./src/utils/*"
+			],
+		}
+	},
+	"exclude": [
+		"node_modules",
+		"dist"
+	]
+}
