@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {UiText} from '../../text';
 import {
-  Modal,
   Dimensions,
   TouchableWithoutFeedback,
   View,
   StyleSheet,
+  Modal,
 } from 'react-native';
 import {height} from '../../../../utils/Responsive';
 
@@ -26,11 +26,7 @@ const UiBottomPopup = ({children, closeModal, visible}) => {
   };
 
   return (
-    <Modal
-      animationType={'fade'}
-      transparent={true}
-      visible={visible}
-      onRequestClose={closeModal}>
+    <Modal animationType="fade" visible={visible} transparent={true}>
       <View style={styles.viewOutside}>
         {renderOutsideTouchable(visible)}
         {children}

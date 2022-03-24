@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
     width: '100%',
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
-    paddingHorizontal: 10,
     maxHeight: height(485),
     paddingHorizontal: width(15),
     paddingVertical: height(20),
