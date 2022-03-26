@@ -15,25 +15,26 @@ import {store} from './src/store';
 import {ProfileScreen, HomeScreen} from './src/screens';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 
-const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
 const App = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Profile">
-          <Stack.Screen
+        <Drawer.Navigator initialRouteName="Home">
+          <Drawer.Screen
             name="Profile"
             component={ProfileScreen}
             options={{headerShown: false}}
           />
-          <Stack.Screen
+          <Drawer.Screen
             name="Home"
             component={HomeScreen}
             options={{headerShown: false}}
           />
-        </Stack.Navigator>
+        </Drawer.Navigator>
       </NavigationContainer>
     </Provider>
   );

@@ -31,7 +31,7 @@ const ProfileScreen = ({navigation}) => {
       <ScrollView>
         <View style={styles.container}>
           <View style={styles.topIcon}>
-            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+            <TouchableOpacity onPress={() => navigation.openDrawer()}>
               <UiIcon iconName="arrowleft" iconColor="white" />
             </TouchableOpacity>
 

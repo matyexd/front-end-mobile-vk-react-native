@@ -1,5 +1,12 @@
 import React from 'react';
-import {SafeAreaView, ScrollView, StyleSheet, View, Text} from 'react-native';
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import {
   UiProfileInfo,
   UiDivider,
@@ -13,7 +20,7 @@ import {width, height} from '@utils/Responsive';
 
 import PostItem from '../components/PostItem';
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   return (
     <SafeAreaView style={styles.app}>
       <ScrollView>
@@ -32,7 +39,9 @@ const HomeScreen = () => {
               alignItems: 'center',
             }}>
             <View>
-              <UiIcon iconName={'menu'} iconColor={'white'} />
+              <TouchableOpacity onPress={() => navigation.openDrawer}>
+                <UiIcon iconName={'menu'} iconColor={'white'} />
+              </TouchableOpacity>
             </View>
             <View style={{flexDirection: 'row'}}>
               <UiIcon iconName={'search'} iconColor={'white'} />
