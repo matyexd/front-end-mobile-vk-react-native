@@ -6,44 +6,35 @@
  * @flow strict-local
  */
 
-import {TOKEN} from '@env';
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import {StyleSheet} from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {Provider} from 'react-redux';
+import {store} from './src/store';
 
-import ProfileScreen from './src/screens/ProfileScreen';
+import {ProfileScreen, HomeScreen} from './src/screens';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <SafeAreaView style={styles.app}>
-      <ScrollView>
-        <ProfileScreen />
-      </ScrollView>
-    </SafeAreaView>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Profile">
+          <Stack.Screen
+            name="Profile"
+            component={ProfileScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen name="Home" component={HomeScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 };
 
-const styles = StyleSheet.create({
-  app: {
-    backgroundColor: '#2B2146',
-    height: '100%',
-  },
-});
+const styles = StyleSheet.create({});
 
 export default App;
