@@ -8,14 +8,11 @@ import {
 } from 'react-native';
 import {
   UiButton,
-  UiModalElementsButton,
-  UiModalButton,
   UiText,
   UiImageAvatar,
   UiImageGalleryItem,
   UiImageGallery,
   UiIcon,
-  UiListElement,
   UiDivider,
   UiBottomPopup,
 } from '@ui-kit';

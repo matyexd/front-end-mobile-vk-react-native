@@ -1,8 +1,7 @@
 import React from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet, Text, ViewPropTypes} from 'react-native';
 import {sp} from '../../../../utils/Responsive';
 import PropTypes from 'prop-types';
-import {ViewPropTypes} from 'react-native';
 
 const UiText = ({
   children,
@@ -12,7 +11,7 @@ const UiText = ({
   width,
   ...props
 }) => {
-  const chosenFont = weight => {
+  const chosenFont = width => {
     if (width == 600) {
       return 'hk_grotesk_semibold';
     }
@@ -47,7 +46,7 @@ UiText.propTypes = {
   children: PropTypes.node.isRequired,
   size: PropTypes.number,
   color: PropTypes.string,
-  weight: PropTypes.number,
+  width: PropTypes.number,
   style: ViewPropTypes.style,
 };
 
