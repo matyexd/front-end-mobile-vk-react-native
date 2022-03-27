@@ -34,13 +34,13 @@ const CustomDrawer = props => {
         />
         <DrawerItem
           label="Друзья"
-          onPress={() => props.navigation.navigate('Profile')}
+          onPress={() => props.navigation.navigate('Friends')}
           icon={() => <UiIcon iconName="group" iconColor="white" />}
           labelStyle={{color: 'white', marginLeft: -width(20)}}
         />
         <DrawerItem
           label="Поиск"
-          onPress={() => props.navigation.navigate('Profile')}
+          onPress={() => props.navigation.navigate('SearchFriends')}
           icon={() => <UiIcon iconName="search" iconColor="white" />}
           labelStyle={{color: 'white', marginLeft: -width(20)}}
         />

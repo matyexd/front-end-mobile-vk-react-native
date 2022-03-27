@@ -12,6 +12,7 @@ import {UiDivider} from './dividers';
 import {UiBottomPopup} from './popups';
 import {UiProfileInfo} from './profileInfo';
 import {UiDots} from './dots';
+import {UiInput} from './inputs';
 
 export {
   UiButton,
@@ -28,4 +29,5 @@ export {
   UiProfileInfo,
   UiImagePost,
   UiDots,
+  UiInput,
 };

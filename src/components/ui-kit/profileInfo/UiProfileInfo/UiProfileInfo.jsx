@@ -17,7 +17,7 @@ const UiProfileInfo = ({
   avaSize = 39,
 }) => {
   return (
-    <View style={{flexDirection: 'row'}}>
+    <View style={{flexDirection: 'row', alignItems: 'center'}}>
       <UiImageAvatar src={avatarSrc} size={avaSize} />
       <View style={{marginLeft: width(8)}}>
         <UiText size={nameSize} width={nameWidth} color={nameColor}>

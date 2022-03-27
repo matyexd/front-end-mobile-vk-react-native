@@ -12,7 +12,13 @@ import {StyleSheet} from 'react-native';
 import {Provider} from 'react-redux';
 import {store} from './src/store';
 
-import {ProfileScreen, HomeScreen, SettingScreen} from './src/screens';
+import {
+  ProfileScreen,
+  HomeScreen,
+  SettingScreen,
+  FriendsScreen,
+  SearchFriendsScreen,
+} from './src/screens';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -44,6 +50,16 @@ const App = () => {
           <Stack.Screen
             name="Setting"
             component={SettingScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Friends"
+            component={FriendsScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="SearchFriends"
+            component={SearchFriendsScreen}
             options={{headerShown: false}}
           />
         </Drawer.Navigator>
