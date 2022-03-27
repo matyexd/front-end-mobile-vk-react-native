@@ -4,34 +4,18 @@ import {
   ScrollView,
   StyleSheet,
   View,
-  Text,
   TouchableOpacity,
 } from 'react-native';
-import {
-  UiProfileInfo,
-  UiDivider,
-  UiImagePost,
-  UiIcon,
-  UiListElement,
-  UiDots,
-} from '@ui-kit';
-import images from '@assets/images';
+import {UiIcon} from '@ui-kit';
 import {width, height} from '@utils/Responsive';
 
-import PostItem from '../components/PostItem';
+import {PostItem} from '../components';
 
 const HomeScreen = ({navigation}) => {
   return (
     <SafeAreaView style={styles.app}>
       <ScrollView>
         <View style={styles.container}>
-          {/* <UiProfileInfo
-            name={'Kat Williams'}
-            addInfo={'1h ago'}
-            avatarSrc={images.ava}
-          />
-          <UiImagePost src={images.gallery5} /> */}
-
           <View
             style={{
               flexDirection: 'row',
@@ -39,7 +23,7 @@ const HomeScreen = ({navigation}) => {
               alignItems: 'center',
             }}>
             <View>
-              <TouchableOpacity onPress={() => navigation.openDrawer}>
+              <TouchableOpacity onPress={() => navigation.openDrawer()}>
                 <UiIcon iconName={'menu'} iconColor={'white'} />
               </TouchableOpacity>
             </View>

@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -18,8 +18,7 @@ import {
 } from '@ui-kit';
 import Images from '@assets/images';
 import {height, width} from '@utils';
-import PopUpMoreDetails from '../components/PopUpMoreDetails';
-import PopUpMenu from '../components/PopUpMenu';
+import {PopUpMoreDetails, PopUpMenu} from '../components';
 import {useModalState} from '@hooks';
 
 const ProfileScreen = ({navigation}) => {
@@ -31,7 +30,7 @@ const ProfileScreen = ({navigation}) => {
       <ScrollView>
         <View style={styles.container}>
           <View style={styles.topIcon}>
-            <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
               <UiIcon iconName="arrowleft" iconColor="white" />
             </TouchableOpacity>
 
