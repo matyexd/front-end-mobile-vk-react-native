@@ -18,6 +18,7 @@ import {
   SettingScreen,
   FriendsScreen,
   SearchFriendsScreen,
+  PostScreen,
 } from './src/screens';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -60,6 +61,11 @@ const App = () => {
           <Stack.Screen
             name="SearchFriends"
             component={SearchFriendsScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Post"
+            component={PostScreen}
             options={{headerShown: false}}
           />
         </Drawer.Navigator>

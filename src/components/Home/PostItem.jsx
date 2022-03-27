@@ -11,9 +11,9 @@ import {
 import images from '@assets/images';
 import {width, height} from '@utils/Responsive';
 
-const PostItem = () => {
+const PostItem = ({onPress}) => {
   return (
-    <TouchableOpacity activeOpacity={0.9}>
+    <TouchableOpacity activeOpacity={0.9} onPress={onPress}>
       <View style={styles.postItem}>
         <View
           style={{

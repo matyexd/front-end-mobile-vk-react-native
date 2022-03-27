@@ -10,7 +10,7 @@ import {UiIcon} from './icons';
 import {UiListElement} from './lists';
 import {UiDivider} from './dividers';
 import {UiBottomPopup} from './popups';
-import {UiProfileInfo} from './profileInfo';
+import {UiProfileInfo, UiComment} from './profileInfo';
 import {UiDots} from './dots';
 import {UiInput} from './inputs';
 
@@ -30,4 +30,5 @@ export {
   UiImagePost,
   UiDots,
   UiInput,
+  UiComment,
 };

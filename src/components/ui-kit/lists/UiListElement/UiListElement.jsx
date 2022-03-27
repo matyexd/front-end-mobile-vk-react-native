@@ -14,7 +14,10 @@ const UiListElement = ({
   textWidth = 500,
   style,
 }) => {
-  const UiListElement = StyleSheet.flatten([{flexDirection: 'row'}, style]);
+  const UiListElement = StyleSheet.flatten([
+    {flexDirection: 'row', alignItems: 'center'},
+    style,
+  ]);
 
   return (
     <View style={UiListElement}>

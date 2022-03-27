@@ -37,7 +37,7 @@ const HomeScreen = ({navigation}) => {
             </View>
           </View>
 
-          <PostItem />
+          <PostItem onPress={() => navigation.navigate('Post')} />
           <PostItem />
           <PostItem />
         </View>
