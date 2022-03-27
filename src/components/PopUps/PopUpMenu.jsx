@@ -14,11 +14,15 @@ const PopUpMenu = ({setShowModalMenu}) => {
   return (
     <View style={styles.viewMenu}>
       <View style={styles.buttonElements}>
-        <UiModalElementsButton iconName={'share'}>
+        <UiModalElementsButton
+          iconName={'share'}
+          style={{paddingLeft: width(10)}}>
           Поделиться
         </UiModalElementsButton>
         <UiDivider style={{marginHorizontal: width(10)}} />
-        <UiModalElementsButton iconName={'documentdublicate'}>
+        <UiModalElementsButton
+          iconName={'documentdublicate'}
+          style={{paddingLeft: width(10)}}>
           Скопировать ссылку
         </UiModalElementsButton>
       </View>

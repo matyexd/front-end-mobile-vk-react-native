@@ -12,7 +12,7 @@ import {StyleSheet} from 'react-native';
 import {Provider} from 'react-redux';
 import {store} from './src/store';
 
-import {ProfileScreen, HomeScreen} from './src/screens';
+import {ProfileScreen, HomeScreen, SettingScreen} from './src/screens';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -39,6 +39,11 @@ const App = () => {
           <Stack.Screen
             name="Profile"
             component={ProfileScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Setting"
+            component={SettingScreen}
             options={{headerShown: false}}
           />
         </Drawer.Navigator>

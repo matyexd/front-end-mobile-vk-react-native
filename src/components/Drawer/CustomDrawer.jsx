@@ -46,7 +46,7 @@ const CustomDrawer = props => {
         />
         <DrawerItem
           label="Настройки"
-          onPress={() => props.navigation.navigate('Profile')}
+          onPress={() => props.navigation.navigate('Setting')}
           icon={() => <UiIcon iconName="settingscog" iconColor="white" />}
           labelStyle={{color: 'white', marginLeft: -width(20)}}
         />
