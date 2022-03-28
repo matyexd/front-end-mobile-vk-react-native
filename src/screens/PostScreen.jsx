@@ -15,6 +15,7 @@ import {
   UiDivider,
   UiComment,
   UiImageAvatar,
+  UiInput,
 } from '@ui-kit';
 import {width, height} from '@utils/Responsive';
 import images from '@assets/images';
@@ -23,8 +24,10 @@ import {CommentItem, CommentAnswer} from '../components';
 const PostScreen = ({navigation}) => {
   return (
     <SafeAreaView style={styles.app}>
-      <ScrollView>
-        <View style={styles.container}>
+      <View style={styles.container}>
+        <ScrollView
+          style={{marginBottom: height(10)}}
+          showsVerticalScrollIndicator={false}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <TouchableOpacity
               style={{flex: 1}}
@@ -85,14 +88,23 @@ const PostScreen = ({navigation}) => {
               <UiDivider style={{marginVertical: height(10)}} />
             </View>
 
-            <View>
-              <CommentItem />
-              <CommentAnswer />
-              <CommentItem />
-            </View>
+            <CommentItem />
+            <CommentAnswer />
+            <CommentItem />
           </View>
+        </ScrollView>
+        <View
+          style={{
+            height: height(50),
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+          <UiInput placeholder="Комментарий" />
+          <TouchableOpacity style={{marginLeft: width(20)}}>
+            <UiIcon iconName="paperairpline" iconColor="white" />
+          </TouchableOpacity>
         </View>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
@@ -103,8 +115,9 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   container: {
-    paddingHorizontal: width(15),
-    paddingTop: height(20),
+    marginHorizontal: width(15),
+    paddingVertical: height(20),
+    flex: 1,
   },
 });
 
