@@ -3,8 +3,8 @@ import {Dimensions, PixelRatio} from 'react-native';
 /**
  * Получаем размер видимого экрана
  */
-const screenWidth = Dimensions.get('window').width;
-const screenHeight = Dimensions.get('window').height;
+export const screenWidth = Dimensions.get('window').width;
+export const screenHeight = Dimensions.get('window').height;
 
 /**
  * Размеры взяты из дизайна для сплеш-экрана(предполагается, что это и есть экран, для которого делался дизайн)

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -16,16 +16,24 @@ import {
   UiComment,
   UiImageAvatar,
   UiInput,
+  UiScrollButton,
 } from '@ui-kit';
-import {width, height} from '@utils/Responsive';
+import {width, height, screenHeight} from '@utils/Responsive';
 import images from '@assets/images';
 import {CommentItem, CommentAnswer} from '../components';
 
 const PostScreen = ({navigation}) => {
+  const scrollViewRef = useRef();
+
+  const EndButtonHandler = () => {
+    scrollViewRef.current.scrollToEnd({animated: true});
+  };
+
   return (
     <SafeAreaView style={styles.app}>
       <View style={styles.container}>
         <ScrollView
+          ref={scrollViewRef}
           style={{marginBottom: height(10)}}
           showsVerticalScrollIndicator={false}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -62,6 +70,10 @@ const PostScreen = ({navigation}) => {
                 src={images.rectangle3}
                 style={{marginVertical: height(2)}}
               />
+              <UiImagePost
+                src={images.rectangle3}
+                style={{marginVertical: height(2)}}
+              />
 
               <View
                 style={{
@@ -91,8 +103,14 @@ const PostScreen = ({navigation}) => {
             <CommentItem />
             <CommentAnswer />
             <CommentItem />
+            <CommentItem />
+            <CommentItem />
           </View>
         </ScrollView>
+        <UiScrollButton
+          style={{bottom: height(100)}}
+          onPress={EndButtonHandler}
+        />
         <View
           style={{
             height: height(50),

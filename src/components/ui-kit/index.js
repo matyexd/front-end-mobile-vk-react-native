@@ -1,4 +1,9 @@
-import {UiButton, UiModalElementsButton, UiModalButton} from './buttons';
+import {
+  UiButton,
+  UiModalElementsButton,
+  UiModalButton,
+  UiScrollButton,
+} from './buttons';
 import {UiText} from './text';
 import {
   UiImageAvatar,
@@ -31,4 +36,5 @@ export {
   UiDots,
   UiInput,
   UiComment,
+  UiScrollButton,
 };
