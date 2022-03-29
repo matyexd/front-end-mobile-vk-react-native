@@ -1,3 +1,3 @@
-import PostItem from './PostItem';
+import Home from './Home';
 
-export {PostItem};
+export {Home};

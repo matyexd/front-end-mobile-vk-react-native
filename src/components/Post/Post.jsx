@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import {
   View,
   StyleSheet,
@@ -18,11 +18,11 @@ import {
   UiInput,
   UiScrollButton,
 } from '@ui-kit';
-import {width, height, screenHeight} from '@utils/Responsive';
+import {width, height} from '@utils/Responsive';
 import images from '@assets/images';
-import {CommentItem, CommentAnswer} from '../components';
+import {CommentItem, CommentAnswer} from './Comments';
 
-const PostScreen = ({navigation}) => {
+const Post = props => {
   const scrollViewRef = useRef();
 
   const EndButtonHandler = () => {
@@ -39,7 +39,7 @@ const PostScreen = ({navigation}) => {
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <TouchableOpacity
               style={{flex: 1}}
-              onPress={() => navigation.navigate('Home')}>
+              onPress={() => props.navigation.navigate('Home')}>
               <UiIcon iconName="arrowleft" iconColor="white" />
             </TouchableOpacity>
             <UiText color="white" size={18} width={700}>
@@ -64,14 +64,6 @@ const PostScreen = ({navigation}) => {
               />
               <UiImagePost
                 src={images.rectangle2}
-                style={{marginVertical: height(2)}}
-              />
-              <UiImagePost
-                src={images.rectangle3}
-                style={{marginVertical: height(2)}}
-              />
-              <UiImagePost
-                src={images.rectangle3}
                 style={{marginVertical: height(2)}}
               />
 
@@ -107,10 +99,14 @@ const PostScreen = ({navigation}) => {
             <CommentItem />
           </View>
         </ScrollView>
+
+        {/* Опуститься вниз всех комментариев */}
         <UiScrollButton
           style={{bottom: height(100)}}
           onPress={EndButtonHandler}
         />
+
+        {/* Ввод комментария */}
         <View
           style={{
             height: height(50),
@@ -139,4 +135,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PostScreen;
+export default Post;

@@ -8,10 +8,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {width, height} from '@utils/Responsive';
-import {UiInput, UiIcon, UiText, UiDivider} from '@ui-kit';
-import {People} from '../components';
+import {UiInput, UiIcon, UiText, UiDivider, UiProfileInfo} from '@ui-kit';
+import images from '@assets/images';
 
-const SearchFriends = ({navigation}) => {
+const SearchFriends = props => {
   const ListTab = [{status: 'Все'}, {status: 'Люди'}, {status: 'Сообщества'}];
   const [status, setStatus] = useState('Все');
 
@@ -20,7 +20,7 @@ const SearchFriends = ({navigation}) => {
       <ScrollView>
         <View style={styles.container}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+            <TouchableOpacity onPress={() => props.navigation.navigate('Home')}>
               <UiIcon
                 iconName="arrowleft"
                 iconColor="white"
@@ -57,7 +57,16 @@ const SearchFriends = ({navigation}) => {
             <UiDivider />
           </View>
 
-          <People />
+          <View style={{marginTop: height(30)}}>
+            <View style={{marginBottom: height(10)}}>
+              <UiProfileInfo
+                name={'Kat Williams'}
+                avatarSrc={images.ava}
+                addInfo="Санк-Петербург"
+                avaSize={50}
+              />
+            </View>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>

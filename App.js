@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React from 'react';
 import {StyleSheet} from 'react-native';
 
@@ -23,26 +15,39 @@ import {
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {CustomDrawer} from './src/components';
+import CustomDrawer from './src/screens/CustomDrawer';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
+
+const Root = () => {
+  return (
+    <Drawer.Navigator
+      initialRouteName="Home"
+      drawerContent={props => <CustomDrawer {...props} />}
+      screenOptions={{
+        drawerStyle: styles.drawerStyle,
+      }}>
+      <Drawer.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{headerShown: false}}
+      />
+    </Drawer.Navigator>
+  );
+};
 
 const App = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Drawer.Navigator
-          initialRouteName="Home"
-          drawerContent={props => <CustomDrawer {...props} />}
-          screenOptions={{
-            drawerStyle: styles.drawerStyle,
-          }}>
-          <Drawer.Screen
-            name="Home"
-            component={HomeScreen}
+        <Stack.Navigator initialRouteName="Root">
+          <Stack.Screen
+            name="Root"
+            component={Root}
             options={{headerShown: false}}
           />
+
           <Stack.Screen
             name="Profile"
             component={ProfileScreen}
@@ -68,7 +73,7 @@ const App = () => {
             component={PostScreen}
             options={{headerShown: false}}
           />
-        </Drawer.Navigator>
+        </Stack.Navigator>
       </NavigationContainer>
     </Provider>
   );

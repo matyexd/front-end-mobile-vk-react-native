@@ -1,15 +1,14 @@
-import HomeScreen from './HomeScreen';
-import ProfileScreen from './ProfileScreen';
-import SettingScreen from './SettingScreen';
-import FriendsScreen from './FriendsScreen';
-import SearchFriendsScreen from './SearchFriendsScreen';
-import PostScreen from './PostScreen';
+import {FriendsScreen, SearchFriendsScreen} from './Friends';
+import {HomeScreen} from './Home';
+import {ProfileScreen} from './Profile';
+import {SettingScreen} from './Settings';
+import {PostScreen} from './Post';
 
 export {
-  HomeScreen,
-  ProfileScreen,
-  SettingScreen,
   FriendsScreen,
   SearchFriendsScreen,
+  HomeScreen,
+  SettingScreen,
+  ProfileScreen,
   PostScreen,
 };

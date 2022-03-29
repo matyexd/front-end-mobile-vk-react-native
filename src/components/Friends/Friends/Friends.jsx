@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -8,10 +8,9 @@ import {
 } from 'react-native';
 import {UiIcon, UiText, UiProfileInfo} from '@ui-kit';
 import images from '@assets/images';
-import {People} from '../components';
 import {width, height} from '@utils/Responsive';
 
-const FriendsScreen = ({navigation}) => {
+const Friends = props => {
   return (
     <SafeAreaView style={styles.app}>
       <ScrollView>
@@ -19,7 +18,7 @@ const FriendsScreen = ({navigation}) => {
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <TouchableOpacity
               style={{flex: 1}}
-              onPress={() => navigation.navigate('Home')}>
+              onPress={() => props.navigation.navigate('Home')}>
               <UiIcon iconName="arrowleft" iconColor="white" />
             </TouchableOpacity>
             <UiText color="white" size={18} width={700}>
@@ -28,7 +27,16 @@ const FriendsScreen = ({navigation}) => {
             <View style={{flex: 1}}></View>
           </View>
 
-          <People />
+          <View style={{marginTop: height(30)}}>
+            <View style={{marginBottom: height(10)}}>
+              <UiProfileInfo
+                name={'Kat Williams'}
+                avatarSrc={images.ava}
+                addInfo="Санк-Петербург"
+                avaSize={50}
+              />
+            </View>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -46,4 +54,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FriendsScreen;
+export default Friends;

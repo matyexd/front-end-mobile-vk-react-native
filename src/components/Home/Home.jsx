@@ -9,9 +9,9 @@ import {
 import {UiIcon} from '@ui-kit';
 import {width, height} from '@utils/Responsive';
 
-import {PostItem} from '../components';
+import PostItem from './PostItem/PostItem';
 
-const HomeScreen = ({navigation}) => {
+const Home = props => {
   return (
     <SafeAreaView style={styles.app}>
       <ScrollView>
@@ -23,7 +23,7 @@ const HomeScreen = ({navigation}) => {
               alignItems: 'center',
             }}>
             <View>
-              <TouchableOpacity onPress={() => navigation.openDrawer()}>
+              <TouchableOpacity onPress={() => props.navigation.openDrawer()}>
                 <UiIcon iconName={'menu'} iconColor={'white'} />
               </TouchableOpacity>
             </View>
@@ -37,7 +37,7 @@ const HomeScreen = ({navigation}) => {
             </View>
           </View>
 
-          <PostItem onPress={() => navigation.navigate('Post')} />
+          <PostItem onPress={() => props.navigation.navigate('Post')} />
           <PostItem />
           <PostItem />
         </View>
@@ -57,4 +57,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default Home;

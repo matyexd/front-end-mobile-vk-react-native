@@ -1,12 +1,8 @@
-import {
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from '@react-navigation/drawer';
+import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {UiIcon, UiImageAvatar, UiText} from '@ui-kit';
-import {width, height, sp} from '@utils';
+import {width, height} from '@utils';
 import images from '@assets/images';
 
 const CustomDrawer = props => {
@@ -24,7 +20,6 @@ const CustomDrawer = props => {
         </View>
       </View>
 
-      {/* <DrawerItemList {...props} style={{color: 'white'}} /> */}
       <View>
         <DrawerItem
           label="Мой профиль"

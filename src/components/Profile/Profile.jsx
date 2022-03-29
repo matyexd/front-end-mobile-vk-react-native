@@ -18,10 +18,10 @@ import {
 } from '@ui-kit';
 import Images from '@assets/images';
 import {height, width} from '@utils';
-import {PopUpMoreDetails, PopUpMenu} from '../components';
+import {PopUpMoreDetails, PopUpMenu} from './PopUps';
 import {useModalState} from '@hooks';
 
-const ProfileScreen = ({navigation}) => {
+const Profile = props => {
   const [showModalMoreDetails, setShowModalMoreDetails] = useModalState();
   const [showModalMenu, setShowModalMenu] = useModalState();
 
@@ -30,7 +30,7 @@ const ProfileScreen = ({navigation}) => {
       <ScrollView>
         <View style={styles.container}>
           <View style={styles.topIcon}>
-            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+            <TouchableOpacity onPress={() => props.navigation.navigate('Home')}>
               <UiIcon iconName="arrowleft" iconColor="white" />
             </TouchableOpacity>
 
@@ -169,4 +169,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileScreen;
+export default Profile;

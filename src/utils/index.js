@@ -1,3 +1,3 @@
-import {width, height, sp} from './Responsive';
+import {width, height, sp, screenWidth, screenHeight} from './Responsive';
 
-export {width, height, sp};
+export {width, height, sp, screenWidth, screenHeight};

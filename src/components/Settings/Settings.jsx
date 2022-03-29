@@ -9,7 +9,7 @@ import {
 import {UiIcon, UiText, UiModalElementsButton} from '@ui-kit';
 import {width, height} from '@utils/Responsive';
 
-const SettingScreen = ({navigation}) => {
+const Setting = props => {
   const [settings, setSettings] = useState([
     {name: 'Внешний вид', iconName: 'colorswatch', isGray: false},
     {name: 'О приложении', iconName: 'informationcircle', isGray: false},
@@ -23,7 +23,7 @@ const SettingScreen = ({navigation}) => {
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <TouchableOpacity
               style={{flex: 1}}
-              onPress={() => navigation.navigate('Home')}>
+              onPress={() => props.navigation.navigate('Home')}>
               <UiIcon iconName="arrowleft" iconColor="white" />
             </TouchableOpacity>
             <UiText color="white" size={18} width={700}>
@@ -60,4 +60,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SettingScreen;
+export default Setting;
