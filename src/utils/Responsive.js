@@ -33,7 +33,7 @@ export const height = (value = 0) => {
 export const width = (value = 0) => {
   const validValue = Math.abs(value > referenceWidth ? referenceWidth : value);
   return PixelRatio.roundToNearestPixel(
-    (validValue / referenceWidth) * screenWidth - 1,
+    (validValue / referenceWidth) * screenWidth,
   );
 };
 /**
