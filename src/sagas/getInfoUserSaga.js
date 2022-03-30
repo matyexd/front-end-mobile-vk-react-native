@@ -1,11 +1,12 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
 import {
   GET_INFO_REQUEST,
-  getInfoUserSuccess,
   getInfoUserFail,
+  getInfoUserSuccess,
 } from '../store/actions/action';
 
-const fetchGetInfoUserAPI = () => fetch('http://localhost:8081/bd/json.json');
+const fetchGetInfoUserAPI = () =>
+  fetch('http://localhost:8081/bd/userInfo.json');
 
 function* getInfoWorker() {
   try {

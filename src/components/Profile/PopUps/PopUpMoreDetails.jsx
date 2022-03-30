@@ -3,7 +3,14 @@ import {View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
 import {height, width} from '@utils';
 import {UiText, UiIcon, UiListElement, UiDivider} from '@ui-kit';
 
-const PopUpMoreDetails = ({setShowModalMoreDetails}) => {
+const PopUpMoreDetails = ({
+  setShowModalMoreDetails,
+  status,
+  birthday,
+  location,
+  education,
+  contacts,
+}) => {
   return (
     <View style={styles.viewMoreDetails}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -23,16 +30,16 @@ const PopUpMoreDetails = ({setShowModalMoreDetails}) => {
         </View>
         <View>
           <UiListElement style={styles.listItem} iconName={'chat'}>
-            They never ask people to do things they wouldn’t do themselves.
+            {status}
           </UiListElement>
           <UiListElement style={styles.listItem} iconName={'cake'}>
-            День рождения: 08 октября 1992
+            День рождения: {birthday}
           </UiListElement>
           <UiListElement style={styles.listItem} iconName={'location'}>
-            Город: Санкт-Петербург
+            Город: {location}
           </UiListElement>
           <UiListElement style={styles.listItem} iconName={'briefcase'}>
-            ВГУЮ в г. Санкт-Петербург
+            {education}
           </UiListElement>
         </View>
         <UiDivider style={{marginVertical: 10}} />
@@ -43,7 +50,7 @@ const PopUpMoreDetails = ({setShowModalMoreDetails}) => {
         </View>
         <View>
           <UiListElement style={styles.listItem} iconName={'arrow'}>
-            http://t.me/durov
+            {contacts}
           </UiListElement>
           <UiListElement style={styles.listItem} iconName={'twitter'}>
             Durov

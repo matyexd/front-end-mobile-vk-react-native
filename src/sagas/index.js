@@ -1,6 +1,7 @@
 import {all} from 'redux-saga/effects';
 import {getInfoWatcher} from './getInfoUserSaga';
+import {getPhotoWatcher} from './getPhotoUserSaga';
 
 export function* rootSaga() {
-  yield all([getInfoWatcher()]);
+  yield all([getInfoWatcher(), getPhotoWatcher()]);
 }

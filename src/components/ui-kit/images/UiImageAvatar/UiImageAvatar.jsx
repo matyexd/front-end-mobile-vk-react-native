@@ -25,7 +25,7 @@ const UiImageAvatar = ({src, size = 150, style, ...props}) => {
 };
 
 UiImageAvatar.propTypes = {
-  src: PropTypes.number.isRequired,
+  src: PropTypes.object.isRequired,
   size: PropTypes.number,
   style: ViewPropTypes.style,
 };

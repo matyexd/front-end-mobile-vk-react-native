@@ -12,7 +12,7 @@ const UiImageGalleryItem = ({src, size, style}) => {
     style,
   ]);
 
-  return <Image source={src} style={UiImageGalleryItem} />;
+  return <Image source={{uri: src}} style={UiImageGalleryItem} />;
 };
 
 UiImageGalleryItem.propTypes = {};

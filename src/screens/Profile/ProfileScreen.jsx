@@ -1,27 +1,34 @@
 import React from 'react';
 import {Profile} from '@components/Profile';
 import {connect} from 'react-redux';
-import {getInfoUserRequest} from '../../store/actions/action';
+import {
+  getInfoUserRequest,
+  getPhotoUserRequest,
+} from '../../store/actions/action';
 
 const ProfileScreen = props => {
   return (
     <Profile
       navigation={props.navigation}
-      userInfo={props.userInfo}
+      userFetch={props.userFetch}
       getInfoAboutUser={props.getInfoAboutUser}
+      photos={props.photos}
+      getPhotoUser={props.getPhotoUser}
     />
   );
 };
 
 const mapStateToProps = store => {
   return {
-    userInfo: store.getInfoUserReducer,
+    userFetch: store.getInfoUserReducer,
+    photos: store.getPhotoUserReducer,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     getInfoAboutUser: () => dispatch(getInfoUserRequest()),
+    getPhotoUser: () => dispatch(getPhotoUserRequest()),
   };
 };
 

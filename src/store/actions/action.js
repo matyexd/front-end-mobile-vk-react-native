@@ -10,3 +10,16 @@ export const getInfoUserSuccess = payload => ({
   payload,
 });
 export const getInfoUserFail = payload => ({type: GET_INFO_FAIL, payload});
+
+export const GET_PHOTO_REQUEST = 'GET_PHOTO_REQUEST';
+export const GET_PHOTO_SUCCESS = 'GET_PHOTO_SUCCESS';
+export const GET_PHOTO_FAIL = 'GET_PHOTO_FAIL';
+
+export const getPhotoUserRequest = () => ({
+  type: GET_PHOTO_REQUEST,
+});
+export const getPhotoUserSuccess = payload => ({
+  type: GET_PHOTO_SUCCESS,
+  payload,
+});
+export const getPhotoUserFail = payload => ({type: GET_PHOTO_FAIL, payload});
