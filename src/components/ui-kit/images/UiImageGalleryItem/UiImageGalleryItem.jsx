@@ -6,8 +6,8 @@ import {height, width, sp} from '../../../../utils/Responsive';
 const UiImageGalleryItem = ({src, size, style}) => {
   const UiImageGalleryItem = StyleSheet.flatten([
     size !== undefined
-      ? {width: height(size), height: height(size)}
-      : {width: height(131), height: height(131)},
+      ? {width: width(size), height: width(size)}
+      : {width: width(114), height: width(114)},
     {margin: 1, flexGrow: 0, flexBasis: size},
     style,
   ]);

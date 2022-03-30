@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -36,6 +36,12 @@ const Profile = props => {
   ];
 
   const renderItem = ({item}) => <UiImageGalleryItem src={item.img} />;
+
+  useEffect(() => {
+    props.getInfoAboutUser();
+  }, []);
+
+  console.log(props.userInfo);
 
   return (
     <SafeAreaView style={styles.app}>
