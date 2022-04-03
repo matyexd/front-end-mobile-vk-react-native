@@ -1,35 +1,31 @@
 import React from 'react';
 import {Profile} from '@components/Profile';
 import {connect} from 'react-redux';
-import {
-  getInfoUserRequest,
-  getPhotoUserRequest,
-} from '../../store/actions/action';
 
 const ProfileScreen = props => {
+  const photos = props.photosData.photos.response.items;
+  const photosData = photos.map(photo => {
+    return photo.sizes.pop().url;
+  });
+
   return (
     <Profile
       navigation={props.navigation}
-      userFetch={props.userFetch}
-      getInfoAboutUser={props.getInfoAboutUser}
-      photos={props.photos}
-      getPhotoUser={props.getPhotoUser}
+      userData={props.userData}
+      photosData={photosData}
     />
   );
 };
 
 const mapStateToProps = store => {
   return {
-    userFetch: store.getInfoUserReducer,
-    photos: store.getPhotoUserReducer,
+    userData: store.getInfoUserReducer,
+    photosData: store.getPhotoUserReducer,
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    getInfoAboutUser: () => dispatch(getInfoUserRequest()),
-    getPhotoUser: () => dispatch(getPhotoUserRequest()),
-  };
+  return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);

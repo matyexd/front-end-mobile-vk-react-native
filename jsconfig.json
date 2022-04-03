@@ -17,6 +17,9 @@
 			"@components/*": [
 				"./src/components/*"
 			],
+			"@type/*": [
+				"./src/store/types/*"
+			],
 		}
 	},
 	"exclude": [

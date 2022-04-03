@@ -1,22 +1,57 @@
-import {
-  GET_INFO_FAIL,
-  GET_INFO_SUCCESS,
-  GET_INFO_REQUEST,
-} from '../actions/action';
+import {GET_INFO_FAIL, GET_INFO_SUCCESS, GET_INFO_REQUEST} from '@type/profile';
 
 const defaultState = {
-  userInfo: {
-    userName: '',
-    userNickname: '',
-    userLocation: '',
-    userOccupation: '',
-    countFollowers: 0,
-    countFollowing: 0,
-    userStatus: '',
-    userBirthDay: '',
-    userEducation: '',
-    contacts: '',
-    userAvatar: '',
+  // userInfo: {
+  //   userName: '',
+  //   userNickname: '',
+  //   userLocation: '',
+  //   userOccupation: '',
+  //   countFollowers: 0,
+  //   countFollowing: 0,
+  //   userStatus: '',
+  //   userBirthDay: '',
+  //   userEducation: '',
+  //   contacts: '',
+  //   userAvatar: '',
+  // },
+  userData: {
+    response: [
+      {
+        id: 139891543,
+        first_name: 'Матвей',
+        last_name: 'Мамочкин',
+        can_access_closed: true,
+        is_closed: false,
+        screen_name: 'mmatvey',
+        bdate: '19.6.2002',
+        city: {id: 144, title: 'Томск'},
+        country: {title: 'Россия', id: 1},
+        photo_400_orig:
+          'https://sun1-16.userapi.com/s/v1/ig2/7fJotgug8fSZibOWtzp4QaPKOXJkdlo1MekQFcYxzcEWBC2IyNiQB3kEH4PotLMzkGTtHJj-kWgvWOQB56YrFsse.jpg?size=400x400&quality=96&crop=50,0,495,495&ava=1',
+        has_photo: 1,
+        site: 'https://t.me/GredMatv',
+        status: 'почему',
+        followers_count: 63,
+        occupation: {
+          id: 852,
+          name: 'ТУСУР (бывш. ТАСУР, ТИАСУР)',
+          type: 'university',
+        },
+        career: [],
+        universities: [
+          {
+            chair: 2050407,
+            chair_name: 'Программная инженерия',
+            city: 144,
+            country: 1,
+            faculty: 118835,
+            faculty_name: 'Факультет систем управления',
+            id: 852,
+            name: 'ТУСУР (бывш. ТАСУР, ТИАСУР)',
+          },
+        ],
+      },
+    ],
   },
   error: '',
   isFetching: false,
@@ -27,24 +62,23 @@ export default function getInfoUserReducer(state = defaultState, action) {
     case GET_INFO_REQUEST:
       return {...state, isFetching: true};
     case GET_INFO_SUCCESS:
-      const response = action.payload.response[0];
       return {
         ...state,
-        isFetching: false,
         userInfo: {
           ...state.userInfo,
-          userName: response.first_name,
-          userNickname: response.screen_name,
-          userLocation: response.city.title,
-          userOccupation: response.occupation.name,
-          countFollowers: response.followers_count,
+          userName: action.payload.response[0].first_name,
+          userNickname: action.payload.response[0].screen_name,
+          userLocation: action.payload.response[0].city.title,
+          userOccupation: action.payload.response[0].occupation.name,
+          countFollowers: action.payload.response[0].followers_count,
           countFollowing: 0,
-          userStatus: response.status,
-          userBirthDay: response.bdate,
-          userEducation: response.universities[0].name,
-          contacts: response.site,
-          userAvatar: response.photo_400_orig,
+          userStatus: action.payload.response[0].status,
+          userBirthDay: action.payload.response[0].bdate,
+          userEducation: action.payload.response[0].universities[0].name,
+          contacts: action.payload.response[0].site,
+          userAvatar: action.payload.response[0].photo_400_orig,
         },
+        isFetching: false,
       };
     case GET_INFO_FAIL:
       return {...state, isFetching: false, error: action.payload};

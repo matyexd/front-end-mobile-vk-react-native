@@ -5,12 +5,15 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
+  ActivityIndicator,
+  propTypes,
 } from 'react-native';
-import {UiIcon, UiText, UiProfileInfo} from '@ui-kit';
-import images from '@assets/images';
+import {UiIcon, UiText, UiProfileInfo, UiLoader} from '@ui-kit';
 import {width, height} from '@utils/Responsive';
 
-const Friends = props => {
+const Friends = ({navigation, friendsData}) => {
+  const {friends, isFetching, error} = friendsData;
+
   return (
     <SafeAreaView style={styles.app}>
       <ScrollView>
@@ -18,7 +21,7 @@ const Friends = props => {
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <TouchableOpacity
               style={{flex: 1}}
-              onPress={() => props.navigation.navigate('Home')}>
+              onPress={() => navigation.navigate('Home')}>
               <UiIcon iconName="arrowleft" iconColor="white" />
             </TouchableOpacity>
             <UiText color="white" size={18} width={700}>
@@ -28,19 +31,30 @@ const Friends = props => {
           </View>
 
           <View style={{marginTop: height(30)}}>
-            <View style={{marginBottom: height(10)}}>
-              <UiProfileInfo
-                name={'Kat Williams'}
-                avatarSrc={images.ava}
-                addInfo="Санк-Петербург"
-                avaSize={50}
-              />
-            </View>
+            {isFetching ? (
+              <UiLoader />
+            ) : (
+              friends.response.items.map(item => (
+                <View style={{marginBottom: height(15)}} key={item.id}>
+                  <UiProfileInfo
+                    name={item.first_name + ' ' + item.last_name}
+                    avatarSrc={item.photo_200_orig}
+                    addInfo={item.city ? item.city.title : ''}
+                    avaSize={50}
+                  />
+                </View>
+              ))
+            )}
           </View>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
+};
+
+Friends.propTypes = {
+  navigation: PropTypes.object.isRequired,
+  friendsData: PropTypes.object,
 };
 
 const styles = StyleSheet.create({

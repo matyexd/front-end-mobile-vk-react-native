@@ -9,7 +9,7 @@ const CustomDrawer = props => {
   return (
     <DrawerContentScrollView {...props}>
       <View style={styles.profileInfo}>
-        <UiImageAvatar src={images.ava3} size={80} />
+        <UiImageAvatar src={'https://via.placeholder.com/150'} size={80} />
         <View style={{marginLeft: width(20)}}>
           <UiText color={'white'} width={700}>
             Kat Williams

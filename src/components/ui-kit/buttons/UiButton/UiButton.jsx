@@ -16,7 +16,7 @@ const UiButton = ({children, onPress, style}) => {
   );
 };
 
-UiText.propTypes = {
+UiButton.propTypes = {
   children: PropTypes.node.isRequired,
   onPress: PropTypes.func,
 };

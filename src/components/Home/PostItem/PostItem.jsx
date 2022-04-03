@@ -23,7 +23,7 @@ const PostItem = ({onPress}) => {
         <UiProfileInfo
           name={'Kat Williams'}
           addInfo={'1h ago'}
-          avatarSrc={images.ava}
+          avatarSrc={'https://via.placeholder.com/150'}
         />
         <UiIcon
           iconName={'dotsvertical'}

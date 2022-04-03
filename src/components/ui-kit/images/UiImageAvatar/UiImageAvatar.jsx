@@ -20,12 +20,11 @@ const UiImageAvatar = ({src, size = 150, style, ...props}) => {
     {borderRadius: width(size) / 2},
     style,
   ]);
-
-  return <Image source={src} style={imageAvatar} />;
+  return <Image source={{uri: src}} style={imageAvatar} />;
 };
 
 UiImageAvatar.propTypes = {
-  src: PropTypes.object.isRequired,
+  src: PropTypes.string.isRequired,
   size: PropTypes.number,
   style: ViewPropTypes.style,
 };

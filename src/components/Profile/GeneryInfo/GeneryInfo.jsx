@@ -9,24 +9,20 @@ const GeneryInfo = ({
   setShowModalMoreDetails,
   showModalMoreDetails,
 }) => {
-  const {
-    userName,
-    userNickname,
-    userLocation,
-    userOccupation,
-    countFollowers,
-    countFollowing,
-    userStatus,
-    userBirthDay,
-    userEducation,
-    contacts,
-    userAvatar,
-  } = userInfo;
+  const userName = userInfo.response[0].first_name;
+  const userNickname = userInfo.response[0].screen_name;
+  const userLocation = userInfo.response[0].city.title;
+  const userOccupation = userInfo.response[0].occupation.name;
+  const countFollowers = userInfo.response[0].followers_count;
+  const userStatus = userInfo.response[0].status;
+  const userBirthDay = userInfo.response[0].bdate;
+  const contacts = userInfo.response[0].site;
+  const userAvatar = userInfo.response[0].photo_400_orig;
 
   return (
     <View style={styles.infoProfile}>
       <View style={[styles.centerItem, {paddingBottom: height(17)}]}>
-        <UiImageAvatar src={{uri: userAvatar}} size={125} />
+        <UiImageAvatar src={userAvatar} size={125} />
       </View>
 
       <View style={[styles.centerItem, {paddingBottom: height(6)}]}>
@@ -60,7 +56,7 @@ const GeneryInfo = ({
         </View>
         <View style={styles.following}>
           <UiText color="white" width={700}>
-            1,589
+            0
           </UiText>
           <UiText color="#8672BB" width={700}>
             Following

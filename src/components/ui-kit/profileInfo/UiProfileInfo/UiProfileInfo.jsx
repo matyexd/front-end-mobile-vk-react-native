@@ -34,7 +34,7 @@ const UiProfileInfo = ({
 UiProfileInfo.propTypes = {
   name: PropTypes.string.isRequired,
   addInfo: PropTypes.string.isRequired,
-  avatarSrc: PropTypes.number.isRequired,
+  avatarSrc: PropTypes.string.isRequired,
   nameSize: PropTypes.number,
   nameWidth: PropTypes.number,
   nameColor: PropTypes.string,

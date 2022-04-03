@@ -1,37 +1,31 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {
   SafeAreaView,
-  ScrollView,
   View,
   StyleSheet,
   TouchableOpacity,
   FlatList,
+  propTypes,
 } from 'react-native';
 import {
-  UiButton,
   UiText,
-  UiImageAvatar,
   UiImageGalleryItem,
   UiIcon,
   UiDivider,
   UiBottomPopup,
+  UiLoader,
 } from '@ui-kit';
-import Images from '@assets/images';
 import {height, width} from '@utils';
-import {PopUpMoreDetails, PopUpMenu} from './PopUps';
+import {PopUpMenu} from './PopUps';
 import {useModalState} from '@hooks';
 import GeneryInfo from './GeneryInfo/GeneryInfo';
+import PropTypes from 'prop-types';
 
-const Profile = props => {
+const Profile = ({navigation, userData, photosData}) => {
   const [showModalMoreDetails, setShowModalMoreDetails] = useModalState();
   const [showModalMenu, setShowModalMenu] = useModalState();
 
   const renderItem = ({item}) => <UiImageGalleryItem src={item} />;
-
-  useEffect(() => {
-    props.getInfoAboutUser();
-    props.getPhotoUser();
-  }, []);
 
   return (
     <SafeAreaView style={styles.app}>
@@ -40,8 +34,7 @@ const Profile = props => {
           ListHeaderComponent={
             <>
               <View style={styles.topIcon}>
-                <TouchableOpacity
-                  onPress={() => props.navigation.navigate('Home')}>
+                <TouchableOpacity onPress={() => navigation.navigate('Home')}>
                   <UiIcon iconName="arrowleft" iconColor="white" />
                 </TouchableOpacity>
 
@@ -64,11 +57,15 @@ const Profile = props => {
                 </UiBottomPopup>
               </View>
 
-              <GeneryInfo
-                userInfo={props.userFetch.userInfo}
-                showModalMoreDetails={showModalMoreDetails}
-                setShowModalMoreDetails={setShowModalMoreDetails}
-              />
+              {userData.isFetching ? (
+                <UiLoader />
+              ) : (
+                <GeneryInfo
+                  userInfo={userData.userData}
+                  showModalMoreDetails={showModalMoreDetails}
+                  setShowModalMoreDetails={setShowModalMoreDetails}
+                />
+              )}
 
               <UiDivider style={{marginVertical: height(24)}} />
 
@@ -83,13 +80,19 @@ const Profile = props => {
           showsVerticalScrollIndicator={false}
           ListHeaderComponentStyle={{marginBottom: height(10)}}
           style={{marginTop: height(10)}}
-          data={props.photos.photos}
+          data={photosData}
           numColumns={3}
           renderItem={renderItem}
         />
       </View>
     </SafeAreaView>
   );
+};
+
+Profile.propTypes = {
+  navigation: PropTypes.object.isRequired,
+  userData: PropTypes.object,
+  photosData: PropTypes.array,
 };
 
 const styles = StyleSheet.create({
