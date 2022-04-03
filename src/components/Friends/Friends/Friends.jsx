@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {UiIcon, UiText, UiProfileInfo, UiLoader} from '@ui-kit';
 import {width, height} from '@utils/Responsive';
+import PropTypes from 'prop-types';
 
 const Friends = ({navigation, friendsData}) => {
   const {friends, isFetching, error} = friendsData;

@@ -9,9 +9,9 @@ import {
 import {UiIcon} from '@ui-kit';
 import {width, height} from '@utils/Responsive';
 
-import PostItem from './PostItem/PostItem';
+import Posts from './Posts/Posts';
 
-const Home = props => {
+const Home = ({navigation, newsData}) => {
   return (
     <SafeAreaView style={styles.app}>
       <ScrollView>
@@ -23,7 +23,7 @@ const Home = props => {
               alignItems: 'center',
             }}>
             <View>
-              <TouchableOpacity onPress={() => props.navigation.openDrawer()}>
+              <TouchableOpacity onPress={() => navigation.openDrawer()}>
                 <UiIcon iconName={'menu'} iconColor={'white'} />
               </TouchableOpacity>
             </View>
@@ -37,9 +37,7 @@ const Home = props => {
             </View>
           </View>
 
-          <PostItem onPress={() => props.navigation.navigate('Post')} />
-          <PostItem />
-          <PostItem />
+          <Posts navigation={navigation} newsData={newsData} />
         </View>
       </ScrollView>
     </SafeAreaView>

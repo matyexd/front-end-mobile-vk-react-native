@@ -1,8 +1,19 @@
 import React from 'react';
 import {Home} from '@components/Home';
+import {connect} from 'react-redux';
 
-const HomeScreen = ({navigation}) => {
-  return <Home navigation={navigation} />;
+const HomeScreen = props => {
+  return <Home navigation={props.navigation} newsData={props.newsData} />;
 };
 
-export default HomeScreen;
+const mapStateToProps = store => {
+  return {
+    newsData: store.getNewsReducer,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

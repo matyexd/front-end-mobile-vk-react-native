@@ -53,7 +53,7 @@ const Post = props => {
               <UiProfileInfo
                 name={'Kat Williams'}
                 addInfo={'1h ago'}
-                avatarSrc={images.ava}
+                avatarSrc={'https://via.placeholder.com/150'}
               />
             </View>
 

@@ -13,7 +13,7 @@ const CommentAnswer = () => {
         paddingLeft: width(42),
       }}>
       <UiImageAvatar
-        src={images.ava}
+        src={'https://via.placeholder.com/150'}
         size={35}
         style={{marginRight: width(10)}}
       />

@@ -9,11 +9,11 @@ const UiImagePost = ({src, style}) => {
     style,
   ]);
 
-  return <Image source={src} style={styleImagePost} />;
+  return <Image source={{uri: src}} style={styleImagePost} />;
 };
 
 UiImagePost.propTypes = {
-  src: PropTypes.number.isRequired,
+  src: PropTypes.string.isRequired,
   style: ViewPropTypes.style,
 };
 

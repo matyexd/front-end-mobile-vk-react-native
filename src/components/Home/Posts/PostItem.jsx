@@ -7,11 +7,23 @@ import {
   UiIcon,
   UiListElement,
   UiDots,
+  UiText,
 } from '@ui-kit';
 import images from '@assets/images';
 import {width, height} from '@utils/Responsive';
 
-const PostItem = ({onPress}) => {
+const PostItem = ({
+  navigation,
+  sourceId,
+  datePost,
+  textPost,
+  countComments,
+  countLike,
+  nameOwnerPost,
+  avatar,
+  postPhotos,
+}) => {
+  console.log(postPhotos);
   return (
     <View style={styles.postItem}>
       <View
@@ -21,9 +33,10 @@ const PostItem = ({onPress}) => {
           alignItems: 'center',
         }}>
         <UiProfileInfo
-          name={'Kat Williams'}
-          addInfo={'1h ago'}
-          avatarSrc={'https://via.placeholder.com/150'}
+          style={{flex: 1, flexWrap: 'nowrap', marginRight: width(15)}}
+          name={nameOwnerPost}
+          addInfo={datePost}
+          avatarSrc={avatar}
         />
         <UiIcon
           iconName={'dotsvertical'}
@@ -31,14 +44,40 @@ const PostItem = ({onPress}) => {
           style={{marginLeft: width(5)}}
         />
       </View>
-      <TouchableOpacity activeOpacity={0.9} onPress={onPress}>
-        <View style={{marginTop: height(16)}}>
-          <UiImagePost src={images.gallery5} />
-          <View style={styles.postItem__dots}>
-            <UiDots />
+
+      {postPhotos ? (
+        <TouchableOpacity
+          activeOpacity={0.9}
+          onPress={() => navigation.navigate('Post')}>
+          {textPost ? (
+            <UiText color={'#C3B8E0'} style={{marginVertical: height(15)}}>
+              {textPost}
+            </UiText>
+          ) : (
+            <View style={{marginTop: height(10)}}></View>
+          )}
+
+          <View>
+            {postPhotos.map((photo, index) => {
+              return photo ? (
+                <UiImagePost
+                  key={index + 'id'}
+                  src={photo}
+                  style={{marginBottom: height(5)}}
+                />
+              ) : (
+                <View key={index + 'id'}></View>
+              );
+            })}
+
+            <View style={styles.postItem__dots}>
+              <UiDots />
+            </View>
           </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      ) : (
+        <View></View>
+      )}
 
       <View style={styles.postItem__bottomMenu}>
         <View style={{flexDirection: 'row'}}>
@@ -46,14 +85,14 @@ const PostItem = ({onPress}) => {
             iconName={'likeicon'}
             textColor={'white'}
             textWidth={600}>
-            8,998
+            {countLike}
           </UiListElement>
           <UiListElement
             iconName={'chat'}
             textColor={'white'}
             style={{marginLeft: width(23)}}
             textWidth={600}>
-            145
+            {countComments}
           </UiListElement>
         </View>
         <View>
