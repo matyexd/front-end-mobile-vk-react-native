@@ -3,7 +3,6 @@ import {
   GET_FRIENDS_REQUEST,
   GET_FRIENDS_SUCCESS,
 } from '@type/friends';
-import * as friends from '../../../bd/getFriends.json';
 
 const defaultState = {
   friends: {

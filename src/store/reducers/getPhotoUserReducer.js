@@ -3,7 +3,6 @@ import {
   GET_PHOTO_SUCCESS,
   GET_PHOTO_REQUEST,
 } from '@type/profilePhoto';
-import * as photoUser from '../../../bd/userPhoto.json';
 
 const defaultState = {
   photos: {

@@ -1,5 +1,11 @@
-import React from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Text,
+} from 'react-native';
 import {
   UiProfileInfo,
   UiDivider,
@@ -9,12 +15,11 @@ import {
   UiDots,
   UiText,
 } from '@ui-kit';
-import images from '@assets/images';
 import {width, height} from '@utils/Responsive';
 
 const PostItem = ({
   navigation,
-  sourceId,
+
   datePost,
   textPost,
   countComments,
@@ -23,7 +28,18 @@ const PostItem = ({
   avatar,
   postPhotos,
 }) => {
-  console.log(postPhotos);
+  const [imgActive, setImgActive] = useState(0);
+
+  onchange = nativeEvent => {
+    if (nativeEvent) {
+      const slide = Math.ceil(
+        nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width,
+      );
+      if (slide != imgActive) {
+        setImgActive(slide);
+      }
+    }
+  };
   return (
     <View style={styles.postItem}>
       <View
@@ -45,39 +61,47 @@ const PostItem = ({
         />
       </View>
 
-      {postPhotos ? (
-        <TouchableOpacity
-          activeOpacity={0.9}
-          onPress={() => navigation.navigate('Post')}>
-          {textPost ? (
-            <UiText color={'#C3B8E0'} style={{marginVertical: height(15)}}>
-              {textPost}
-            </UiText>
-          ) : (
-            <View style={{marginTop: height(10)}}></View>
-          )}
-
-          <View>
-            {postPhotos.map((photo, index) => {
-              return photo ? (
+      <View>
+        {/* // activeOpacity={0.9}
+        // onPress={() => navigation.navigate('Post')}> */}
+        {textPost.length > 0 && (
+          <UiText color={'#C3B8E0'} style={{marginTop: height(15)}}>
+            {textPost}
+          </UiText>
+        )}
+        {postPhotos.length > 0 && (
+          <View style={{marginTop: height(15)}}>
+            <ScrollView
+              onScroll={({nativeEvent}) => onchange(nativeEvent)}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              pagingEnabled>
+              {postPhotos.map((photo, index) => (
                 <UiImagePost
+                  style={{marginHorizontal: width(5)}}
                   key={index + 'id'}
                   src={photo}
-                  style={{marginBottom: height(5)}}
+                  resizeMode="cover"
                 />
-              ) : (
-                <View key={index + 'id'}></View>
-              );
-            })}
+              ))}
+            </ScrollView>
 
             <View style={styles.postItem__dots}>
-              <UiDots />
+              {postPhotos.map((e, index) => (
+                <Text
+                  key={e}
+                  style={
+                    imgActive == index
+                      ? {color: 'white', margin: 3}
+                      : {color: '#8672BB', margin: 3}
+                  }>
+                  {console.log(index)}●
+                </Text>
+              ))}
             </View>
           </View>
-        </TouchableOpacity>
-      ) : (
-        <View></View>
-      )}
+        )}
+      </View>
 
       <View style={styles.postItem__bottomMenu}>
         <View style={{flexDirection: 'row'}}>
