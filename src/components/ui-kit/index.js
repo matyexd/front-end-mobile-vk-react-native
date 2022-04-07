@@ -10,6 +10,7 @@ import {
   UiImageGalleryItem,
   UiImageGallery,
   UiImagePost,
+  UiImageComment,
 } from './images';
 import {UiIcon} from './icons';
 import {UiListElement} from './lists';
@@ -39,4 +40,5 @@ export {
   UiComment,
   UiScrollButton,
   UiLoader,
+  UiImageComment,
 };

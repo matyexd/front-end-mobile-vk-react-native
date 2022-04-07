@@ -26,18 +26,37 @@ const PostScreen = ({route, navigation, commentsData}) => {
       textComment: '',
       dateComment: '',
       countLikes: 0,
+      imageComment: [],
     };
 
     obj.idComment = comment.id;
     const commentObject = profileComments.find(
       profile => profile.id == comment.from_id,
     );
-    obj.nameOwnerComment =
-      commentObject.first_name + ' ' + commentObject.last_name;
-    obj.avaOwnerComment = commentObject.photo_100;
+
+    if (commentObject) {
+      obj.nameOwnerComment =
+        commentObject.first_name + ' ' + commentObject.last_name;
+
+      obj.avaOwnerComment = commentObject.photo_100;
+    }
+    console.log(comment.id);
     obj.textComment = comment.text;
     obj.dateComment = new Date(comment.date * 1000).toLocaleString();
     obj.countLikes = comment.likes.count;
+
+    if (comment.attachments) {
+      const photos = comment.attachments.filter(
+        attachment => attachment.type === 'photo',
+      );
+      if (photos) {
+        obj.imageComment = photos.map(photo => photo.photo.sizes.pop().url);
+      }
+
+      if (comment.attachments[0].type === 'sticker') {
+        obj.imageComment.push(comment.attachments[0].sticker.images[1].url);
+      }
+    }
 
     return obj;
   };
@@ -45,7 +64,8 @@ const PostScreen = ({route, navigation, commentsData}) => {
   const filterComments = () => {
     allComments = [];
 
-    allComments = comments.map(comment => {
+    comments.map(comment => {
+      if (comment.from_id == 0) return;
       const obj = filterItemComment(comment);
 
       objCom = {
@@ -59,7 +79,7 @@ const PostScreen = ({route, navigation, commentsData}) => {
           return obj1;
         });
       }
-      return objCom;
+      return allComments.push(objCom);
     });
 
     return allComments;

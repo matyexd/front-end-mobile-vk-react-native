@@ -114,6 +114,7 @@ const Post = ({
                     text={comment.textComment}
                     date={comment.dateComment}
                     countLikes={comment.countLikes}
+                    imageComment={comment.imageComment}
                   />
                   {comment.answerComments.map(item => {
                     return (
@@ -124,6 +125,7 @@ const Post = ({
                         text={item.textComment}
                         date={item.dateComment}
                         countLikes={item.countLikes}
+                        imageComment={item.imageComment}
                       />
                     );
                   })}
@@ -136,6 +138,7 @@ const Post = ({
                   text={comment.textComment}
                   date={comment.dateComment}
                   countLikes={comment.countLikes}
+                  imageComment={comment.imageComment}
                 />
               ),
             )}

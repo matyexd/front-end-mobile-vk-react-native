@@ -1,10 +1,12 @@
 import React from 'react';
-import {View, SafeAreaView, Text} from 'react-native';
-import {UiText, UiListElement, UiImageAvatar} from '@ui-kit';
+import {View, SafeAreaView, Text, Image} from 'react-native';
+import {UiText, UiListElement, UiImageAvatar, UiImageComment} from '@ui-kit';
 import images from '@assets/images';
 import {width, height} from '@utils/Responsive';
 
-const CommentItem = ({name, ava, text, date, countLikes}) => {
+const CommentItem = ({name, ava, text, date, countLikes, imageComment}) => {
+  console.log(imageComment);
+
   return (
     <View
       style={{
@@ -17,12 +19,20 @@ const CommentItem = ({name, ava, text, date, countLikes}) => {
           {name}
         </UiText>
         <View style={{flexDirection: 'row'}}>
-          <UiText
-            size={14}
-            color={'#C3B8E0'}
-            style={{flex: 1, flexWrap: 'wrap', marginRight: width(10)}}>
-            {text}
-          </UiText>
+          <View style={{flex: 1}}>
+            <UiText
+              size={14}
+              color={'#C3B8E0'}
+              style={{flex: 1, flexWrap: 'wrap', marginRight: width(10)}}>
+              {text}
+            </UiText>
+            <View style={{flex: 1, marginTop: height(5)}}>
+              {imageComment &&
+                imageComment.map((image, index) => (
+                  <UiImageComment key={index + '_' + image} src={image} />
+                ))}
+            </View>
+          </View>
           <View>
             <UiListElement
               iconName={'likeicon'}
