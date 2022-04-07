@@ -22,7 +22,19 @@ import {width, height} from '@utils/Responsive';
 import images from '@assets/images';
 import {CommentItem, CommentAnswer} from './Comments';
 
-const Post = props => {
+const Post = ({
+  navigation,
+  source_id,
+  news_id,
+  datePost,
+  textPost,
+  countComments,
+  countLike,
+  nameOwnerPost,
+  avatar,
+  postPhotos,
+  comments,
+}) => {
   const scrollViewRef = useRef();
 
   const EndButtonHandler = () => {
@@ -39,7 +51,7 @@ const Post = props => {
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <TouchableOpacity
               style={{flex: 1}}
-              onPress={() => props.navigation.navigate('Home')}>
+              onPress={() => navigation.navigate('Home')}>
               <UiIcon iconName="arrowleft" iconColor="white" />
             </TouchableOpacity>
             <UiText color="white" size={18} width={700}>
@@ -51,21 +63,22 @@ const Post = props => {
           <View>
             <View style={{marginTop: height(20)}}>
               <UiProfileInfo
-                name={'Kat Williams'}
-                addInfo={'1h ago'}
-                avatarSrc={'https://via.placeholder.com/150'}
+                name={nameOwnerPost}
+                addInfo={datePost}
+                avatarSrc={avatar}
               />
             </View>
 
             <View style={{marginTop: height(20)}}>
-              <UiImagePost
-                src={images.rectangle1}
-                style={{marginVertical: height(2)}}
-              />
-              <UiImagePost
-                src={images.rectangle2}
-                style={{marginVertical: height(2)}}
-              />
+              <View>
+                {postPhotos.map((photo, index) => (
+                  <UiImagePost
+                    key={photo + 'id' + index}
+                    src={photo}
+                    style={{marginVertical: height(2)}}
+                  />
+                ))}
+              </View>
 
               <View
                 style={{
@@ -78,25 +91,54 @@ const Post = props => {
                   iconName={'likeicon'}
                   textColor={'white'}
                   textWidth={600}>
-                  8,998
+                  {countLike}
                 </UiListElement>
                 <UiIcon iconName="bookmark" iconColor="white" />
               </View>
 
               <View style={{marginTop: height(10)}}>
                 <UiText width={700} color="white">
-                  12 комментариев
+                  {countComments} комментариев
                 </UiText>
               </View>
 
               <UiDivider style={{marginVertical: height(10)}} />
             </View>
 
-            <CommentItem />
-            <CommentAnswer />
-            <CommentItem />
-            <CommentItem />
-            <CommentItem />
+            {comments.map(comment =>
+              comment.answerComments ? (
+                <View key={comment.idComment}>
+                  <CommentItem
+                    name={comment.nameOwnerComment}
+                    ava={comment.avaOwnerComment}
+                    text={comment.textComment}
+                    date={comment.dateComment}
+                    countLikes={comment.countLikes}
+                  />
+                  {comment.answerComments.map(item => {
+                    return (
+                      <CommentAnswer
+                        key={item.idComment}
+                        name={item.nameOwnerComment}
+                        ava={item.avaOwnerComment}
+                        text={item.textComment}
+                        date={item.dateComment}
+                        countLikes={item.countLikes}
+                      />
+                    );
+                  })}
+                </View>
+              ) : (
+                <CommentItem
+                  key={comment.idComment}
+                  name={comment.nameOwnerComment}
+                  ava={comment.avaOwnerComment}
+                  text={comment.textComment}
+                  date={comment.dateComment}
+                  countLikes={comment.countLikes}
+                />
+              ),
+            )}
           </View>
         </ScrollView>
 

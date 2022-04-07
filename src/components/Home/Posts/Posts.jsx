@@ -11,6 +11,8 @@ const Posts = ({navigation, newsData}) => {
           <PostItem
             key={post.source_id + '_' + post.news_id}
             navigation={navigation}
+            source_id={post.source_id}
+            news_id={post.news_id}
             nameOwnerPost={post.nameOwner}
             datePost={post.news.date}
             textPost={post.news.text}

@@ -19,7 +19,8 @@ import {width, height} from '@utils/Responsive';
 
 const PostItem = ({
   navigation,
-
+  source_id,
+  news_id,
   datePost,
   textPost,
   countComments,
@@ -62,8 +63,8 @@ const PostItem = ({
       </View>
 
       <View>
-        {/* // activeOpacity={0.9}
-        // onPress={() => navigation.navigate('Post')}> */}
+        {/* activeOpacity={0.9}
+        onPress={() => navigation.navigate('Post')}> */}
         {textPost.length > 0 && (
           <UiText color={'#C3B8E0'} style={{marginTop: height(15)}}>
             {textPost}
@@ -77,12 +78,28 @@ const PostItem = ({
               showsHorizontalScrollIndicator={false}
               pagingEnabled>
               {postPhotos.map((photo, index) => (
-                <UiImagePost
-                  style={{marginHorizontal: width(5)}}
+                <TouchableOpacity
                   key={index + 'id'}
-                  src={photo}
-                  resizeMode="cover"
-                />
+                  activeOpacity={0.9}
+                  onPress={() =>
+                    navigation.navigate('Post', {
+                      source_id: source_id,
+                      news_id: news_id,
+                      datePost: datePost,
+                      textPost: textPost,
+                      countComments: countComments,
+                      countLike: countLike,
+                      nameOwnerPost: nameOwnerPost,
+                      avatar: avatar,
+                      postPhotos: postPhotos,
+                    })
+                  }>
+                  <UiImagePost
+                    style={{marginHorizontal: width(5)}}
+                    src={photo}
+                    resizeMode="cover"
+                  />
+                </TouchableOpacity>
               ))}
             </ScrollView>
 
@@ -95,7 +112,7 @@ const PostItem = ({
                       ? {color: 'white', margin: 3}
                       : {color: '#8672BB', margin: 3}
                   }>
-                  {console.log(index)}●
+                  ●
                 </Text>
               ))}
             </View>
