@@ -17,7 +17,7 @@
           "can_publish": 1
         },
         "thread": {
-          "count": 2,
+          "count": 1,
           "items": [
             {
               "id": 42496,
@@ -30,23 +30,6 @@
               "likes": {
                 "can_like": 1,
                 "count": 2,
-                "user_likes": 0,
-                "can_publish": 1
-              },
-              "reply_to_user": 448946182,
-              "reply_to_comment": 42449
-            },
-            {
-              "id": 42506,
-              "from_id": 448763153,
-              "date": 1649310074,
-              "text": "да мы поняли вы очень крутые дед инсайды не спите сериальчики смотрите бессоница ахуенно мы рассказчики из бойцовского клуба пошли нахуй",
-              "post_id": 42448,
-              "owner_id": -186726568,
-              "parents_stack": [42449],
-              "likes": {
-                "can_like": 1,
-                "count": 1,
                 "user_likes": 0,
                 "can_publish": 1
               },
