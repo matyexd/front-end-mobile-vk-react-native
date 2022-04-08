@@ -3,16 +3,38 @@ import {Profile} from '@components/Profile';
 import {connect} from 'react-redux';
 
 const ProfileScreen = props => {
-  const photos = props.photosData.photos.response.items;
-  const photosData = photos.map(photo => {
-    return photo.sizes.pop().url;
-  });
+  const filterPhotos = photos => {
+    const photosData = photos.map(photo => {
+      return photo.sizes.pop().url;
+    });
+    return photosData;
+  };
+
+  const filterUserInfo = userData => {
+    const userInfo = userData.userData.response[0];
+    const userFetch = userData.isFetching;
+    const obj = {
+      userName: userInfo.first_name + ' ' + userInfo.last_name,
+      userNickname: userInfo.screen_name,
+      userLocation: userInfo.city.title,
+      userOccupation: userInfo.occupation.name,
+      countFollowers: userInfo.followers_count,
+      userStatus: userInfo.status,
+      userBirthDay: userInfo.bdate,
+      contacts: userInfo.site,
+      userAvatar: userInfo.photo_400_orig,
+      countFollowing: props.friendsData.friends.response.count,
+      isFetching: userFetch,
+    };
+
+    return obj;
+  };
 
   return (
     <Profile
       navigation={props.navigation}
-      userData={props.userData}
-      photosData={photosData}
+      userData={filterUserInfo(props.userData)}
+      photosData={filterPhotos(props.photosData.photos.response.items)}
     />
   );
 };
@@ -21,6 +43,7 @@ const mapStateToProps = store => {
   return {
     userData: store.getInfoUserReducer,
     photosData: store.getPhotoUserReducer,
+    friendsData: store.getFriendsReducer,
   };
 };
 

@@ -64,20 +64,7 @@ export default function getInfoUserReducer(state = defaultState, action) {
     case GET_INFO_SUCCESS:
       return {
         ...state,
-        userInfo: {
-          ...state.userInfo,
-          userName: action.payload.response[0].first_name,
-          userNickname: action.payload.response[0].screen_name,
-          userLocation: action.payload.response[0].city.title,
-          userOccupation: action.payload.response[0].occupation.name,
-          countFollowers: action.payload.response[0].followers_count,
-          countFollowing: 0,
-          userStatus: action.payload.response[0].status,
-          userBirthDay: action.payload.response[0].bdate,
-          userEducation: action.payload.response[0].universities[0].name,
-          contacts: action.payload.response[0].site,
-          userAvatar: action.payload.response[0].photo_400_orig,
-        },
+        userInfo: payload.action,
         isFetching: false,
       };
     case GET_INFO_FAIL:

@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {
   View,
-  Text,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -9,9 +8,9 @@ import {
 } from 'react-native';
 import {width, height} from '@utils/Responsive';
 import {UiInput, UiIcon, UiText, UiDivider, UiProfileInfo} from '@ui-kit';
-import images from '@assets/images';
+import PropTypes from 'prop-types';
 
-const SearchFriends = props => {
+const SearchFriends = ({navigation, peopleData}) => {
   const ListTab = [{status: 'Все'}, {status: 'Люди'}, {status: 'Сообщества'}];
   const [status, setStatus] = useState('Все');
 
@@ -20,7 +19,7 @@ const SearchFriends = props => {
       <ScrollView>
         <View style={styles.container}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <TouchableOpacity onPress={() => props.navigation.navigate('Home')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
               <UiIcon
                 iconName="arrowleft"
                 iconColor="white"
@@ -58,19 +57,26 @@ const SearchFriends = props => {
           </View>
 
           <View style={{marginTop: height(30)}}>
-            <View style={{marginBottom: height(10)}}>
-              <UiProfileInfo
-                name={'Kat Williams'}
-                avatarSrc={images.ava}
-                addInfo="Санк-Петербург"
-                avaSize={50}
-              />
-            </View>
+            {peopleData.map((item, index) => (
+              <View style={{marginBottom: height(15)}} key={index + 'id'}>
+                <UiProfileInfo
+                  name={item.friendName}
+                  avatarSrc={item.friendAvatar}
+                  addInfo={item.friendCity}
+                  avaSize={50}
+                />
+              </View>
+            ))}
           </View>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
+};
+
+SearchFriends.propTypes = {
+  navigation: PropTypes.object.isRequired,
+  peopleData: PropTypes.array,
 };
 
 const styles = StyleSheet.create({

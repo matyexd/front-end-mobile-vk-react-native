@@ -5,8 +5,6 @@ import images from '@assets/images';
 import {width, height} from '@utils/Responsive';
 
 const CommentItem = ({name, ava, text, date, countLikes, imageComment}) => {
-  console.log(imageComment);
-
   return (
     <View
       style={{

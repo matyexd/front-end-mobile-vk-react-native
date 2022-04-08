@@ -30,60 +30,60 @@ const Profile = ({navigation, userData, photosData}) => {
   return (
     <SafeAreaView style={styles.app}>
       <View style={styles.container}>
-        <FlatList
-          ListHeaderComponent={
-            <>
-              <View style={styles.topIcon}>
-                <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-                  <UiIcon iconName="arrowleft" iconColor="white" />
-                </TouchableOpacity>
+        {userData.isFetching ? (
+          <UiLoader />
+        ) : (
+          <FlatList
+            ListHeaderComponent={
+              <>
+                <View style={styles.topIcon}>
+                  <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                    <UiIcon iconName="arrowleft" iconColor="white" />
+                  </TouchableOpacity>
 
-                <TouchableOpacity onPress={setShowModalMenu}>
-                  <UiIcon
-                    iconName="dotsvertical"
-                    iconColor="white"
-                    style={[
-                      {
-                        transform: [{rotate: '90deg'}],
-                      },
-                    ]}
-                  />
-                </TouchableOpacity>
+                  <TouchableOpacity onPress={setShowModalMenu}>
+                    <UiIcon
+                      iconName="dotsvertical"
+                      iconColor="white"
+                      style={[
+                        {
+                          transform: [{rotate: '90deg'}],
+                        },
+                      ]}
+                    />
+                  </TouchableOpacity>
 
-                <UiBottomPopup
-                  visible={showModalMenu}
-                  closeModal={setShowModalMenu}>
-                  <PopUpMenu setShowModalMenu={setShowModalMenu} />
-                </UiBottomPopup>
-              </View>
+                  <UiBottomPopup
+                    visible={showModalMenu}
+                    closeModal={setShowModalMenu}>
+                    <PopUpMenu setShowModalMenu={setShowModalMenu} />
+                  </UiBottomPopup>
+                </View>
 
-              {userData.isFetching ? (
-                <UiLoader />
-              ) : (
                 <GeneryInfo
-                  userInfo={userData.userData}
+                  userInfo={userData}
                   showModalMoreDetails={showModalMoreDetails}
                   setShowModalMoreDetails={setShowModalMoreDetails}
                 />
-              )}
 
-              <UiDivider style={{marginVertical: height(24)}} />
+                <UiDivider style={{marginVertical: height(24)}} />
 
-              <View style={styles.centerItem}>
-                <UiText color="white">Фотография</UiText>
-                <View style={{marginLeft: 8}}>
-                  <UiText color="#8672BB">254</UiText>
+                <View style={styles.centerItem}>
+                  <UiText color="white">Фотография</UiText>
+                  <View style={{marginLeft: 8}}>
+                    <UiText color="#8672BB">254</UiText>
+                  </View>
                 </View>
-              </View>
-            </>
-          }
-          showsVerticalScrollIndicator={false}
-          ListHeaderComponentStyle={{marginBottom: height(10)}}
-          style={{marginTop: height(10)}}
-          data={photosData}
-          numColumns={3}
-          renderItem={renderItem}
-        />
+              </>
+            }
+            showsVerticalScrollIndicator={false}
+            ListHeaderComponentStyle={{marginBottom: height(10)}}
+            style={{marginTop: height(10)}}
+            data={photosData}
+            numColumns={3}
+            renderItem={renderItem}
+          />
+        )}
       </View>
     </SafeAreaView>
   );

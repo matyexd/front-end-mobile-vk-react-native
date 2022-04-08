@@ -21,15 +21,11 @@ const UiListElement = ({
 
   return (
     <View style={UiListElement}>
-      <UiIcon
-        iconColor={iconColor}
-        iconSize={sp(iconSize)}
-        iconName={iconName}
-      />
+      <UiIcon iconColor={iconColor} iconSize={iconSize} iconName={iconName} />
       <UiText
         color={textColor}
         width={textWidth}
-        size={sp(textSize)}
+        size={textSize}
         style={{marginLeft: width(10)}}>
         {children}
       </UiText>

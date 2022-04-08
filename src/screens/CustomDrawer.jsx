@@ -1,62 +1,34 @@
-import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {UiIcon, UiImageAvatar, UiText} from '@ui-kit';
-import {width, height} from '@utils';
-import images from '@assets/images';
+import Drawer from '@components/Drawer';
+import {connect} from 'react-redux';
 
 const CustomDrawer = props => {
-  return (
-    <DrawerContentScrollView {...props}>
-      <View style={styles.profileInfo}>
-        <UiImageAvatar src={'https://via.placeholder.com/150'} size={80} />
-        <View style={{marginLeft: width(20)}}>
-          <UiText color={'white'} width={700}>
-            Kat Williams
-          </UiText>
-          <UiText color={'#8672BB'} size={12}>
-            @Williams
-          </UiText>
-        </View>
-      </View>
+  const filterUserInfo = userInfo => {
+    const obj = {
+      userName:
+        userInfo.response[0].first_name + ' ' + userInfo.response[0].last_name,
+      userNickname: userInfo.response[0].screen_name,
+      userAvatar: userInfo.response[0].photo_400_orig,
+    };
+    return obj;
+  };
 
-      <View>
-        <DrawerItem
-          label="Мой профиль"
-          onPress={() => props.navigation.navigate('Profile')}
-          icon={() => <UiIcon iconName="profileicon" iconColor="white" />}
-          labelStyle={{color: 'white', marginLeft: -width(20)}}
-        />
-        <DrawerItem
-          label="Друзья"
-          onPress={() => props.navigation.navigate('Friends')}
-          icon={() => <UiIcon iconName="group" iconColor="white" />}
-          labelStyle={{color: 'white', marginLeft: -width(20)}}
-        />
-        <DrawerItem
-          label="Поиск"
-          onPress={() => props.navigation.navigate('SearchFriends')}
-          icon={() => <UiIcon iconName="search" iconColor="white" />}
-          labelStyle={{color: 'white', marginLeft: -width(20)}}
-        />
-        <DrawerItem
-          label="Настройки"
-          onPress={() => props.navigation.navigate('Setting')}
-          icon={() => <UiIcon iconName="settingscog" iconColor="white" />}
-          labelStyle={{color: 'white', marginLeft: -width(20)}}
-        />
-      </View>
-    </DrawerContentScrollView>
+  return (
+    <Drawer
+      navigation={props.navigation}
+      userInfo={filterUserInfo(props.userData.userData)}
+    />
   );
 };
 
-const styles = StyleSheet.create({
-  profileInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginHorizontal: width(15),
-    marginVertical: height(30),
-  },
-});
+const mapStateToProps = store => {
+  return {
+    userData: store.getInfoUserReducer,
+  };
+};
 
-export default CustomDrawer;
+const mapDispatchToProps = dispatch => {
+  return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CustomDrawer);

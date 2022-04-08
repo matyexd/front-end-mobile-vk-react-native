@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, ViewPropTypes, Text, View, TextInput} from 'react-native';
-import {height, width} from '@utils/Responsive';
+import {height, sp, width} from '@utils/Responsive';
 import {UiIcon} from '@ui-kit/';
 
 const UiInput = ({onChangeText, placeholder, iconName}) => {
@@ -46,6 +46,8 @@ const styles = StyleSheet.create({
     borderRadius: height(28),
     paddingLeft: width(8),
     color: 'white',
+    fontSize: sp(16),
+    paddingVertical: height(5),
   },
 });
 

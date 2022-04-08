@@ -22,19 +22,7 @@ import {width, height} from '@utils/Responsive';
 import images from '@assets/images';
 import {CommentItem, CommentAnswer} from './Comments';
 
-const Post = ({
-  navigation,
-  source_id,
-  news_id,
-  datePost,
-  textPost,
-  countComments,
-  countLike,
-  nameOwnerPost,
-  avatar,
-  postPhotos,
-  comments,
-}) => {
+const Post = ({navigation, postItem, comments}) => {
   const scrollViewRef = useRef();
 
   const EndButtonHandler = () => {
@@ -63,15 +51,15 @@ const Post = ({
           <View>
             <View style={{marginTop: height(20)}}>
               <UiProfileInfo
-                name={nameOwnerPost}
-                addInfo={datePost}
-                avatarSrc={avatar}
+                name={postItem.nameOwnerPost}
+                addInfo={postItem.datePost}
+                avatarSrc={postItem.avatar}
               />
             </View>
 
             <View style={{marginTop: height(20)}}>
               <View>
-                {postPhotos.map((photo, index) => (
+                {postItem.postPhotos.map((photo, index) => (
                   <UiImagePost
                     key={photo + 'id' + index}
                     src={photo}
@@ -91,14 +79,14 @@ const Post = ({
                   iconName={'likeicon'}
                   textColor={'white'}
                   textWidth={600}>
-                  {countLike}
+                  {postItem.countLike}
                 </UiListElement>
                 <UiIcon iconName="bookmark" iconColor="white" />
               </View>
 
               <View style={{marginTop: height(10)}}>
                 <UiText width={700} color="white">
-                  {countComments} комментариев
+                  {postItem.countComments} комментариев
                 </UiText>
               </View>
 

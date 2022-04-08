@@ -1,6 +1,5 @@
 import React from 'react';
 import {View} from 'react-native';
-import {get} from 'react-native/Libraries/Utilities/PixelRatio';
 import PostItem from './PostItem';
 
 const Posts = ({navigation, newsData}) => {

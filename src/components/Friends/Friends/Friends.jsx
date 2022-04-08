@@ -5,16 +5,12 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
-  ActivityIndicator,
-  propTypes,
 } from 'react-native';
 import {UiIcon, UiText, UiProfileInfo, UiLoader} from '@ui-kit';
 import {width, height} from '@utils/Responsive';
 import PropTypes from 'prop-types';
 
 const Friends = ({navigation, friendsData}) => {
-  const {friends, isFetching, error} = friendsData;
-
   return (
     <SafeAreaView style={styles.app}>
       <ScrollView>
@@ -32,20 +28,16 @@ const Friends = ({navigation, friendsData}) => {
           </View>
 
           <View style={{marginTop: height(30)}}>
-            {isFetching ? (
-              <UiLoader />
-            ) : (
-              friends.response.items.map(item => (
-                <View style={{marginBottom: height(15)}} key={item.id}>
-                  <UiProfileInfo
-                    name={item.first_name + ' ' + item.last_name}
-                    avatarSrc={item.photo_200_orig}
-                    addInfo={item.city ? item.city.title : ''}
-                    avaSize={50}
-                  />
-                </View>
-              ))
-            )}
+            {friendsData.map((item, index) => (
+              <View style={{marginBottom: height(15)}} key={index + 'id'}>
+                <UiProfileInfo
+                  name={item.friendName}
+                  avatarSrc={item.friendAvatar}
+                  addInfo={item.friendCity}
+                  avaSize={50}
+                />
+              </View>
+            ))}
           </View>
         </View>
       </ScrollView>
@@ -55,7 +47,7 @@ const Friends = ({navigation, friendsData}) => {
 
 Friends.propTypes = {
   navigation: PropTypes.object.isRequired,
-  friendsData: PropTypes.object,
+  friendsData: PropTypes.array,
 };
 
 const styles = StyleSheet.create({

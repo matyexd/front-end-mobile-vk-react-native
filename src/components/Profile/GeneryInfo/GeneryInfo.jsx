@@ -9,46 +9,36 @@ const GeneryInfo = ({
   setShowModalMoreDetails,
   showModalMoreDetails,
 }) => {
-  const userName = userInfo.response[0].first_name;
-  const userNickname = userInfo.response[0].screen_name;
-  const userLocation = userInfo.response[0].city.title;
-  const userOccupation = userInfo.response[0].occupation.name;
-  const countFollowers = userInfo.response[0].followers_count;
-  const userStatus = userInfo.response[0].status;
-  const userBirthDay = userInfo.response[0].bdate;
-  const contacts = userInfo.response[0].site;
-  const userAvatar = userInfo.response[0].photo_400_orig;
-
   return (
     <View style={styles.infoProfile}>
       <View style={[styles.centerItem, {paddingBottom: height(17)}]}>
-        <UiImageAvatar src={userAvatar} size={125} />
+        <UiImageAvatar src={userInfo.userAvatar} size={125} />
       </View>
 
       <View style={[styles.centerItem, {paddingBottom: height(6)}]}>
         <UiText size={18} color="white" width={700}>
-          {userName}
+          {userInfo.userName}
         </UiText>
       </View>
 
       <View style={[styles.centerItem, {paddingBottom: height(29)}]}>
         <UiText size={14} color="#8672BB">
-          @{userNickname}
+          @{userInfo.userNickname}
         </UiText>
       </View>
 
       <View style={[styles.centerItem, {paddingBottom: height(8)}]}>
-        <UiText color="#8672BB">{userLocation}</UiText>
+        <UiText color="#8672BB">{userInfo.userLocation}</UiText>
       </View>
 
       <View style={[styles.centerItem, {paddingBottom: height(24)}]}>
-        <UiText color="white">{userOccupation}</UiText>
+        <UiText color="white">{userInfo.userOccupation}</UiText>
       </View>
 
       <View style={styles.infoProfile__additionalInfo}>
         <View style={styles.followers}>
           <UiText color="white" width={700}>
-            {countFollowers}
+            {userInfo.countFollowers}
           </UiText>
           <UiText color="#8672BB" width={700}>
             Followers
@@ -56,7 +46,7 @@ const GeneryInfo = ({
         </View>
         <View style={styles.following}>
           <UiText color="white" width={700}>
-            0
+            {userInfo.countFollowing}
           </UiText>
           <UiText color="#8672BB" width={700}>
             Following
@@ -70,11 +60,11 @@ const GeneryInfo = ({
             closeModal={setShowModalMoreDetails}>
             <PopUpMoreDetails
               setShowModalMoreDetails={setShowModalMoreDetails}
-              status={userStatus}
-              birthday={userBirthDay}
-              location={userLocation}
-              education={userOccupation}
-              contacts={contacts}
+              status={userInfo.userStatus}
+              birthday={userInfo.userBirthDay}
+              location={userInfo.userLocation}
+              education={userInfo.userOccupation}
+              contacts={userInfo.contacts}
             />
           </UiBottomPopup>
         </View>

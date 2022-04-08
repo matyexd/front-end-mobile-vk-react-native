@@ -2,24 +2,13 @@ import React from 'react';
 import {Post} from '@components/Post';
 import {connect} from 'react-redux';
 
-const PostScreen = ({route, navigation, commentsData}) => {
-  const {
-    source_id,
-    news_id,
-    datePost,
-    textPost,
-    countComments,
-    countLike,
-    nameOwnerPost,
-    avatar,
-    postPhotos,
-  } = route.params;
+const PostScreen = props => {
+  const comments = props.commentsData.comments.response.items;
+  const profileComments = props.commentsData.comments.response.profiles;
 
-  const comments = commentsData.comments.response.items;
-  const profileComments = commentsData.comments.response.profiles;
-
+  // возвращает объект одного комментария
   const filterItemComment = comment => {
-    obj = {
+    const obj = {
       idComment: 0,
       nameOwnerComment: '',
       avaOwnerComment: '',
@@ -40,7 +29,6 @@ const PostScreen = ({route, navigation, commentsData}) => {
 
       obj.avaOwnerComment = commentObject.photo_100;
     }
-    console.log(comment.id);
     obj.textComment = comment.text;
     obj.dateComment = new Date(comment.date * 1000).toLocaleString();
     obj.countLikes = comment.likes.count;
@@ -61,6 +49,7 @@ const PostScreen = ({route, navigation, commentsData}) => {
     return obj;
   };
 
+  // главная функция фильтра комментов
   const filterComments = () => {
     allComments = [];
 
@@ -87,16 +76,8 @@ const PostScreen = ({route, navigation, commentsData}) => {
 
   return (
     <Post
-      navigation={navigation}
-      source_id={source_id}
-      news_id={news_id}
-      datePost={datePost}
-      textPost={textPost}
-      countComments={countComments}
-      countLike={countLike}
-      nameOwnerPost={nameOwnerPost}
-      avatar={avatar}
-      postPhotos={postPhotos}
+      navigation={props.navigation}
+      postItem={props.route.params}
       comments={filterComments()}
     />
   );

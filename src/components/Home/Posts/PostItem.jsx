@@ -1,21 +1,15 @@
 import React, {useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  Text,
-} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {
   UiProfileInfo,
   UiDivider,
-  UiImagePost,
   UiIcon,
   UiListElement,
-  UiDots,
   UiText,
+  UiSlider,
 } from '@ui-kit';
 import {width, height} from '@utils/Responsive';
+import useSlider from '@hooks/useSlider';
 
 const PostItem = ({
   navigation,
@@ -29,18 +23,8 @@ const PostItem = ({
   avatar,
   postPhotos,
 }) => {
-  const [imgActive, setImgActive] = useState(0);
+  const [imgActive, onchange] = useSlider();
 
-  onchange = nativeEvent => {
-    if (nativeEvent) {
-      const slide = Math.ceil(
-        nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width,
-      );
-      if (slide != imgActive) {
-        setImgActive(slide);
-      }
-    }
-  };
   return (
     <View style={styles.postItem}>
       <View
@@ -63,60 +47,31 @@ const PostItem = ({
       </View>
 
       <View>
-        {/* activeOpacity={0.9}
-        onPress={() => navigation.navigate('Post')}> */}
         {textPost.length > 0 && (
           <UiText color={'#C3B8E0'} style={{marginTop: height(15)}}>
             {textPost}
           </UiText>
         )}
         {postPhotos.length > 0 && (
-          <View style={{marginTop: height(15)}}>
-            <ScrollView
-              onScroll={({nativeEvent}) => onchange(nativeEvent)}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              pagingEnabled>
-              {postPhotos.map((photo, index) => (
-                <TouchableOpacity
-                  key={index + 'id'}
-                  activeOpacity={0.9}
-                  onPress={() =>
-                    navigation.navigate('Post', {
-                      source_id: source_id,
-                      news_id: news_id,
-                      datePost: datePost,
-                      textPost: textPost,
-                      countComments: countComments,
-                      countLike: countLike,
-                      nameOwnerPost: nameOwnerPost,
-                      avatar: avatar,
-                      postPhotos: postPhotos,
-                    })
-                  }>
-                  <UiImagePost
-                    style={{marginHorizontal: width(5)}}
-                    src={photo}
-                    resizeMode="cover"
-                  />
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-
-            <View style={styles.postItem__dots}>
-              {postPhotos.map((e, index) => (
-                <Text
-                  key={e}
-                  style={
-                    imgActive == index
-                      ? {color: 'white', margin: 3}
-                      : {color: '#8672BB', margin: 3}
-                  }>
-                  ●
-                </Text>
-              ))}
-            </View>
-          </View>
+          <UiSlider
+            photos={postPhotos}
+            imgActive={imgActive}
+            onchange={onchange}
+            onPress={() =>
+              navigation.navigate('Post', {
+                source_id: source_id,
+                news_id: news_id,
+                datePost: datePost,
+                textPost: textPost,
+                countComments: countComments,
+                countLike: countLike,
+                nameOwnerPost: nameOwnerPost,
+                avatar: avatar,
+                postPhotos: postPhotos,
+              })
+            }
+            style={{marginTop: height(15)}}
+          />
         )}
       </View>
 
@@ -156,10 +111,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  postItem__dots: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: height(16),
   },
 });
