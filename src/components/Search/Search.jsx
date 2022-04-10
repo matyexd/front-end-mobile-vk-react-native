@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   SafeAreaView,
@@ -13,6 +13,23 @@ import PropTypes from 'prop-types';
 const Search = ({navigation, peopleData, groupsData}) => {
   const ListTab = [{status: 'Все'}, {status: 'Люди'}, {status: 'Сообщества'}];
   const [status, setStatus] = useState('Все');
+  const [items, setItems] = useState(peopleData.concat(groupsData));
+
+  useEffect(() => {
+    listItems();
+  }, [status]);
+
+  const listItems = () => {
+    if (status == 'Все') {
+      setItems(peopleData.concat(groupsData));
+    }
+    if (status == 'Люди') {
+      setItems(peopleData);
+    }
+    if (status == 'Сообщества') {
+      setItems(groupsData);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.app}>
@@ -56,59 +73,17 @@ const Search = ({navigation, peopleData, groupsData}) => {
             <UiDivider />
           </View>
 
-          {status == 'Все' && (
-            <View style={{marginTop: height(30)}}>
-              {peopleData.map((item, index) => (
-                <View style={{marginBottom: height(15)}} key={index + 'id'}>
-                  <UiProfileInfo
-                    name={item.friendName}
-                    avatarSrc={item.friendAvatar}
-                    addInfo={item.friendCity}
-                    avaSize={50}
-                  />
-                </View>
-              ))}
-
-              {groupsData.map((item, index) => (
-                <View style={{marginBottom: height(15)}} key={index + 'id'}>
-                  <UiProfileInfo
-                    name={item.groupName}
-                    avatarSrc={item.groupAvatar}
-                    avaSize={50}
-                  />
-                </View>
-              ))}
-            </View>
-          )}
-
-          {status == 'Люди' && (
-            <View style={{marginTop: height(30)}}>
-              {peopleData.map((item, index) => (
-                <View style={{marginBottom: height(15)}} key={index + 'id'}>
-                  <UiProfileInfo
-                    name={item.friendName}
-                    avatarSrc={item.friendAvatar}
-                    addInfo={item.friendCity}
-                    avaSize={50}
-                  />
-                </View>
-              ))}
-            </View>
-          )}
-
-          {status == 'Сообщества' && (
-            <View style={{marginTop: height(30)}}>
-              {groupsData.map((item, index) => (
-                <View style={{marginBottom: height(15)}} key={index + 'id'}>
-                  <UiProfileInfo
-                    name={item.groupName}
-                    avatarSrc={item.groupAvatar}
-                    avaSize={50}
-                  />
-                </View>
-              ))}
-            </View>
-          )}
+          <View style={{marginTop: height(30)}}>
+            {items.map((item, index) => (
+              <View style={{marginBottom: height(15)}} key={index + 'id'}>
+                <UiProfileInfo
+                  name={item.name}
+                  avatarSrc={item.ava}
+                  avaSize={50}
+                />
+              </View>
+            ))}
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
