@@ -14,8 +14,8 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const PostItem = ({
   navigation,
-  source_id,
-  news_id,
+  sourceId,
+  newsId,
   datePost,
   textPost,
   countComments,
@@ -52,8 +52,8 @@ const PostItem = ({
           activeOpacity={0.9}
           onPress={() =>
             navigation.navigate('Post', {
-              source_id: source_id,
-              news_id: news_id,
+              sourceId: sourceId,
+              newsId: newsId,
               datePost: datePost,
               textPost: textPost,
               countComments: countComments,
@@ -92,8 +92,8 @@ const PostItem = ({
             activeOpacity={0.7}
             onPress={() =>
               navigation.navigate('Post', {
-                source_id: source_id,
-                news_id: news_id,
+                sourceId: sourceId,
+                newsId: newsId,
                 datePost: datePost,
                 textPost: textPost,
                 countComments: countComments,

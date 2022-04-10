@@ -10,8 +10,8 @@ const HomeScreen = props => {
 
     const filterData = items.map(item => {
       const obj = {
-        source_id: 0,
-        news_id: 0,
+        sourceId: 0,
+        newsId: 0,
         nameOwner: '',
         imageOwner: '',
         news: {
@@ -24,8 +24,8 @@ const HomeScreen = props => {
         },
       };
 
-      obj.source_id = item.source_id;
-      obj.news_id = item.post_id;
+      obj.sourceId = item.source_id;
+      obj.newsId = item.post_id;
       obj.news.text = item.text;
       obj.news.countLikes = item.likes.count;
       obj.news.countComments = item.comments.count;
@@ -33,16 +33,17 @@ const HomeScreen = props => {
       obj.dateUnixtime = item.date;
 
       // получаем имя и аватарку владельца поста
-      if (obj.source_id < 0) {
+      if (obj.sourceId < 0) {
         const ownerPostObject = groups.find(
-          group => group.id == Math.abs(obj.source_id),
+          group => group.id == Math.abs(obj.sourceId),
         );
         obj.nameOwner = ownerPostObject.name;
         obj.imageOwner = ownerPostObject.photo_200;
       } else {
         const ownerPostObject = profiles.find(
-          profile => profile.id == obj.source_id,
+          profile => profile.id == obj.sourceId,
         );
+        console.log(ownerPostObject);
         obj.nameOwner =
           ownerPostObject.first_name + ' ' + ownerPostObject.last_name;
         obj.imageOwner = ownerPostObject.photo_100;

@@ -8,10 +8,10 @@ const Posts = ({navigation, newsData}) => {
       {newsData.map(post => {
         return (
           <PostItem
-            key={post.source_id + '_' + post.news_id}
+            key={post.sourceId + '_' + post.newsId}
             navigation={navigation}
-            source_id={post.source_id}
-            news_id={post.news_id}
+            sourceId={post.sourceId}
+            newsId={post.newsId}
             nameOwnerPost={post.nameOwner}
             datePost={post.news.date}
             textPost={post.news.text}
