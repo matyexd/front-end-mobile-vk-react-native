@@ -16,12 +16,7 @@ const Home = ({navigation, newsData}) => {
     <SafeAreaView style={styles.app}>
       <ScrollView>
         <View style={styles.container}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
+          <View style={styles.topMenu}>
             <View>
               <TouchableOpacity onPress={() => navigation.openDrawer()}>
                 <UiIcon iconName={'menu'} iconColor={'white'} />
@@ -52,6 +47,11 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: width(15),
     paddingTop: height(20),
+  },
+  topMenu: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });
 

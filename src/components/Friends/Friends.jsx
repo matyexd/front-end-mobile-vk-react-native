@@ -15,7 +15,7 @@ const Friends = ({navigation, friendsData}) => {
     <SafeAreaView style={styles.app}>
       <ScrollView>
         <View style={styles.container}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={styles.topMenu}>
             <TouchableOpacity
               style={{flex: 1}}
               onPress={() => navigation.navigate('Home')}>
@@ -27,9 +27,9 @@ const Friends = ({navigation, friendsData}) => {
             <View style={{flex: 1}}></View>
           </View>
 
-          <View style={{marginTop: height(30)}}>
+          <View style={styles.allFriends}>
             {friendsData.map((item, index) => (
-              <View style={{marginBottom: height(15)}} key={index + 'id'}>
+              <View style={styles.friendItems} key={index + 'id'}>
                 <UiProfileInfo
                   name={item.friendName}
                   avatarSrc={item.friendAvatar}
@@ -58,6 +58,16 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: width(15),
     paddingTop: height(20),
+  },
+  allFriends: {
+    marginTop: height(30),
+  },
+  friendItems: {
+    marginBottom: height(15),
+  },
+  topMenu: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 

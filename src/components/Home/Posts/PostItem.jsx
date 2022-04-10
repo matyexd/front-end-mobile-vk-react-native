@@ -28,12 +28,7 @@ const PostItem = ({
 
   return (
     <View style={styles.postItem}>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
+      <View style={styles.postInfo}>
         <UiProfileInfo
           style={{flex: 1, flexWrap: 'nowrap', marginRight: width(15)}}
           name={nameOwnerPost}
@@ -129,6 +124,11 @@ const styles = StyleSheet.create({
   },
   postItem__bottomMenu: {
     marginTop: height(20),
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  postInfo: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

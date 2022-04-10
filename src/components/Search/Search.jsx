@@ -15,10 +15,6 @@ const Search = ({navigation, peopleData, groupsData}) => {
   const [status, setStatus] = useState('Все');
   const [items, setItems] = useState(peopleData.concat(groupsData));
 
-  useEffect(() => {
-    listItems();
-  }, [status]);
-
   const listItems = () => {
     if (status == 'Все') {
       setItems(peopleData.concat(groupsData));
@@ -31,11 +27,15 @@ const Search = ({navigation, peopleData, groupsData}) => {
     }
   };
 
+  useEffect(() => {
+    listItems();
+  }, [status]);
+
   return (
     <SafeAreaView style={styles.app}>
       <ScrollView>
         <View style={styles.container}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={styles.topMenu}>
             <TouchableOpacity onPress={() => navigation.navigate('Home')}>
               <UiIcon
                 iconName="arrowleft"
@@ -45,7 +45,7 @@ const Search = ({navigation, peopleData, groupsData}) => {
             </TouchableOpacity>
             <UiInput iconName="search" placeholder="Поиск" />
           </View>
-          <View style={{marginTop: height(20)}}>
+          <View style={styles.tabs}>
             <View style={styles.listTab}>
               {ListTab.map(tab => (
                 <TouchableOpacity
@@ -58,15 +58,7 @@ const Search = ({navigation, peopleData, groupsData}) => {
                     color={tab.status === status ? 'white' : '#8672BB'}>
                     {tab.status}
                   </UiText>
-                  {tab.status === status && (
-                    <View
-                      style={{
-                        height: height(2),
-                        backgroundColor: 'white',
-                        borderRadius: height(2),
-                      }}
-                    />
-                  )}
+                  {tab.status === status && <View style={styles.lineTab} />}
                 </TouchableOpacity>
               ))}
             </View>
@@ -75,7 +67,7 @@ const Search = ({navigation, peopleData, groupsData}) => {
 
           <View style={{marginTop: height(30)}}>
             {items.map((item, index) => (
-              <View style={{marginBottom: height(15)}} key={index + 'id'}>
+              <View style={styles.friendItem} key={index + 'id'}>
                 <UiProfileInfo
                   name={item.name}
                   avatarSrc={item.ava}
@@ -107,6 +99,21 @@ const styles = StyleSheet.create({
   listTab: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+  },
+  lineTab: {
+    height: height(2),
+    backgroundColor: 'white',
+    borderRadius: height(2),
+  },
+  friendItem: {
+    marginBottom: height(15),
+  },
+  tabs: {
+    marginTop: height(20),
+  },
+  topMenu: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 

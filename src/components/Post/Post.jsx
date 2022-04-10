@@ -38,7 +38,7 @@ const Post = ({navigation, postItem, comments}) => {
             isShowButton(nativeEvent);
           }}
           scrollEventThrottle={400}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={styles.topMenu}>
             <TouchableOpacity
               style={{flex: 1}}
               onPress={() => navigation.navigate('Home')}>
@@ -51,7 +51,7 @@ const Post = ({navigation, postItem, comments}) => {
           </View>
 
           <View>
-            <View style={{marginTop: height(20)}}>
+            <View style={styles.postInfo}>
               <UiProfileInfo
                 name={postItem.nameOwnerPost}
                 addInfo={postItem.datePost}
@@ -59,7 +59,12 @@ const Post = ({navigation, postItem, comments}) => {
               />
             </View>
 
-            <View style={{marginTop: height(20)}}>
+            <View style={styles.post}>
+              {postItem.textPost.length > 0 && (
+                <UiText color={'#C3B8E0'} style={{marginBottom: height(10)}}>
+                  {postItem.textPost}
+                </UiText>
+              )}
               <View>
                 {postItem.postPhotos.map((photo, index) => (
                   <UiImagePost
@@ -70,13 +75,7 @@ const Post = ({navigation, postItem, comments}) => {
                 ))}
               </View>
 
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  marginTop: height(15),
-                }}>
+              <View style={styles.bottomPostMenu}>
                 <UiListElement
                   iconName={'likeicon'}
                   textColor={'white'}
@@ -169,6 +168,22 @@ const styles = StyleSheet.create({
     marginHorizontal: width(15),
     paddingVertical: height(20),
     flex: 1,
+  },
+  topMenu: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  postInfo: {
+    marginTop: height(20),
+  },
+  post: {
+    marginTop: height(20),
+  },
+  bottomPostMenu: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: height(15),
   },
 });
 

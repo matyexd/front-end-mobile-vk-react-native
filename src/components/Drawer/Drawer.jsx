@@ -24,41 +24,25 @@ const Drawer = ({navigation, userInfo, ...props}) => {
           label="Мой профиль"
           onPress={() => navigation.navigate('Profile')}
           icon={() => <UiIcon iconName="profileicon" iconColor="white" />}
-          labelStyle={{
-            color: 'white',
-            marginLeft: -width(20),
-            fontSize: sp(16),
-          }}
+          labelStyle={styles.drawerItem}
         />
         <DrawerItem
           label="Друзья"
           onPress={() => navigation.navigate('Friends')}
           icon={() => <UiIcon iconName="group" iconColor="white" />}
-          labelStyle={{
-            color: 'white',
-            marginLeft: -width(20),
-            fontSize: sp(16),
-          }}
+          labelStyle={styles.drawerItem}
         />
         <DrawerItem
           label="Поиск"
           onPress={() => navigation.navigate('Search')}
           icon={() => <UiIcon iconName="search" iconColor="white" />}
-          labelStyle={{
-            color: 'white',
-            marginLeft: -width(20),
-            fontSize: sp(16),
-          }}
+          labelStyle={styles.drawerItem}
         />
         <DrawerItem
           label="Настройки"
           onPress={() => navigation.navigate('Setting')}
           icon={() => <UiIcon iconName="settingscog" iconColor="white" />}
-          labelStyle={{
-            color: 'white',
-            marginLeft: -width(20),
-            fontSize: sp(16),
-          }}
+          labelStyle={styles.drawerItem}
         />
       </View>
     </DrawerContentScrollView>
@@ -71,6 +55,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: width(15),
     marginVertical: height(30),
+  },
+
+  drawerItem: {
+    color: 'white',
+    marginLeft: -width(20),
+    fontSize: sp(16),
   },
 });
 

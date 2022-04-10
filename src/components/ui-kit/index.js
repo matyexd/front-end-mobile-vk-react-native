@@ -18,7 +18,6 @@ import {UiListElement} from './lists';
 import {UiDivider} from './dividers';
 import {UiBottomPopup} from './popups';
 import {UiProfileInfo, UiComment} from './profileInfo';
-import {UiDots} from './dots';
 import {UiInput} from './inputs';
 import {UiLoader} from './loader';
 
@@ -36,7 +35,6 @@ export {
   UiBottomPopup,
   UiProfileInfo,
   UiImagePost,
-  UiDots,
   UiInput,
   UiComment,
   UiScrollButton,

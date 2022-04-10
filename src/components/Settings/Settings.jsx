@@ -20,7 +20,7 @@ const Setting = props => {
     <SafeAreaView style={styles.app}>
       <ScrollView>
         <View style={styles.container}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={styles.topMenu}>
             <TouchableOpacity
               style={{flex: 1}}
               onPress={() => props.navigation.navigate('Home')}>
@@ -57,6 +57,10 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: width(15),
     paddingTop: height(20),
+  },
+  topMenu: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 

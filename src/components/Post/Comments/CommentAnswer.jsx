@@ -1,31 +1,26 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {UiText, UiListElement, UiImageAvatar, UiImageComment} from '@ui-kit';
 import images from '@assets/images';
 import {width, height} from '@utils/Responsive';
 
 const CommentAnswer = ({name, ava, text, date, countLikes, imageComment}) => {
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        marginTop: height(10),
-        paddingLeft: width(42),
-      }}>
+    <View style={styles.commentItem}>
       <UiImageAvatar src={ava} size={35} style={{marginRight: width(10)}} />
-      <View style={{flex: 1, flexWrap: 'wrap'}}>
+      <View style={styles.wrap}>
         <UiText width={700} color={'white'}>
           {name}
         </UiText>
-        <View style={{flexDirection: 'row'}}>
+        <View style={styles.textAndCountLikes}>
           <View style={{flex: 1}}>
             <UiText
               size={14}
               color={'#C3B8E0'}
-              style={{flex: 1, flexWrap: 'wrap', marginRight: width(10)}}>
+              style={[styles.wrap, {marginRight: width(10)}]}>
               {text}
             </UiText>
-            <View style={{flex: 1, marginTop: height(5)}}>
+            <View style={styles.imageInComment}>
               {imageComment &&
                 imageComment.map((image, index) => (
                   <UiImageComment key={index + '_' + image} src={image} />
@@ -55,5 +50,25 @@ const CommentAnswer = ({name, ava, text, date, countLikes, imageComment}) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  commentItem: {
+    flexDirection: 'row',
+    marginTop: height(10),
+    paddingLeft: width(42),
+  },
+  wrap: {
+    flex: 1,
+    flexWrap: 'wrap',
+  },
+
+  textAndCountLikes: {
+    flexDirection: 'row',
+  },
+  imageInComment: {
+    flex: 1,
+    marginTop: height(5),
+  },
+});
 
 export default CommentAnswer;

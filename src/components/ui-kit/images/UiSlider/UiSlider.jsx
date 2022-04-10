@@ -30,21 +30,23 @@ const UiSlider = ({photos, imgActive, onchange, style}) => {
         ))}
       </ScrollView>
 
-      <View style={styles.postItem__dots}>
-        {photos.map((e, index) => {
-          return (
-            <Text
-              key={e}
-              style={
-                imgActive === index
-                  ? {color: 'white', margin: 3}
-                  : {color: '#8672BB', margin: 3}
-              }>
-              ●
-            </Text>
-          );
-        })}
-      </View>
+      {photos.length > 1 && (
+        <View style={styles.postItem__dots}>
+          {photos.map((e, index) => {
+            return (
+              <Text
+                key={e}
+                style={
+                  imgActive === index
+                    ? {color: 'white', margin: 3}
+                    : {color: '#8672BB', margin: 3}
+                }>
+                ●
+              </Text>
+            );
+          })}
+        </View>
+      )}
     </View>
   );
 };
@@ -53,7 +55,7 @@ const styles = StyleSheet.create({
   postItem__dots: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: height(16),
+    marginTop: height(10),
   },
 });
 
