@@ -10,6 +10,7 @@ import {
 } from '@ui-kit';
 import {width, height} from '@utils/Responsive';
 import useSlider from '@hooks/useSlider';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const PostItem = ({
   navigation,
@@ -47,16 +48,48 @@ const PostItem = ({
       </View>
 
       <View>
-        {textPost.length > 0 && (
-          <UiText color={'#C3B8E0'} style={{marginTop: height(15)}}>
-            {textPost}
-          </UiText>
-        )}
-        {postPhotos.length > 0 && (
-          <UiSlider
-            photos={postPhotos}
-            imgActive={imgActive}
-            onchange={onchange}
+        <TouchableOpacity
+          activeOpacity={0.9}
+          onPress={() =>
+            navigation.navigate('Post', {
+              source_id: source_id,
+              news_id: news_id,
+              datePost: datePost,
+              textPost: textPost,
+              countComments: countComments,
+              countLike: countLike,
+              nameOwnerPost: nameOwnerPost,
+              avatar: avatar,
+              postPhotos: postPhotos,
+            })
+          }>
+          {textPost.length > 0 && (
+            <UiText color={'#C3B8E0'} style={{marginTop: height(15)}}>
+              {textPost}
+            </UiText>
+          )}
+
+          {postPhotos.length > 0 && (
+            <UiSlider
+              photos={postPhotos}
+              imgActive={imgActive}
+              onchange={onchange}
+              style={{marginTop: height(15)}}
+            />
+          )}
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.postItem__bottomMenu}>
+        <View style={{flexDirection: 'row'}}>
+          <UiListElement
+            iconName={'likeicon'}
+            textColor={'white'}
+            textWidth={600}>
+            {countLike}
+          </UiListElement>
+          <TouchableOpacity
+            activeOpacity={0.7}
             onPress={() =>
               navigation.navigate('Post', {
                 source_id: source_id,
@@ -69,27 +102,15 @@ const PostItem = ({
                 avatar: avatar,
                 postPhotos: postPhotos,
               })
-            }
-            style={{marginTop: height(15)}}
-          />
-        )}
-      </View>
-
-      <View style={styles.postItem__bottomMenu}>
-        <View style={{flexDirection: 'row'}}>
-          <UiListElement
-            iconName={'likeicon'}
-            textColor={'white'}
-            textWidth={600}>
-            {countLike}
-          </UiListElement>
-          <UiListElement
-            iconName={'chat'}
-            textColor={'white'}
-            style={{marginLeft: width(23)}}
-            textWidth={600}>
-            {countComments}
-          </UiListElement>
+            }>
+            <UiListElement
+              iconName={'chat'}
+              textColor={'white'}
+              style={{marginLeft: width(23)}}
+              textWidth={600}>
+              {countComments}
+            </UiListElement>
+          </TouchableOpacity>
         </View>
         <View>
           <UiIcon iconName={'bookmark'} iconColor="white" />

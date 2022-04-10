@@ -1,4 +1,3 @@
-import Friends from './Friends/Friends';
-import SearchFriends from './SearchFriends/SearchFriends';
+import Friends from './Friends';
 
-export {Friends, SearchFriends};
+export {Friends};

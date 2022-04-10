@@ -6,7 +6,7 @@ import {width} from '@utils/Responsive';
 
 const UiProfileInfo = ({
   name,
-  addInfo,
+  addInfo = '',
   avatarSrc,
   nameSize = 18,
   nameColor = 'white',
@@ -20,7 +20,7 @@ const UiProfileInfo = ({
   return (
     <View style={[{flexDirection: 'row', alignItems: 'center'}, style]}>
       <UiImageAvatar src={avatarSrc} size={avaSize} />
-      <View style={{marginLeft: width(8)}}>
+      <View style={[{marginLeft: width(8)}]}>
         <UiText
           size={nameSize}
           width={nameWidth}
@@ -29,9 +29,11 @@ const UiProfileInfo = ({
           ellipsizeMode={'tail'}>
           {name}
         </UiText>
-        <UiText size={addSize} width={addWidth} color={addColor}>
-          {addInfo}
-        </UiText>
+        {addInfo.length > 0 && (
+          <UiText size={addSize} width={addWidth} color={addColor}>
+            {addInfo}
+          </UiText>
+        )}
       </View>
     </View>
   );
@@ -39,7 +41,7 @@ const UiProfileInfo = ({
 
 UiProfileInfo.propTypes = {
   name: PropTypes.string.isRequired,
-  addInfo: PropTypes.string.isRequired,
+  addInfo: PropTypes.string,
   avatarSrc: PropTypes.string.isRequired,
   nameSize: PropTypes.number,
   nameWidth: PropTypes.number,

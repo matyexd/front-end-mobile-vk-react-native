@@ -10,7 +10,7 @@ import {width, height} from '@utils/Responsive';
 import {UiInput, UiIcon, UiText, UiDivider, UiProfileInfo} from '@ui-kit';
 import PropTypes from 'prop-types';
 
-const SearchFriends = ({navigation, peopleData}) => {
+const Search = ({navigation, peopleData, groupsData}) => {
   const ListTab = [{status: 'Все'}, {status: 'Люди'}, {status: 'Сообщества'}];
   const [status, setStatus] = useState('Все');
 
@@ -56,25 +56,66 @@ const SearchFriends = ({navigation, peopleData}) => {
             <UiDivider />
           </View>
 
-          <View style={{marginTop: height(30)}}>
-            {peopleData.map((item, index) => (
-              <View style={{marginBottom: height(15)}} key={index + 'id'}>
-                <UiProfileInfo
-                  name={item.friendName}
-                  avatarSrc={item.friendAvatar}
-                  addInfo={item.friendCity}
-                  avaSize={50}
-                />
-              </View>
-            ))}
-          </View>
+          {status == 'Все' && (
+            <View style={{marginTop: height(30)}}>
+              {peopleData.map((item, index) => (
+                <View style={{marginBottom: height(15)}} key={index + 'id'}>
+                  <UiProfileInfo
+                    name={item.friendName}
+                    avatarSrc={item.friendAvatar}
+                    addInfo={item.friendCity}
+                    avaSize={50}
+                  />
+                </View>
+              ))}
+
+              {groupsData.map((item, index) => (
+                <View style={{marginBottom: height(15)}} key={index + 'id'}>
+                  <UiProfileInfo
+                    name={item.groupName}
+                    avatarSrc={item.groupAvatar}
+                    avaSize={50}
+                  />
+                </View>
+              ))}
+            </View>
+          )}
+
+          {status == 'Люди' && (
+            <View style={{marginTop: height(30)}}>
+              {peopleData.map((item, index) => (
+                <View style={{marginBottom: height(15)}} key={index + 'id'}>
+                  <UiProfileInfo
+                    name={item.friendName}
+                    avatarSrc={item.friendAvatar}
+                    addInfo={item.friendCity}
+                    avaSize={50}
+                  />
+                </View>
+              ))}
+            </View>
+          )}
+
+          {status == 'Сообщества' && (
+            <View style={{marginTop: height(30)}}>
+              {groupsData.map((item, index) => (
+                <View style={{marginBottom: height(15)}} key={index + 'id'}>
+                  <UiProfileInfo
+                    name={item.groupName}
+                    avatarSrc={item.groupAvatar}
+                    avaSize={50}
+                  />
+                </View>
+              ))}
+            </View>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-SearchFriends.propTypes = {
+Search.propTypes = {
   navigation: PropTypes.object.isRequired,
   peopleData: PropTypes.array,
 };
@@ -94,4 +135,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SearchFriends;
+export default Search;

@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 const ProfileScreen = props => {
   const filterPhotos = photos => {
     const photosData = photos.map(photo => {
-      return photo.sizes.pop().url;
+      return photo.sizes[photo.sizes.length - 1].url;
     });
     return photosData;
   };

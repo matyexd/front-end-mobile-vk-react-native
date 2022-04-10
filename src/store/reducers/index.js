@@ -4,6 +4,7 @@ import getPhotoUserReducer from './getPhotoUserReducer';
 import getFriendsReducer from './getFriendsReducer';
 import getNewsReducer from './getNewsReducer';
 import getCommentsReducer from './getCommentsReducer';
+import getGroupsUser from './getGroupsUser';
 
 export const rootReducers = combineReducers({
   getInfoUserReducer,
@@ -11,4 +12,5 @@ export const rootReducers = combineReducers({
   getFriendsReducer,
   getNewsReducer,
   getCommentsReducer,
+  getGroupsUser,
 });

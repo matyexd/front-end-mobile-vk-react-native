@@ -42,7 +42,7 @@ const Drawer = ({navigation, userInfo, ...props}) => {
         />
         <DrawerItem
           label="Поиск"
-          onPress={() => navigation.navigate('SearchFriends')}
+          onPress={() => navigation.navigate('Search')}
           icon={() => <UiIcon iconName="search" iconColor="white" />}
           labelStyle={{
             color: 'white',

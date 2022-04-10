@@ -57,7 +57,7 @@ const HomeScreen = props => {
           });
 
           obj.news.imagesNews = photos.map(
-            photo => photo.photo.sizes.pop().url,
+            photo => photo.photo.sizes[photo.photo.sizes.length - 1].url,
           );
         }
       } else {
@@ -66,7 +66,9 @@ const HomeScreen = props => {
             return photo.type == 'photo';
           });
 
-          obj.news.imagesNews = photos.map(item => item.photo.sizes.pop().url);
+          obj.news.imagesNews = photos.map(
+            item => item.photo.sizes[item.photo.sizes.length - 1].url,
+          );
         }
       }
 

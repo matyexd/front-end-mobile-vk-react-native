@@ -6,6 +6,15 @@ const PostScreen = props => {
   const comments = props.commentsData.comments.response.items;
   const profileComments = props.commentsData.comments.response.profiles;
 
+  const formatAnswerComment = text => {
+    var re1 = /\[id\d+\|/;
+    var re2 = /\[id\d+\|[A-zА-яё]+/i;
+    const str = text.split(',')[0];
+    var newstr = str.replace(re1, '').replace(/\]/, '');
+    newstr = text.replace(re2, newstr);
+    return newstr;
+  };
+
   // возвращает объект одного комментария
   const filterItemComment = comment => {
     const obj = {
@@ -29,7 +38,12 @@ const PostScreen = props => {
 
       obj.avaOwnerComment = commentObject.photo_100;
     }
-    obj.textComment = comment.text;
+
+    // если это ответ на коммент, форматируем имя в начале
+    obj.textComment =
+      comment.parents_stack.length == 0
+        ? comment.text
+        : formatAnswerComment(comment.text);
     obj.dateComment = new Date(comment.date * 1000).toLocaleString();
     obj.countLikes = comment.likes.count;
 
@@ -38,7 +52,9 @@ const PostScreen = props => {
         attachment => attachment.type === 'photo',
       );
       if (photos) {
-        obj.imageComment = photos.map(photo => photo.photo.sizes.pop().url);
+        obj.imageComment = photos.map(
+          photo => photo.photo.sizes[photo.photo.sizes.length - 1].url,
+        );
       }
 
       if (comment.attachments[0].type === 'sticker') {

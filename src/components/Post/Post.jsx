@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -21,13 +21,11 @@ import {
 import {width, height} from '@utils/Responsive';
 import images from '@assets/images';
 import {CommentItem, CommentAnswer} from './Comments';
+import useButtonToBottom from '@hooks/useButtonToBottom';
 
 const Post = ({navigation, postItem, comments}) => {
-  const scrollViewRef = useRef();
-
-  const EndButtonHandler = () => {
-    scrollViewRef.current.scrollToEnd({animated: true});
-  };
+  const {showButtonBottom, scrollViewRef, EndButtonHandler, isShowButton} =
+    useButtonToBottom();
 
   return (
     <SafeAreaView style={styles.app}>
@@ -35,7 +33,11 @@ const Post = ({navigation, postItem, comments}) => {
         <ScrollView
           ref={scrollViewRef}
           style={{marginBottom: height(10)}}
-          showsVerticalScrollIndicator={false}>
+          showsVerticalScrollIndicator={false}
+          onScroll={({nativeEvent}) => {
+            isShowButton(nativeEvent);
+          }}
+          scrollEventThrottle={400}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <TouchableOpacity
               style={{flex: 1}}
@@ -134,10 +136,12 @@ const Post = ({navigation, postItem, comments}) => {
         </ScrollView>
 
         {/* Опуститься вниз всех комментариев */}
-        <UiScrollButton
-          style={{bottom: height(100)}}
-          onPress={EndButtonHandler}
-        />
+        {showButtonBottom && (
+          <UiScrollButton
+            style={{bottom: height(100)}}
+            onPress={EndButtonHandler}
+          />
+        )}
 
         {/* Ввод комментария */}
         <View

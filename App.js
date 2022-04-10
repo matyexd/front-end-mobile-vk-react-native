@@ -9,7 +9,7 @@ import {
   HomeScreen,
   SettingScreen,
   FriendsScreen,
-  SearchFriendsScreen,
+  SearchScreen,
   PostScreen,
 } from './src/screens';
 import {NavigationContainer} from '@react-navigation/native';
@@ -64,8 +64,8 @@ const App = () => {
             options={{headerShown: false}}
           />
           <Stack.Screen
-            name="SearchFriends"
-            component={SearchFriendsScreen}
+            name="Search"
+            component={SearchScreen}
             options={{headerShown: false}}
           />
           <Stack.Screen

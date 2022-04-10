@@ -11,7 +11,7 @@ import {UiImagePost} from '@ui-kit';
 import {height, width} from '@utils/Responsive';
 import PropTypes from 'prop-types';
 
-const UiSlider = ({photos, imgActive, onchange, onPress, style}) => {
+const UiSlider = ({photos, imgActive, onchange, style}) => {
   return (
     <View style={style}>
       <ScrollView
@@ -20,13 +20,13 @@ const UiSlider = ({photos, imgActive, onchange, onPress, style}) => {
         showsHorizontalScrollIndicator={false}
         pagingEnabled>
         {photos.map((photo, index) => (
-          <TouchableOpacity key={photo} activeOpacity={0.9} onPress={onPress}>
+          <View key={photo}>
             <UiImagePost
               style={{marginHorizontal: width(5)}}
               src={photo}
               resizeMode="cover"
             />
-          </TouchableOpacity>
+          </View>
         ))}
       </ScrollView>
 
@@ -61,7 +61,6 @@ UiSlider.propTypes = {
   photos: PropTypes.array.isRequired,
   imgActive: PropTypes.number.isRequired,
   onchange: PropTypes.func.isRequired,
-  onPress: PropTypes.func,
   style: ViewPropTypes.style,
 };
 
