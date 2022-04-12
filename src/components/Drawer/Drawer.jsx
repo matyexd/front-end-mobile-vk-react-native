@@ -9,7 +9,7 @@ const Drawer = ({navigation, userInfo, ...props}) => {
     <DrawerContentScrollView {...props}>
       <View style={styles.profileInfo}>
         <UiImageAvatar src={userInfo.userAvatar} size={80} />
-        <View style={{marginLeft: width(20)}}>
+        <View style={styles.textInfo}>
           <UiText color={'white'} width={700}>
             {userInfo.userName}
           </UiText>
@@ -61,6 +61,9 @@ const styles = StyleSheet.create({
     color: 'white',
     marginLeft: -width(20),
     fontSize: sp(16),
+  },
+  textInfo: {
+    marginLeft: width(20),
   },
 });
 

@@ -30,7 +30,7 @@ const PostItem = ({
     <View style={styles.postItem}>
       <View style={styles.postInfo}>
         <UiProfileInfo
-          style={{flex: 1, flexWrap: 'nowrap', marginRight: width(15)}}
+          style={styles.profileInfo}
           name={nameOwnerPost}
           addInfo={datePost}
           avatarSrc={avatar}
@@ -38,7 +38,7 @@ const PostItem = ({
         <UiIcon
           iconName={'dotsvertical'}
           iconColor="#8672BB"
-          style={{marginLeft: width(5)}}
+          style={styles.iconStyle}
         />
       </View>
 
@@ -101,7 +101,7 @@ const PostItem = ({
             <UiListElement
               iconName={'chat'}
               textColor={'white'}
-              style={{marginLeft: width(23)}}
+              style={styles.commentStyle}
               textWidth={600}>
               {countComments}
             </UiListElement>
@@ -111,7 +111,7 @@ const PostItem = ({
           <UiIcon iconName={'bookmark'} iconColor="white" />
         </View>
       </View>
-      <UiDivider style={{marginTop: height(16)}} />
+      <UiDivider style={styles.dividerStyle} />
     </View>
   );
 };
@@ -133,4 +133,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  profileInfo: {
+    flex: 1,
+    flexWrap: 'nowrap',
+    marginRight: width(15),
+  },
+  iconStyle: {marginLeft: width(5)},
+  commentStyle: {marginLeft: width(23)},
+  dividerStyle: {marginTop: height(16)},
 });

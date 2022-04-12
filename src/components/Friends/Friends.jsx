@@ -24,7 +24,7 @@ const Friends = ({navigation, friendsData}) => {
             <UiText color="white" size={18} width={700}>
               Друзья
             </UiText>
-            <View style={{flex: 1}}></View>
+            <View style={styles.flexElement}></View>
           </View>
 
           <View style={styles.allFriends}>
@@ -68,6 +68,9 @@ const styles = StyleSheet.create({
   topMenu: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  flexElement: {
+    flex: 1,
   },
 });
 

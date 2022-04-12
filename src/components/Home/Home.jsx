@@ -25,7 +25,7 @@ const Home = ({navigation, newsData}) => {
             <View style={{flexDirection: 'row'}}>
               <UiIcon iconName={'search'} iconColor={'white'} />
               <UiIcon
-                style={{marginLeft: width(20)}}
+                style={styles.iconStyle}
                 iconName={'alert'}
                 iconColor={'white'}
               />
@@ -52,6 +52,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  iconStyle: {
+    marginLeft: width(20),
   },
 });
 

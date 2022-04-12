@@ -45,11 +45,7 @@ const Profile = ({navigation, userData, photosData}) => {
                     <UiIcon
                       iconName="dotsvertical"
                       iconColor="white"
-                      style={[
-                        {
-                          transform: [{rotate: '90deg'}],
-                        },
-                      ]}
+                      style={styles.iconElement}
                     />
                   </TouchableOpacity>
 
@@ -66,19 +62,19 @@ const Profile = ({navigation, userData, photosData}) => {
                   setShowModalMoreDetails={setShowModalMoreDetails}
                 />
 
-                <UiDivider style={{marginVertical: height(24)}} />
+                <UiDivider style={styles.dividerStyle} />
 
                 <View style={styles.centerItem}>
                   <UiText color="white">Фотография</UiText>
-                  <View style={{marginLeft: 8}}>
+                  <View style={styles.countPhoto}>
                     <UiText color="#8672BB">254</UiText>
                   </View>
                 </View>
               </>
             }
             showsVerticalScrollIndicator={false}
-            ListHeaderComponentStyle={{marginBottom: height(10)}}
-            style={{marginTop: height(10)}}
+            ListHeaderComponentStyle={styles.generyInfoStyle}
+            style={styles.photosBlock}
             data={photosData}
             numColumns={3}
             renderItem={renderItem}
@@ -111,6 +107,15 @@ const styles = StyleSheet.create({
   centerItem: {
     flexDirection: 'row',
     justifyContent: 'center',
+  },
+  countPhoto: {
+    marginLeft: 8,
+  },
+  generyInfoStyle: {marginBottom: height(10)},
+  dividerStyle: {marginVertical: height(24)},
+  photosBlock: {marginTop: height(10)},
+  iconElement: {
+    transform: [{rotate: '90deg'}],
   },
 });
 

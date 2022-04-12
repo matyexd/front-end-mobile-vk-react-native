@@ -42,7 +42,7 @@ const PopUpMoreDetails = ({
             {education}
           </UiListElement>
         </View>
-        <UiDivider style={{marginVertical: 10}} />
+        <UiDivider style={styles.dividerStyle} />
         <View style={styles.titleList}>
           <UiText color={'white'} size={18} width={700}>
             Контакты
@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingBottom: 10,
   },
+  dividerStyle: {marginVertical: 10},
 });
 
 export default PopUpMoreDetails;

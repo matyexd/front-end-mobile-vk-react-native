@@ -11,27 +11,27 @@ const GeneryInfo = ({
 }) => {
   return (
     <View style={styles.infoProfile}>
-      <View style={[styles.centerItem, {paddingBottom: height(17)}]}>
+      <View style={avatarStyle}>
         <UiImageAvatar src={userInfo.userAvatar} size={125} />
       </View>
 
-      <View style={[styles.centerItem, {paddingBottom: height(6)}]}>
+      <View style={nameStyle}>
         <UiText size={18} color="white" width={700}>
           {userInfo.userName}
         </UiText>
       </View>
 
-      <View style={[styles.centerItem, {paddingBottom: height(29)}]}>
+      <View style={userNicknameStyle}>
         <UiText size={14} color="#8672BB">
           @{userInfo.userNickname}
         </UiText>
       </View>
 
-      <View style={[styles.centerItem, {paddingBottom: height(8)}]}>
+      <View style={locationStyle}>
         <UiText color="#8672BB">{userInfo.userLocation}</UiText>
       </View>
 
-      <View style={[styles.centerItem, {paddingBottom: height(24)}]}>
+      <View style={occupationStyle}>
         <UiText color="white">{userInfo.userOccupation}</UiText>
       </View>
 
@@ -94,6 +94,33 @@ const styles = StyleSheet.create({
     flexGrow: 2.5,
     flexShrink: 2,
   },
+  avatarPadding: {paddingBottom: height(17)},
+  namePadding: {paddingBottom: height(6)},
+  userNicknamePadding: {paddingBottom: height(29)},
+  locationPadding: {paddingBottom: height(8)},
+  occupationPadding: {paddingBottom: height(24)},
 });
+
+const avatarStyle = StyleSheet.flatten([
+  styles.centerItem,
+  styles.avatarPadding,
+]);
+
+const nameStyle = StyleSheet.flatten([styles.centerItem, styles.namePadding]);
+
+const userNicknameStyle = StyleSheet.flatten([
+  styles.centerItem,
+  styles.userNicknamePadding,
+]);
+
+const locationStyle = StyleSheet.flatten([
+  styles.centerItem,
+  styles.locationPadding,
+]);
+
+const occupationStyle = StyleSheet.flatten([
+  styles.centerItem,
+  styles.occupationPadding,
+]);
 
 export default GeneryInfo;

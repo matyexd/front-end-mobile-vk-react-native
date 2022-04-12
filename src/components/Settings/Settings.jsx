@@ -22,17 +22,17 @@ const Setting = props => {
         <View style={styles.container}>
           <View style={styles.topMenu}>
             <TouchableOpacity
-              style={{flex: 1}}
+              style={styles.flexElement}
               onPress={() => props.navigation.navigate('Home')}>
               <UiIcon iconName="arrowleft" iconColor="white" />
             </TouchableOpacity>
             <UiText color="white" size={18} width={700}>
               Настройки
             </UiText>
-            <View style={{flex: 1}}></View>
+            <View style={styles.flexElement}></View>
           </View>
 
-          <View style={{marginTop: height(30)}}>
+          <View style={styles.settingsBlock}>
             {settings.map(setting => (
               <UiModalElementsButton
                 iconName={setting.iconName}
@@ -62,6 +62,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  flexElement: {
+    flex: 1,
+  },
+  settingsBlock: {marginTop: height(30)},
 });
 
 export default Setting;

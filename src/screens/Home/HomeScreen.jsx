@@ -43,7 +43,6 @@ const HomeScreen = props => {
         const ownerPostObject = profiles.find(
           profile => profile.id == obj.sourceId,
         );
-        console.log(ownerPostObject);
         obj.nameOwner =
           ownerPostObject.first_name + ' ' + ownerPostObject.last_name;
         obj.imageOwner = ownerPostObject.photo_100;

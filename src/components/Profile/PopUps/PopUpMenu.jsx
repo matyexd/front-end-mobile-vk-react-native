@@ -14,15 +14,13 @@ const PopUpMenu = ({setShowModalMenu}) => {
   return (
     <View style={styles.viewMenu}>
       <View style={styles.buttonElements}>
-        <UiModalElementsButton
-          iconName={'share'}
-          style={{paddingLeft: width(10)}}>
+        <UiModalElementsButton iconName={'share'} style={styles.shareStyle}>
           Поделиться
         </UiModalElementsButton>
-        <UiDivider style={{marginHorizontal: width(10)}} />
+        <UiDivider style={styles.dividerStyle} />
         <UiModalElementsButton
           iconName={'documentdublicate'}
-          style={{paddingLeft: width(10)}}>
+          style={styles.copyStyle}>
           Скопировать ссылку
         </UiModalElementsButton>
       </View>
@@ -38,6 +36,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#2B2146',
     marginBottom: 10,
   },
+  shareStyle: {paddingLeft: width(10)},
+  dividerStyle: {marginHorizontal: width(10)},
+  copyStyle: {paddingLeft: width(10)},
 });
 
 export default PopUpMenu;

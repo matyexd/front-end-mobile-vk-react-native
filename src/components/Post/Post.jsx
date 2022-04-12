@@ -40,14 +40,14 @@ const Post = ({navigation, postItem, comments}) => {
           scrollEventThrottle={400}>
           <View style={styles.topMenu}>
             <TouchableOpacity
-              style={{flex: 1}}
+              style={styles.flexElement}
               onPress={() => navigation.navigate('Home')}>
               <UiIcon iconName="arrowleft" iconColor="white" />
             </TouchableOpacity>
             <UiText color="white" size={18} width={700}>
               Запись
             </UiText>
-            <View style={{flex: 1}}></View>
+            <View style={styles.flexElement}></View>
           </View>
 
           <View>
@@ -85,13 +85,13 @@ const Post = ({navigation, postItem, comments}) => {
                 <UiIcon iconName="bookmark" iconColor="white" />
               </View>
 
-              <View style={{marginTop: height(10)}}>
+              <View style={styles.countComments}>
                 <UiText width={700} color="white">
                   {postItem.countComments} комментариев
                 </UiText>
               </View>
 
-              <UiDivider style={{marginVertical: height(10)}} />
+              <UiDivider style={styles.dividerStyle} />
             </View>
 
             {comments.map(comment =>
@@ -185,6 +185,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: height(15),
   },
+  flexElement: {flex: 1},
+  countComments: {marginTop: height(10)},
+  dividerStyle: {marginVertical: height(10)},
 });
 
 export default Post;

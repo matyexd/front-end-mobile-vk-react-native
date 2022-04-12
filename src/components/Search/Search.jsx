@@ -40,7 +40,7 @@ const Search = ({navigation, peopleData, groupsData}) => {
               <UiIcon
                 iconName="arrowleft"
                 iconColor="white"
-                style={{marginRight: width(19)}}
+                style={styles.iconStyle}
               />
             </TouchableOpacity>
             <UiInput iconName="search" placeholder="Поиск" />
@@ -52,9 +52,7 @@ const Search = ({navigation, peopleData, groupsData}) => {
                   onPress={() => setStatus(tab.status)}
                   key={tab.status}>
                   <UiText
-                    style={{
-                      marginBottom: height(10),
-                    }}
+                    style={styles.textStyle}
                     color={tab.status === status ? 'white' : '#8672BB'}>
                     {tab.status}
                   </UiText>
@@ -65,7 +63,7 @@ const Search = ({navigation, peopleData, groupsData}) => {
             <UiDivider />
           </View>
 
-          <View style={{marginTop: height(30)}}>
+          <View style={styles.searchResult}>
             {items.map((item, index) => (
               <View style={styles.friendItem} key={index + 'id'}>
                 <UiProfileInfo
@@ -115,6 +113,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  iconStyle: {marginRight: width(19)},
+  textStyle: {
+    marginBottom: height(10),
+  },
+  searchResult: {marginTop: height(30)},
 });
 
 export default Search;
