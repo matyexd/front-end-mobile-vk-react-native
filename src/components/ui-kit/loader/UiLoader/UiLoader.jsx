@@ -1,14 +1,18 @@
 import React from 'react';
-import {View, ActivityIndicator} from 'react-native';
+import {View, ActivityIndicator, StyleSheet} from 'react-native';
 
-const UiLoader = () => {
+const UiLoader = ({style}) => {
+  const loaderStyles = StyleSheet.flatten([
+    {
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'center',
+    },
+    style,
+  ]);
+
   return (
-    <View
-      style={{
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-      }}>
+    <View style={loaderStyles}>
       <ActivityIndicator size="large" color="#ffffff" />
     </View>
   );

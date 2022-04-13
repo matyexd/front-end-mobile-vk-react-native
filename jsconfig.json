@@ -1,29 +1,15 @@
 {
-	"compilerOptions": {
-		"baseUrl": ".",
-		"paths": {
-			"@hooks/*": [
-				"./src/hooks/*"
-			],
-			"@assets/*": [
-				"./src/assets/*"
-			],
-			"@ui-kit/*": [
-				"./src/components/ui-kit/*"
-			],
-			"@utils/*": [
-				"./src/utils/*"
-			],
-			"@components/*": [
-				"./src/components/*"
-			],
-			"@type/*": [
-				"./src/store/types/*"
-			],
-		}
-	},
-	"exclude": [
-		"node_modules",
-		"dist"
-	]
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@hooks/*": ["./src/hooks/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@ui-kit/*": ["./src/components/ui-kit/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@components/*": ["./src/components/*"],
+      "@type/*": ["./src/store/types/*"],
+      "@action/*": ["./src/store/actions/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
 }

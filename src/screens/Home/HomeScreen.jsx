@@ -1,9 +1,20 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Home} from '@components/Home';
 import {connect} from 'react-redux';
+import {getNews} from '@action/newsAction';
 
 const HomeScreen = props => {
   const filterData = newsData => {
+    if (newsData.isFetching) {
+      return {newsData: [], isFetching: true, error: false};
+    }
+    if (newsData.error) {
+      return {newsData: [], isFetching: false, error: true};
+    }
+    if (Object.keys(newsData.news).length == 0) {
+      return {newsData: [], isFetching: false, error: true};
+    }
+
     const items = newsData.news.response.items;
     const groups = newsData.news.response.groups;
     const profiles = newsData.news.response.profiles;
@@ -75,11 +86,19 @@ const HomeScreen = props => {
       return obj;
     });
 
-    return filterData;
+    return {newsData: filterData, isFetching: false, error: false};
   };
 
+  useEffect(() => {
+    if (Object.keys(props.newsData.news).length == 0) props.getNews();
+  }, []);
+
   return (
-    <Home navigation={props.navigation} newsData={filterData(props.newsData)} />
+    <Home
+      navigation={props.navigation}
+      newsData={filterData(props.newsData)}
+      uploadingNews={() => props.getNews()}
+    />
   );
 };
 
@@ -90,7 +109,9 @@ const mapStateToProps = store => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    getNews: () => dispatch(getNews()),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

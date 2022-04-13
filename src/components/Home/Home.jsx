@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -6,15 +6,34 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import {UiIcon} from '@ui-kit';
+import {UiIcon, UiText} from '@ui-kit';
 import {width, height} from '@utils/Responsive';
 
 import Posts from './Posts/Posts';
+import {UiLoader} from '@ui-kit/loader';
 
-const Home = ({navigation, newsData}) => {
+const Home = ({navigation, newsData, uploadingNews}) => {
+  const scrollViewRef = useRef();
+  const [currentPage, setCurrentPage] = useState(0);
+  const [news, setNews] = useState(newsData.newsData);
+
+  const isScrollDown = ({layoutMeasurement, contentOffset, contentSize}) => {
+    if (layoutMeasurement.height + contentOffset.y >= contentSize.height - 1) {
+      setCurrentPage(currentPage + 1);
+      console.log('Внизу');
+    }
+  };
+
+  useEffect(() => {
+    uploadingNews();
+    setNews([...news, newsData.newsData]);
+  }, [currentPage]);
+
   return (
     <SafeAreaView style={styles.app}>
-      <ScrollView>
+      <ScrollView
+        ref={scrollViewRef}
+        onScroll={({nativeEvent}) => isScrollDown(nativeEvent)}>
         <View style={styles.container}>
           <View style={styles.topMenu}>
             <View>
@@ -32,7 +51,13 @@ const Home = ({navigation, newsData}) => {
             </View>
           </View>
 
-          <Posts navigation={navigation} newsData={newsData} />
+          {newsData.error ? (
+            <UiText>Ошибка</UiText>
+          ) : newsData.isFetching ? (
+            <UiLoader style={styles.loaderStyle} />
+          ) : (
+            <Posts navigation={navigation} newsData={newsData.newsData} />
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -55,6 +80,9 @@ const styles = StyleSheet.create({
   },
   iconStyle: {
     marginLeft: width(20),
+  },
+  loaderStyle: {
+    marginTop: height(25),
   },
 });
 
