@@ -4,7 +4,8 @@ import jsonNews from './json/jsonNews.json';
 const defaultState = {
   news: {},
   error: '',
-  isFetching: false,
+  isFetching: true,
+  nextFrom: '',
 };
 
 export default function getNewsReducer(state = defaultState, action) {

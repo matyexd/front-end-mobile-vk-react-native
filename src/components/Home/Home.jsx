@@ -5,61 +5,93 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import {UiIcon, UiText} from '@ui-kit';
 import {width, height} from '@utils/Responsive';
 
 import Posts from './Posts/Posts';
 import {UiLoader} from '@ui-kit/loader';
+import PostItem from './Posts/PostItem';
 
 const Home = ({navigation, newsData, uploadingNews}) => {
-  const scrollViewRef = useRef();
-  const [currentPage, setCurrentPage] = useState(0);
-  const [news, setNews] = useState(newsData.newsData);
+  const [news, setNews] = useState([]);
+  // const [isLoading, setIsLoading] = useState(false)
 
-  const isScrollDown = ({layoutMeasurement, contentOffset, contentSize}) => {
-    if (layoutMeasurement.height + contentOffset.y >= contentSize.height - 1) {
-      setCurrentPage(currentPage + 1);
-      console.log('Внизу');
-    }
-  };
+  const [pageCurrent, setPageCurrent] = useState(0);
 
   useEffect(() => {
-    uploadingNews();
-    setNews([...news, newsData.newsData]);
-  }, [currentPage]);
+    uploadingNews(newsData.nextFrom);
+  }, [pageCurrent]);
+
+  useEffect(() => {
+    if (!newsData.isFetching) {
+      setNews(news.concat(newsData.newsData));
+    }
+  }, [newsData]);
+
+  const renderHeader = () => {
+    return (
+      <>
+        <View style={styles.topMenu}>
+          <View>
+            <TouchableOpacity onPress={() => navigation.openDrawer()}>
+              <UiIcon iconName={'menu'} iconColor={'white'} />
+            </TouchableOpacity>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <UiIcon iconName={'search'} iconColor={'white'} />
+            <UiIcon
+              style={styles.iconStyle}
+              iconName={'alert'}
+              iconColor={'white'}
+            />
+          </View>
+        </View>
+      </>
+    );
+  };
+
+  const renderItem = ({item}) => {
+    if (!item) return null;
+    return (
+      <PostItem
+        key={item.sourceId + '_' + item.newsId}
+        sourceId={item.sourceId}
+        newsId={item.newsId}
+        nameOwnerPost={item.nameOwner}
+        datePost={item.news.date}
+        textPost={item.news.text}
+        countComments={item.news.countComments}
+        countLike={item.news.countLikes}
+        avatar={item.imageOwner}
+        postPhotos={item.news.imagesNews}
+      />
+    );
+  };
+
+  const renderFooter = isLoading => {
+    return isLoading && <UiLoader />;
+  };
+
+  const handleLoadMore = () => {
+    console.log(pageCurrent);
+    setPageCurrent(pageCurrent + 1);
+  };
 
   return (
     <SafeAreaView style={styles.app}>
-      <ScrollView
-        ref={scrollViewRef}
-        onScroll={({nativeEvent}) => isScrollDown(nativeEvent)}>
-        <View style={styles.container}>
-          <View style={styles.topMenu}>
-            <View>
-              <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                <UiIcon iconName={'menu'} iconColor={'white'} />
-              </TouchableOpacity>
-            </View>
-            <View style={{flexDirection: 'row'}}>
-              <UiIcon iconName={'search'} iconColor={'white'} />
-              <UiIcon
-                style={styles.iconStyle}
-                iconName={'alert'}
-                iconColor={'white'}
-              />
-            </View>
-          </View>
-
-          {newsData.error ? (
-            <UiText>Ошибка</UiText>
-          ) : newsData.isFetching ? (
-            <UiLoader style={styles.loaderStyle} />
-          ) : (
-            <Posts navigation={navigation} newsData={newsData.newsData} />
-          )}
-        </View>
-      </ScrollView>
+      <View style={styles.container}>
+        <FlatList
+          ListHeaderComponent={renderHeader}
+          data={news}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+          ListFooterComponent={renderFooter(newsData.isFetching)}
+          onEndReached={handleLoadMore}
+          onEndReachedThreshold={0.01}
+        />
+      </View>
     </SafeAreaView>
   );
 };

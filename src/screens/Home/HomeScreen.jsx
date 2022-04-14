@@ -6,18 +6,29 @@ import {getNews} from '@action/newsAction';
 const HomeScreen = props => {
   const filterData = newsData => {
     if (newsData.isFetching) {
-      return {newsData: [], isFetching: true, error: false};
+      return {newsData: [], isFetching: true, error: false, nextFrom: ''};
     }
     if (newsData.error) {
-      return {newsData: [], isFetching: false, error: true};
+      return {
+        newsData: [],
+        isFetching: false,
+        error: newsData.error,
+        nextFrom: '',
+      };
     }
     if (Object.keys(newsData.news).length == 0) {
-      return {newsData: [], isFetching: false, error: true};
+      return {
+        newsData: [],
+        isFetching: false,
+        error: 'Нету ничего',
+        nextFrom: '',
+      };
     }
 
     const items = newsData.news.response.items;
     const groups = newsData.news.response.groups;
     const profiles = newsData.news.response.profiles;
+    const nextFrom = newsData.news.response.next_from;
 
     const filterData = items.map(item => {
       const obj = {
@@ -86,18 +97,23 @@ const HomeScreen = props => {
       return obj;
     });
 
-    return {newsData: filterData, isFetching: false, error: false};
+    return {
+      newsData: filterData,
+      isFetching: false,
+      error: false,
+      nextFrom: nextFrom,
+    };
   };
 
-  useEffect(() => {
-    if (Object.keys(props.newsData.news).length == 0) props.getNews();
-  }, []);
+  // useEffect(() => {
+  //   if (Object.keys(props.newsData.news).length == 0) props.getNews();
+  // }, []);
 
   return (
     <Home
       navigation={props.navigation}
       newsData={filterData(props.newsData)}
-      uploadingNews={() => props.getNews()}
+      uploadingNews={props.getNews}
     />
   );
 };
@@ -110,7 +126,7 @@ const mapStateToProps = store => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getNews: () => dispatch(getNews()),
+    getNews: startFrom => dispatch(getNews(startFrom)),
   };
 };
 
