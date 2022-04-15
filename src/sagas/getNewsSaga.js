@@ -4,7 +4,6 @@ import {failGetNews, setNews, fetchGetNewsAPI} from '@action/newsAction';
 
 function* getNewsWorker({payload}) {
   try {
-    console.log('df: ' + payload);
     const data = yield call(fetchGetNewsAPI, payload);
     const json = yield call(() => new Promise(res => res(data.json())));
     if (json.error) {

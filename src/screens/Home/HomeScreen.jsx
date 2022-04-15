@@ -49,8 +49,8 @@ const HomeScreen = props => {
       obj.sourceId = item.source_id;
       obj.newsId = item.post_id;
       obj.news.text = item.text;
-      obj.news.countLikes = item.likes.count;
-      obj.news.countComments = item.comments.count;
+      obj.news.countLikes = item.likes?.count;
+      obj.news.countComments = item.comments?.count;
       obj.news.date = new Date(item.date * 1000).toLocaleString();
       obj.dateUnixtime = item.date;
 

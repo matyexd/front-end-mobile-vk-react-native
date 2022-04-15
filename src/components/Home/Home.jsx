@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, useMemo} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -13,22 +13,13 @@ import {width, height} from '@utils/Responsive';
 import Posts from './Posts/Posts';
 import {UiLoader} from '@ui-kit/loader';
 import PostItem from './Posts/PostItem';
+import useLoadMore from '@hooks/useLoadMore';
 
 const Home = ({navigation, newsData, uploadingNews}) => {
-  const [news, setNews] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false)
-
-  const [pageCurrent, setPageCurrent] = useState(0);
-
-  useEffect(() => {
-    uploadingNews(newsData.nextFrom);
-  }, [pageCurrent]);
-
-  useEffect(() => {
-    if (!newsData.isFetching) {
-      setNews(news.concat(newsData.newsData));
-    }
-  }, [newsData]);
+  const {data, handleLoadMore, isLoading} = useLoadMore(
+    newsData,
+    uploadingNews,
+  );
 
   const renderHeader = () => {
     return (
@@ -53,7 +44,6 @@ const Home = ({navigation, newsData, uploadingNews}) => {
   };
 
   const renderItem = ({item}) => {
-    if (!item) return null;
     return (
       <PostItem
         key={item.sourceId + '_' + item.newsId}
@@ -70,13 +60,8 @@ const Home = ({navigation, newsData, uploadingNews}) => {
     );
   };
 
-  const renderFooter = isLoading => {
+  const renderFooter = () => {
     return isLoading && <UiLoader />;
-  };
-
-  const handleLoadMore = () => {
-    console.log(pageCurrent);
-    setPageCurrent(pageCurrent + 1);
   };
 
   return (
@@ -84,12 +69,12 @@ const Home = ({navigation, newsData, uploadingNews}) => {
       <View style={styles.container}>
         <FlatList
           ListHeaderComponent={renderHeader}
-          data={news}
+          data={data}
           renderItem={renderItem}
           keyExtractor={(item, index) => index.toString()}
-          ListFooterComponent={renderFooter(newsData.isFetching)}
-          onEndReached={handleLoadMore}
-          onEndReachedThreshold={0.01}
+          ListFooterComponent={renderFooter()}
+          onEndReached={!isLoading && handleLoadMore}
+          onEndReachedThreshold={0.1}
         />
       </View>
     </SafeAreaView>

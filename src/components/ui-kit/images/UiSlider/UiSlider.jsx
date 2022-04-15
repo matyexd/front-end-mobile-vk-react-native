@@ -20,7 +20,7 @@ const UiSlider = ({photos, imgActive, onchange, style}) => {
         showsHorizontalScrollIndicator={false}
         pagingEnabled>
         {photos.map((photo, index) => (
-          <View key={photo}>
+          <View key={photo + '_' + index}>
             <UiImagePost
               style={{marginHorizontal: width(5)}}
               src={photo}
@@ -35,7 +35,7 @@ const UiSlider = ({photos, imgActive, onchange, style}) => {
           {photos.map((e, index) => {
             return (
               <Text
-                key={e}
+                key={e + '_' + index}
                 style={
                   imgActive === index
                     ? {color: 'white', margin: 3}

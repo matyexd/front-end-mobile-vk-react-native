@@ -9,7 +9,7 @@ export const failGetNews = payload => ({type: GET_NEWS_FAIL, payload: payload});
 
 export const fetchGetNewsAPI = (startFrom = '') =>
   fetch(
-    'https://api.vk.com/method/newsfeed.get?filters=post&count=10&start_from=' +
+    'https://api.vk.com/method/newsfeed.get?filters=post&count=3&start_from=' +
       startFrom +
       '&v=5.131&access_token=' +
       process.env['API_TOKEN'],
