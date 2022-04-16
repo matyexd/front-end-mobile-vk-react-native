@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, memo} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {
   UiProfileInfo,
@@ -116,7 +116,7 @@ const PostItem = ({
   );
 };
 
-export default PostItem;
+export default memo(PostItem);
 
 const styles = StyleSheet.create({
   postItem: {

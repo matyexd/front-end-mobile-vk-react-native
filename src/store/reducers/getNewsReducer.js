@@ -1,5 +1,4 @@
 import {GET_NEWS_FAIL, GET_NEWS_SUCCESS, GET_NEWS_REQUEST} from '@type/news';
-import jsonNews from './json/jsonNews.json';
 
 const defaultState = {
   news: {},

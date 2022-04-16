@@ -7,8 +7,12 @@ const useLoadMore = (fetchData, uploadData) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    uploadData(fetchData.nextFrom);
+    getData(fetchData.nextFrom);
   }, []);
+
+  const getData = async () => {
+    await uploadData(fetchData.nextFrom);
+  };
 
   useEffect(() => {
     if (!fetchData.isFetching) {
@@ -20,7 +24,6 @@ const useLoadMore = (fetchData, uploadData) => {
   const handleLoadMore = () => {
     setIsLoading(true);
     setPageCurrent(pageCurrent + 1);
-    console.log(pageCurrent);
     uploadData(fetchData.nextFrom);
   };
 

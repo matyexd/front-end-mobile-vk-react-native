@@ -46,6 +46,7 @@ const Home = ({navigation, newsData, uploadingNews}) => {
   const renderItem = ({item}) => {
     return (
       <PostItem
+        navigation={navigation}
         key={item.sourceId + '_' + item.newsId}
         sourceId={item.sourceId}
         newsId={item.newsId}
@@ -61,8 +62,10 @@ const Home = ({navigation, newsData, uploadingNews}) => {
   };
 
   const renderFooter = () => {
-    return isLoading && <UiLoader />;
+    return newsData.isFetching && <UiLoader />;
   };
+
+  const keyExtractor = (item, index) => index.toString();
 
   return (
     <SafeAreaView style={styles.app}>
@@ -71,9 +74,9 @@ const Home = ({navigation, newsData, uploadingNews}) => {
           ListHeaderComponent={renderHeader}
           data={data}
           renderItem={renderItem}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={keyExtractor}
           ListFooterComponent={renderFooter()}
-          onEndReached={!isLoading && handleLoadMore}
+          onEndReached={!newsData.isFetching && handleLoadMore}
           onEndReachedThreshold={0.1}
         />
       </View>
