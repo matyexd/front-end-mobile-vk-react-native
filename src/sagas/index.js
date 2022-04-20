@@ -3,6 +3,7 @@ import {getFriendsWatcher} from './getFriendsSaga';
 import {getInfoWatcher} from './getInfoUserSaga';
 import {getPhotoWatcher} from './getPhotoUserSaga';
 import {getNewsWatcher} from './getNewsSaga';
+import {getCommentsWatcher} from './getCommentsSaga';
 
 export function* rootSaga() {
   yield all([
@@ -10,5 +11,6 @@ export function* rootSaga() {
     getPhotoWatcher(),
     getFriendsWatcher(),
     getNewsWatcher(),
+    getCommentsWatcher(),
   ]);
 }

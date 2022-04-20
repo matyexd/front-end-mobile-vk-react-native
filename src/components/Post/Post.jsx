@@ -1,10 +1,11 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
+  FlatList,
 } from 'react-native';
 import {
   UiText,
@@ -22,117 +23,105 @@ import {width, height} from '@utils/Responsive';
 import images from '@assets/images';
 import {CommentItem, CommentAnswer} from './Comments';
 import useButtonToBottom from '@hooks/useButtonToBottom';
+import useLoadMore from '@hooks/useLoadMore';
+import PostContent from './PostContent/PostContent';
 
-const Post = ({navigation, postItem, comments}) => {
+const Post = ({navigation, postItem, comments, uploadComments}) => {
   const {showButtonBottom, scrollViewRef, EndButtonHandler, isShowButton} =
     useButtonToBottom();
+
+  const dataForRequest = {
+    ownerId: postItem.sourceId,
+    postId: postItem.newsId,
+    startCommentId: comments.lastComment,
+  };
+
+  const {data, handleLoadMore, isLoading} = useLoadMore(
+    comments.allComments,
+    uploadComments,
+    dataForRequest,
+    comments.isFetching,
+  );
+
+  console.log(data);
+
+  const headerContent = () => {
+    return (
+      <View>
+        <View style={styles.topMenu}>
+          <TouchableOpacity
+            style={styles.flexElement}
+            onPress={() => navigation.navigate('Home')}>
+            <UiIcon iconName="arrowleft" iconColor="white" />
+          </TouchableOpacity>
+          <UiText color="white" size={18} width={700}>
+            Запись
+          </UiText>
+          <View style={styles.flexElement}></View>
+        </View>
+
+        <PostContent postItem={postItem} />
+      </View>
+    );
+  };
+
+  const renderItem = ({item}) => {
+    return (
+      <View>
+        {item.answerComments ? (
+          <View key={item.idComment}>
+            <CommentItem
+              name={item.nameOwnerComment}
+              ava={item.avaOwnerComment}
+              text={item.textComment}
+              date={item.dateComment}
+              countLikes={item.countLikes}
+              imageComment={item.imageComment}
+            />
+            {item.answerComments.map(itemAnswer => {
+              return (
+                <CommentAnswer
+                  key={itemAnswer.idComment}
+                  name={itemAnswer.nameOwnerComment}
+                  ava={itemAnswer.avaOwnerComment}
+                  text={itemAnswer.textComment}
+                  date={itemAnswer.dateComment}
+                  countLikes={itemAnswer.countLikes}
+                  imageComment={itemAnswer.imageComment}
+                />
+              );
+            })}
+          </View>
+        ) : (
+          <CommentItem
+            key={item.idComment}
+            name={item.nameOwnerComment}
+            ava={item.avaOwnerComment}
+            text={item.textComment}
+            date={item.dateComment}
+            countLikes={item.countLikes}
+            imageComment={item.imageComment}
+          />
+        )}
+      </View>
+    );
+  };
+
+  const keyExtractor = (item, index) => index.toString();
 
   return (
     <SafeAreaView style={styles.app}>
       <View style={styles.container}>
-        <ScrollView
-          ref={scrollViewRef}
-          style={{marginBottom: height(10)}}
-          showsVerticalScrollIndicator={false}
-          onScroll={({nativeEvent}) => {
-            isShowButton(nativeEvent);
-          }}
-          scrollEventThrottle={400}>
-          <View style={styles.topMenu}>
-            <TouchableOpacity
-              style={styles.flexElement}
-              onPress={() => navigation.navigate('Home')}>
-              <UiIcon iconName="arrowleft" iconColor="white" />
-            </TouchableOpacity>
-            <UiText color="white" size={18} width={700}>
-              Запись
-            </UiText>
-            <View style={styles.flexElement}></View>
-          </View>
-
-          <View>
-            <View style={styles.postInfo}>
-              <UiProfileInfo
-                name={postItem.nameOwnerPost}
-                addInfo={postItem.datePost}
-                avatarSrc={postItem.avatar}
-              />
-            </View>
-
-            <View style={styles.post}>
-              {postItem.textPost.length > 0 && (
-                <UiText color={'#C3B8E0'} style={{marginBottom: height(10)}}>
-                  {postItem.textPost}
-                </UiText>
-              )}
-              <View>
-                {postItem.postPhotos.map((photo, index) => (
-                  <UiImagePost
-                    key={photo + 'id' + index}
-                    src={photo}
-                    style={{marginVertical: height(2)}}
-                  />
-                ))}
-              </View>
-
-              <View style={styles.bottomPostMenu}>
-                <UiListElement
-                  iconName={'likeicon'}
-                  textColor={'white'}
-                  textWidth={600}>
-                  {postItem.countLike}
-                </UiListElement>
-                <UiIcon iconName="bookmark" iconColor="white" />
-              </View>
-
-              <View style={styles.countComments}>
-                <UiText width={700} color="white">
-                  {postItem.countComments} комментариев
-                </UiText>
-              </View>
-
-              <UiDivider style={styles.dividerStyle} />
-            </View>
-
-            {comments.map(comment =>
-              comment.answerComments ? (
-                <View key={comment.idComment}>
-                  <CommentItem
-                    name={comment.nameOwnerComment}
-                    ava={comment.avaOwnerComment}
-                    text={comment.textComment}
-                    date={comment.dateComment}
-                    countLikes={comment.countLikes}
-                    imageComment={comment.imageComment}
-                  />
-                  {comment.answerComments.map(item => {
-                    return (
-                      <CommentAnswer
-                        key={item.idComment}
-                        name={item.nameOwnerComment}
-                        ava={item.avaOwnerComment}
-                        text={item.textComment}
-                        date={item.dateComment}
-                        countLikes={item.countLikes}
-                        imageComment={item.imageComment}
-                      />
-                    );
-                  })}
-                </View>
-              ) : (
-                <CommentItem
-                  key={comment.idComment}
-                  name={comment.nameOwnerComment}
-                  ava={comment.avaOwnerComment}
-                  text={comment.textComment}
-                  date={comment.dateComment}
-                  countLikes={comment.countLikes}
-                  imageComment={comment.imageComment}
-                />
-              ),
-            )}
-          </View>
-        </ScrollView>
+        <FlatList
+          ListHeaderComponent={headerContent}
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={keyExtractor}
+          onEndReached={
+            postItem.countComments > 21 && !isLoading && handleLoadMore
+          }
+          onEndReachedThreshold={0.1}
+        />
 
         {/* Опуститься вниз всех комментариев */}
         {showButtonBottom && (
@@ -173,21 +162,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  postInfo: {
-    marginTop: height(20),
-  },
-  post: {
-    marginTop: height(20),
-  },
-  bottomPostMenu: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: height(15),
-  },
+
   flexElement: {flex: 1},
-  countComments: {marginTop: height(10)},
-  dividerStyle: {marginVertical: height(10)},
 });
 
 export default Post;

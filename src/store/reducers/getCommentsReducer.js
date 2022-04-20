@@ -3,12 +3,12 @@ import {
   GET_COMMENTS_REQUEST,
   GET_COMMENTS_FAIL,
 } from '@type/comments';
-import jsonComments from './json/jsonComments.json';
+// import jsonComments from './json/jsonComments.json';
 
 const defaultState = {
-  comments: jsonComments,
+  comments: [],
   error: '',
-  isFetching: false,
+  isFetching: true,
 };
 
 export default function getCommentsReducer(state = defaultState, action) {

@@ -1,11 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Post} from '@components/Post';
 import {connect} from 'react-redux';
+import {getComments} from '@action/commentsAction';
+import useLoadMore from '@hooks/useLoadMore';
 
 const PostScreen = props => {
-  const comments = props.commentsData.comments.response.items;
-  const profileComments = props.commentsData.comments.response.profiles;
-
   const formatAnswerComment = text => {
     var re1 = /\[id\d+\|/;
     var re2 = /\[id\d+\|[A-zА-яё]+/i;
@@ -14,6 +13,10 @@ const PostScreen = props => {
     newstr = text.replace(re2, newstr);
     return newstr;
   };
+
+  const comments = props.commentsData.comments.response?.items;
+  const profileComments = props.commentsData.comments.response?.profiles;
+  const groupsComments = props.commentsData.comments.response?.groups;
 
   // возвращает объект одного комментария
   const filterItemComment = comment => {
@@ -28,15 +31,27 @@ const PostScreen = props => {
     };
 
     obj.idComment = comment.id;
-    const commentObject = profileComments.find(
-      profile => profile.id == comment.from_id,
-    );
 
-    if (commentObject) {
-      obj.nameOwnerComment =
-        commentObject.first_name + ' ' + commentObject.last_name;
+    if (comment.from_id > 0) {
+      const commentObject = profileComments.find(
+        profile => profile.id == comment.from_id,
+      );
 
-      obj.avaOwnerComment = commentObject.photo_100;
+      if (commentObject) {
+        obj.nameOwnerComment =
+          commentObject.first_name + ' ' + commentObject.last_name;
+
+        obj.avaOwnerComment = commentObject.photo_100;
+      }
+    } else {
+      const commentObject = groupsComments.find(
+        group => group.id == Math.abs(comment.from_id),
+      );
+
+      if (commentObject) {
+        obj.nameOwnerComment = commentObject.name;
+        obj.avaOwnerComment = commentObject.photo_100;
+      }
     }
 
     // если это ответ на коммент, форматируем имя в начале
@@ -45,7 +60,7 @@ const PostScreen = props => {
         ? comment.text
         : formatAnswerComment(comment.text);
     obj.dateComment = new Date(comment.date * 1000).toLocaleString();
-    obj.countLikes = comment.likes.count;
+    obj.countLikes = comment.likes?.count;
 
     if (comment.attachments) {
       const photos = comment.attachments.filter(
@@ -67,6 +82,22 @@ const PostScreen = props => {
 
   // главная функция фильтра комментов
   const filterComments = () => {
+    if (props.commentsData.isFetching)
+      return {
+        isFetching: true,
+        error: '',
+        allComments: [],
+        lastComment: '',
+      };
+
+    if (props.commentsData.error)
+      return {
+        isFetching: false,
+        error: props.commentsData.error,
+        allComments: [],
+        lastComment: '',
+      };
+
     allComments = [];
 
     comments.map(comment => {
@@ -87,14 +118,49 @@ const PostScreen = props => {
       return allComments.push(objCom);
     });
 
-    return allComments;
+    const lastComment = '';
+
+    if (allComments.length > 20) lastComment = allComments.pop().id;
+
+    return {
+      isFetching: props.commentsData.isFetching,
+      error: props.commentsData.error,
+      allComments: allComments,
+      lastComment: lastComment,
+    };
   };
+
+  // отправка запроса
+
+  // const [data, setData] = useState([]);
+  // const [isLoading, setIsLoading] = useState(false);
+
+  // useEffect(() => {
+  //   getData(dataForRequest);
+  // }, []);
+
+  // const getData = async dataForRequest => {
+  //   await props.getComments(dataForRequest);
+  // };
+
+  // useEffect(() => {
+  //   if (!fetchData.isFetching) {
+  //     setData(data.concat(fetchData.newsData));
+  //     setIsLoading(false);
+  //   }
+  // }, [fetchData]);
+
+  // const handleLoadMore = () => {
+  //   setIsLoading(true);
+  //   getData(dataForRequest);
+  // };
 
   return (
     <Post
       navigation={props.navigation}
       postItem={props.route.params}
       comments={filterComments()}
+      uploadComments={props.getComments}
     />
   );
 };
@@ -106,7 +172,10 @@ const mapStateToProps = store => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    getComments: (ownerId, postId, startCommentId) =>
+      dispatch(getComments(ownerId, postId, startCommentId)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostScreen);

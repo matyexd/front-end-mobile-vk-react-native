@@ -16,9 +16,13 @@ import PostItem from './Posts/PostItem';
 import useLoadMore from '@hooks/useLoadMore';
 
 const Home = ({navigation, newsData, uploadingNews}) => {
+  const dataForRequest = {nextFrom: newsData.nextFrom};
+
   const {data, handleLoadMore, isLoading} = useLoadMore(
-    newsData,
+    newsData.newsData,
     uploadingNews,
+    dataForRequest,
+    newsData.isFetching,
   );
 
   const renderHeader = () => {
@@ -62,7 +66,7 @@ const Home = ({navigation, newsData, uploadingNews}) => {
   };
 
   const renderFooter = () => {
-    return newsData.isFetching && <UiLoader />;
+    return isLoading && <UiLoader />;
   };
 
   const keyExtractor = (item, index) => index.toString();
@@ -76,7 +80,7 @@ const Home = ({navigation, newsData, uploadingNews}) => {
           renderItem={renderItem}
           keyExtractor={keyExtractor}
           ListFooterComponent={renderFooter()}
-          onEndReached={!newsData.isFetching && handleLoadMore}
+          onEndReached={!isLoading && handleLoadMore}
           onEndReachedThreshold={0.1}
         />
       </View>
