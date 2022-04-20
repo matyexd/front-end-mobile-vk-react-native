@@ -1,36 +1,28 @@
 import React, {useState, useEffect} from 'react';
 import {View} from 'react-native';
 
-const useLoadMore = (fetchData, uploadData, dataForRequest, fetching) => {
+const useLoadMore = (fetchData, uploadData) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setData([]);
-    getData(dataForRequest);
+    getData(fetchData.nextFrom);
   }, []);
 
-  const getData = async dataForRequest => {
-    await uploadData(dataForRequest);
+  const getData = async nextFrom => {
+    await uploadData(nextFrom);
   };
 
   useEffect(() => {
-    if (!fetching) {
-      setData(fetchData);
-      console.log('сучка:');
+    if (!fetchData.isFetching) {
+      setData(data.concat(fetchData.newsData));
       setIsLoading(false);
     }
   }, [fetchData]);
 
-  useEffect(() => {
-    return () => {
-      console.log('unmount');
-    };
-  }, []);
-
   const handleLoadMore = () => {
     setIsLoading(true);
-    getData(dataForRequest);
+    getData(fetchData.nextFrom);
   };
 
   return {data, handleLoadMore, isLoading};

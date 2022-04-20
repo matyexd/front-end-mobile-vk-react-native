@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {UiText, UiListElement, UiImageAvatar, UiImageComment} from '@ui-kit';
 import images from '@assets/images';
@@ -72,4 +72,4 @@ const styles = StyleSheet.create({
   answerTextElement: {marginLeft: width(15)},
 });
 
-export default CommentItem;
+export default memo(CommentItem);

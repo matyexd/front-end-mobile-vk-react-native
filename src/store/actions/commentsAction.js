@@ -2,6 +2,7 @@ import {
   GET_COMMENTS_REQUEST,
   GET_COMMENTS_FAIL,
   GET_COMMENTS_SUCCESS,
+  CLEAR_STORE,
 } from '@type/comments';
 
 export const getComments = ({ownerId, postId, startCommentId}) => ({
@@ -15,6 +16,10 @@ export const setComments = payload => ({
 export const failGetComments = payload => ({
   type: GET_COMMENTS_FAIL,
   payload: payload,
+});
+
+export const clearStore = () => ({
+  type: CLEAR_STORE,
 });
 
 export const fetchGetCommentsAPI = ({ownerId, postId, startCommentId = ''}) =>

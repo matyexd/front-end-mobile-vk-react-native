@@ -2,6 +2,7 @@ import {
   GET_COMMENTS_SUCCESS,
   GET_COMMENTS_REQUEST,
   GET_COMMENTS_FAIL,
+  CLEAR_STORE,
 } from '@type/comments';
 // import jsonComments from './json/jsonComments.json';
 
@@ -23,6 +24,8 @@ export default function getCommentsReducer(state = defaultState, action) {
       };
     case GET_COMMENTS_FAIL:
       return {...state, isFetching: false, error: action.payload};
+    case CLEAR_STORE:
+      return {comments: [], error: '', isFetching: true};
   }
 
   return state;

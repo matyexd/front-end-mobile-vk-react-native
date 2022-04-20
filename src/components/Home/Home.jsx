@@ -16,13 +16,9 @@ import PostItem from './Posts/PostItem';
 import useLoadMore from '@hooks/useLoadMore';
 
 const Home = ({navigation, newsData, uploadingNews}) => {
-  const dataForRequest = {nextFrom: newsData.nextFrom};
-
   const {data, handleLoadMore, isLoading} = useLoadMore(
-    newsData.newsData,
+    newsData,
     uploadingNews,
-    dataForRequest,
-    newsData.isFetching,
   );
 
   const renderHeader = () => {

@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Post} from '@components/Post';
 import {connect} from 'react-redux';
-import {getComments} from '@action/commentsAction';
+import {getComments, clearStore} from '@action/commentsAction';
 import useLoadMore from '@hooks/useLoadMore';
 
 const PostScreen = props => {
@@ -87,7 +87,6 @@ const PostScreen = props => {
         isFetching: true,
         error: '',
         allComments: [],
-        lastComment: '',
       };
 
     if (props.commentsData.error)
@@ -95,7 +94,6 @@ const PostScreen = props => {
         isFetching: false,
         error: props.commentsData.error,
         allComments: [],
-        lastComment: '',
       };
 
     allComments = [];
@@ -118,49 +116,74 @@ const PostScreen = props => {
       return allComments.push(objCom);
     });
 
-    const lastComment = '';
-
-    if (allComments.length > 20) lastComment = allComments.pop().id;
+    setCountPages(
+      Math.ceil(props.commentsData.comments.response?.current_level_count / 20),
+    );
+    console.log(
+      'Колво: ' + props.commentsData.comments.response?.current_level_count,
+    );
+    console.log('В текущий момент: ' + allComments.length);
+    setLastComment(allComments.length > 19 ? allComments.pop().idComment : '');
 
     return {
       isFetching: props.commentsData.isFetching,
       error: props.commentsData.error,
       allComments: allComments,
-      lastComment: lastComment,
     };
   };
 
   // отправка запроса
 
-  // const [data, setData] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
+  const [dataComments, setDataComments] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [countPages, setCountPages] = useState(1);
+  const [page, setPage] = useState(1);
+  const [lastComment, setLastComment] = useState('');
 
-  // useEffect(() => {
-  //   getData(dataForRequest);
-  // }, []);
+  useEffect(() => {
+    const commentsInfo = filterComments();
+    if (!commentsInfo.isFetching) {
+      setDataComments(dataComments.concat(commentsInfo.allComments));
+      setIsLoading(false);
+    }
+  }, [props.commentsData]);
 
-  // const getData = async dataForRequest => {
-  //   await props.getComments(dataForRequest);
-  // };
+  useEffect(() => {
+    setIsLoading(true);
+    const dataForRequest = {
+      ownerId: props.route.params.sourceId,
+      postId: props.route.params.newsId,
+      startCommentId: '',
+    };
+    props.getComments(dataForRequest);
+    return () => {
+      props.clearStore();
+    };
+  }, []);
 
-  // useEffect(() => {
-  //   if (!fetchData.isFetching) {
-  //     setData(data.concat(fetchData.newsData));
-  //     setIsLoading(false);
-  //   }
-  // }, [fetchData]);
-
-  // const handleLoadMore = () => {
-  //   setIsLoading(true);
-  //   getData(dataForRequest);
-  // };
+  const handleLoadMore = () => {
+    console.log('countPages: ' + countPages);
+    console.log('page: ' + page);
+    if (countPages > page) {
+      setIsLoading(true);
+      setPage(page + 1);
+      const dataForRequest = {
+        ownerId: props.route.params.sourceId,
+        postId: props.route.params.newsId,
+        startCommentId: lastComment,
+      };
+      console.log(dataForRequest);
+      props.getComments(dataForRequest);
+    }
+  };
 
   return (
     <Post
       navigation={props.navigation}
       postItem={props.route.params}
-      comments={filterComments()}
-      uploadComments={props.getComments}
+      comments={dataComments}
+      isLoading={isLoading}
+      handleLoadMore={() => handleLoadMore()}
     />
   );
 };
@@ -173,8 +196,8 @@ const mapStateToProps = store => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getComments: (ownerId, postId, startCommentId) =>
-      dispatch(getComments(ownerId, postId, startCommentId)),
+    getComments: dataForRequest => dispatch(getComments(dataForRequest)),
+    clearStore: () => dispatch(clearStore()),
   };
 };
 

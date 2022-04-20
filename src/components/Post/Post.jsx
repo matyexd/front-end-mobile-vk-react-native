@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, memo} from 'react';
 import {
   View,
   StyleSheet,
@@ -18,6 +18,7 @@ import {
   UiImageAvatar,
   UiInput,
   UiScrollButton,
+  UiLoader,
 } from '@ui-kit';
 import {width, height} from '@utils/Responsive';
 import images from '@assets/images';
@@ -26,25 +27,10 @@ import useButtonToBottom from '@hooks/useButtonToBottom';
 import useLoadMore from '@hooks/useLoadMore';
 import PostContent from './PostContent/PostContent';
 
-const Post = ({navigation, postItem, comments, uploadComments}) => {
+const Post = ({navigation, postItem, comments, isLoading, handleLoadMore}) => {
   const {showButtonBottom, scrollViewRef, EndButtonHandler, isShowButton} =
     useButtonToBottom();
-
-  const dataForRequest = {
-    ownerId: postItem.sourceId,
-    postId: postItem.newsId,
-    startCommentId: comments.lastComment,
-  };
-
-  const {data, handleLoadMore, isLoading} = useLoadMore(
-    comments.allComments,
-    uploadComments,
-    dataForRequest,
-    comments.isFetching,
-  );
-
-  console.log(data);
-
+  console.log(comments.length);
   const headerContent = () => {
     return (
       <View>
@@ -61,6 +47,14 @@ const Post = ({navigation, postItem, comments, uploadComments}) => {
         </View>
 
         <PostContent postItem={postItem} />
+      </View>
+    );
+  };
+
+  const footerContent = () => {
+    return (
+      <View>
+        <UiLoader />
       </View>
     );
   };
@@ -114,13 +108,11 @@ const Post = ({navigation, postItem, comments, uploadComments}) => {
       <View style={styles.container}>
         <FlatList
           ListHeaderComponent={headerContent}
-          data={data}
+          data={comments}
           renderItem={renderItem}
           keyExtractor={keyExtractor}
-          onEndReached={
-            postItem.countComments > 21 && !isLoading && handleLoadMore
-          }
-          onEndReachedThreshold={0.1}
+          ListFooterComponent={isLoading && footerContent}
+          onEndReached={!isLoading && handleLoadMore}
         />
 
         {/* Опуститься вниз всех комментариев */}
@@ -166,4 +158,4 @@ const styles = StyleSheet.create({
   flexElement: {flex: 1},
 });
 
-export default Post;
+export default memo(Post);
