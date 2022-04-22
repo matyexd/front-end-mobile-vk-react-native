@@ -24,13 +24,11 @@ import {width, height} from '@utils/Responsive';
 import images from '@assets/images';
 import {CommentItem, CommentAnswer} from './Comments';
 import useButtonToBottom from '@hooks/useButtonToBottom';
-import useLoadMore from '@hooks/useLoadMore';
 import PostContent from './PostContent/PostContent';
 
 const Post = ({navigation, postItem, comments, isLoading, handleLoadMore}) => {
   const {showButtonBottom, scrollViewRef, EndButtonHandler, isShowButton} =
     useButtonToBottom();
-  console.log(comments.length);
   const headerContent = () => {
     return (
       <View>

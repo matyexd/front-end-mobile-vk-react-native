@@ -12,6 +12,7 @@ const UiListElement = ({
   textColor = '#C3B8E0',
   textSize = 16,
   textWidth = 500,
+  iconStyle,
   style,
 }) => {
   const UiListElement = StyleSheet.flatten([
@@ -21,7 +22,12 @@ const UiListElement = ({
 
   return (
     <View style={UiListElement}>
-      <UiIcon iconColor={iconColor} iconSize={iconSize} iconName={iconName} />
+      <UiIcon
+        iconColor={iconColor}
+        iconSize={iconSize}
+        iconName={iconName}
+        style={iconStyle}
+      />
       <UiText
         color={textColor}
         width={textWidth}

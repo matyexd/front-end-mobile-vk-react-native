@@ -13,14 +13,16 @@ import {width, height} from '@utils/Responsive';
 import Posts from './Posts/Posts';
 import {UiLoader} from '@ui-kit/loader';
 import PostItem from './Posts/PostItem';
-import useLoadMore from '@hooks/useLoadMore';
 
-const Home = ({navigation, newsData, uploadingNews}) => {
-  const {data, handleLoadMore, isLoading} = useLoadMore(
-    newsData,
-    uploadingNews,
-  );
-
+const Home = ({
+  navigation,
+  data,
+  isLoading,
+  handleLoadMore,
+  putLike,
+  deleteLike,
+  newCountLike,
+}) => {
   const renderHeader = () => {
     return (
       <>
@@ -55,8 +57,11 @@ const Home = ({navigation, newsData, uploadingNews}) => {
         textPost={item.news.text}
         countComments={item.news.countComments}
         countLike={item.news.countLikes}
+        userLike={item.news.userLike}
         avatar={item.imageOwner}
         postPhotos={item.news.imagesNews}
+        putNewsLike={putLike}
+        deleteNewsLike={deleteLike}
       />
     );
   };

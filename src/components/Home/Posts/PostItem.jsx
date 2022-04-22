@@ -1,4 +1,4 @@
-import React, {useState, memo} from 'react';
+import React, {useState, memo, useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {
   UiProfileInfo,
@@ -20,11 +20,29 @@ const PostItem = ({
   textPost,
   countComments,
   countLike,
+  userLike,
   nameOwnerPost,
   avatar,
   postPhotos,
+  putNewsLike,
+  deleteNewsLike,
 }) => {
   const [imgActive, onchange] = useSlider();
+  const [isLikes, setIsLikes] = useState(userLike);
+  const [countLikeAfterFetching, setCountLikeAfterFetching] =
+    useState(countLike);
+
+  const handleLike = () => {
+    if (!isLikes) {
+      setIsLikes(true);
+      putNewsLike(sourceId, newsId);
+      setCountLikeAfterFetching(countLikeAfterFetching + 1);
+    } else {
+      setIsLikes(false);
+      deleteNewsLike(sourceId, newsId);
+      setCountLikeAfterFetching(countLikeAfterFetching - 1);
+    }
+  };
 
   return (
     <View style={styles.postItem}>
@@ -77,12 +95,15 @@ const PostItem = ({
 
       <View style={styles.postItem__bottomMenu}>
         <View style={{flexDirection: 'row'}}>
-          <UiListElement
-            iconName={'likeicon'}
-            textColor={'white'}
-            textWidth={600}>
-            {countLike}
-          </UiListElement>
+          <TouchableOpacity onPress={() => handleLike()}>
+            <UiListElement
+              iconName={'likeicon'}
+              textColor={'white'}
+              textWidth={600}
+              iconStyle={isLikes && {backgroundColor: 'white'}}>
+              {countLikeAfterFetching}
+            </UiListElement>
+          </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() =>

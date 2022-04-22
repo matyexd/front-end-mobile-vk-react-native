@@ -12,6 +12,7 @@ const UiIcon = ({iconColor = 'black', iconName, iconSize = 20, style}) => {
       size={sp(iconSize)}
       width={800}
       style={style}
+      backgroundColor="#FFFFFF"
     />
   );
 };

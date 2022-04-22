@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {Post} from '@components/Post';
 import {connect} from 'react-redux';
 import {getComments, clearStore} from '@action/commentsAction';
-import useLoadMore from '@hooks/useLoadMore';
 
 const PostScreen = props => {
   const formatAnswerComment = text => {
@@ -119,10 +118,6 @@ const PostScreen = props => {
     setCountPages(
       Math.ceil(props.commentsData.comments.response?.current_level_count / 20),
     );
-    console.log(
-      'Колво: ' + props.commentsData.comments.response?.current_level_count,
-    );
-    console.log('В текущий момент: ' + allComments.length);
     setLastComment(allComments.length > 19 ? allComments.pop().idComment : '');
 
     return {
@@ -132,7 +127,7 @@ const PostScreen = props => {
     };
   };
 
-  // отправка запроса
+  // ЗАГРУЗКА ДАННЫХ
 
   const [dataComments, setDataComments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -140,6 +135,7 @@ const PostScreen = props => {
   const [page, setPage] = useState(1);
   const [lastComment, setLastComment] = useState('');
 
+  // тригерится на изменения данных в строре
   useEffect(() => {
     const commentsInfo = filterComments();
     if (!commentsInfo.isFetching) {
@@ -148,6 +144,7 @@ const PostScreen = props => {
     }
   }, [props.commentsData]);
 
+  // перввый рендер
   useEffect(() => {
     setIsLoading(true);
     const dataForRequest = {
@@ -161,9 +158,8 @@ const PostScreen = props => {
     };
   }, []);
 
+  // подгрузить следующие комментарии
   const handleLoadMore = () => {
-    console.log('countPages: ' + countPages);
-    console.log('page: ' + page);
     if (countPages > page) {
       setIsLoading(true);
       setPage(page + 1);
@@ -172,7 +168,6 @@ const PostScreen = props => {
         postId: props.route.params.newsId,
         startCommentId: lastComment,
       };
-      console.log(dataForRequest);
       props.getComments(dataForRequest);
     }
   };

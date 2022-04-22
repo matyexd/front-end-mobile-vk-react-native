@@ -1,7 +1,8 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Home} from '@components/Home';
 import {connect} from 'react-redux';
-import {getNews} from '@action/newsAction';
+import {getNews, putNewsLike} from '@action/newsAction';
+import {deleteLike, putLike} from '@action/likeAction';
 
 const HomeScreen = props => {
   const filterData = newsData => {
@@ -40,6 +41,7 @@ const HomeScreen = props => {
           text: '',
           imagesNews: [],
           countLikes: 0,
+          userLike: 0,
           countComments: 0,
           date: '',
           dateUnixtime: 0,
@@ -50,6 +52,7 @@ const HomeScreen = props => {
       obj.newsId = item.post_id;
       obj.news.text = item.text;
       obj.news.countLikes = item.likes?.count;
+      obj.news.userLike = item.likes?.user_likes;
       obj.news.countComments = item.comments?.count;
       obj.news.date = new Date(item.date * 1000).toLocaleString();
       obj.dateUnixtime = item.date;
@@ -105,15 +108,77 @@ const HomeScreen = props => {
     };
   };
 
+  // Подгрузка новых данных
+
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [nextPostFrom, setNextPostFrom] = useState('');
+  // const [postData, setPostData] = useState({sourceId: null, postId: null});
+  // const [newCountLikes, setNewCountLikes] = useState(0);
+
+  useEffect(() => {
+    setIsLoading(true);
+    props.getNews();
+  }, []);
+
+  useEffect(() => {
+    const filterPosts = filterData(props.newsData);
+    if (!filterPosts.isFetching) {
+      setData(data.concat(filterPosts.newsData));
+      setIsLoading(false);
+      setNextPostFrom(filterPosts.nextFrom);
+    }
+  }, [props.newsData]);
+
+  const handleLoadMore = () => {
+    setIsLoading(true);
+    props.getNews(nextPostFrom);
+  };
+
+  // поставить лайк или удалить лайк
+
+  // ПОДГРУЗКА ЛАЙКОВ С СЕРВЕРА (МЕДЛЕННО)
   // useEffect(() => {
-  //   if (Object.keys(props.newsData.news).length == 0) props.getNews();
-  // }, []);
+  //   if (postData.sourceId && postData.postId) {
+  //     const editObject = obj => ({
+  //       ...obj,
+  //       news: {...obj.news, countLikes: props.countLikePost.countLikes},
+  //     });
+
+  //     setData(() => {
+  //       console.log('123');
+  //       let indexEl = data.findIndex(item => item.newsId == postData.postId);
+  //       const arr = [
+  //         ...data.slice(0, indexEl),
+  //         editObject(data[indexEl]),
+  //         ...data.slice(indexEl + 1),
+  //       ];
+  //       console.log('d');
+  //       console.log(arr);
+  //       return arr;
+  //     });
+  //     console.log('df');
+  //   }
+  // }, [props.countLikePost]);
+
+  const handleAddLike = (sourceId, newsId) => {
+    props.putLike(sourceId, newsId, 'post');
+    // setPostData({sourceId: sourceId, postId: newsId});
+  };
+
+  const handleDeleteLike = (sourceId, newsId) => {
+    props.deleteLike(sourceId, newsId, 'post');
+    // setPostData({sourceId: sourceId, postId: newsId});
+  };
 
   return (
     <Home
       navigation={props.navigation}
-      newsData={filterData(props.newsData)}
-      uploadingNews={props.getNews}
+      data={data}
+      isLoading={isLoading}
+      handleLoadMore={() => handleLoadMore()}
+      putLike={handleAddLike}
+      deleteLike={handleDeleteLike}
     />
   );
 };
@@ -121,12 +186,17 @@ const HomeScreen = props => {
 const mapStateToProps = store => {
   return {
     newsData: store.getNewsReducer,
+    countLikePost: store.getCountLikeReducer,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     getNews: startFrom => dispatch(getNews(startFrom)),
+    putLike: (ownerId, itemId, type) =>
+      dispatch(putLike(ownerId, itemId, type)),
+    deleteLike: (ownerId, itemId, type) =>
+      dispatch(deleteLike(ownerId, itemId, type)),
   };
 };
 
