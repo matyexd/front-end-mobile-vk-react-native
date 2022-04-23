@@ -27,10 +27,15 @@ const PostItem = ({
   putNewsLike,
   deleteNewsLike,
 }) => {
+  console.log(countLike);
   const [imgActive, onchange] = useSlider();
   const [isLikes, setIsLikes] = useState(userLike);
   const [countLikeAfterFetching, setCountLikeAfterFetching] =
     useState(countLike);
+
+  useEffect(() => {
+    setCountLikeAfterFetching(countLike);
+  }, [countLike]);
 
   const handleLike = () => {
     if (!isLikes) {

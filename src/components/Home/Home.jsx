@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState, useMemo} from 'react';
+import React, {useCallback} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -45,7 +45,7 @@ const Home = ({
     );
   };
 
-  const renderItem = ({item}) => {
+  const renderItem = useCallback(({item}) => {
     return (
       <PostItem
         navigation={navigation}
@@ -64,13 +64,15 @@ const Home = ({
         deleteNewsLike={deleteLike}
       />
     );
-  };
+  }, []);
 
   const renderFooter = () => {
     return isLoading && <UiLoader />;
   };
 
-  const keyExtractor = (item, index) => index.toString();
+  const keyExtractor = (item, index) => {
+    return index.toString();
+  };
 
   return (
     <SafeAreaView style={styles.app}>
@@ -80,9 +82,9 @@ const Home = ({
           data={data}
           renderItem={renderItem}
           keyExtractor={keyExtractor}
-          ListFooterComponent={renderFooter()}
-          onEndReached={!isLoading && handleLoadMore}
-          onEndReachedThreshold={0.1}
+          ListFooterComponent={renderFooter}
+          onEndReached={handleLoadMore}
+          onEndReachedThreshold={0.3}
         />
       </View>
     </SafeAreaView>

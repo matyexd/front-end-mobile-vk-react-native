@@ -82,6 +82,7 @@ const HomeScreen = props => {
           });
 
           obj.news.imagesNews = photos.map(
+            // photo.photo.sizes.length - 1
             photo => photo.photo.sizes[photo.photo.sizes.length - 1].url,
           );
         }
@@ -113,62 +114,67 @@ const HomeScreen = props => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [nextPostFrom, setNextPostFrom] = useState('');
-  // const [postData, setPostData] = useState({sourceId: null, postId: null});
-  // const [newCountLikes, setNewCountLikes] = useState(0);
+  const [postIdLike, setPostIdLike] = useState(0);
+
+  async function getNewPosts(nextPostFrom = '') {
+    await props.getNews(nextPostFrom);
+  }
 
   useEffect(() => {
     setIsLoading(true);
-    props.getNews();
+    getNewPosts();
   }, []);
 
   useEffect(() => {
-    const filterPosts = filterData(props.newsData);
-    if (!filterPosts.isFetching) {
+    if (!props.newsData.isFetching) {
+      const filterPosts = filterData(props.newsData);
       setData(data.concat(filterPosts.newsData));
       setIsLoading(false);
       setNextPostFrom(filterPosts.nextFrom);
     }
-  }, [props.newsData]);
+  }, [props.newsData.isFetching]);
 
   const handleLoadMore = () => {
-    setIsLoading(true);
-    props.getNews(nextPostFrom);
+    if (!props.newsData.isFetching) {
+      setIsLoading(true);
+      getNewPosts(nextPostFrom);
+    }
   };
 
   // поставить лайк или удалить лайк
+  // ПОДГРУЗКА ЛАЙКОВ С СЕРВЕРА
+  useEffect(() => {
+    // console.log(props.countLikePost.countLikes);
+    if (postIdLike > 0) {
+      setData(changeCountLikesPost(postIdLike));
+      setPostIdLike(0);
+    }
+  }, [props.countLikePost]);
 
-  // ПОДГРУЗКА ЛАЙКОВ С СЕРВЕРА (МЕДЛЕННО)
-  // useEffect(() => {
-  //   if (postData.sourceId && postData.postId) {
-  //     const editObject = obj => ({
-  //       ...obj,
-  //       news: {...obj.news, countLikes: props.countLikePost.countLikes},
-  //     });
-
-  //     setData(() => {
-  //       console.log('123');
-  //       let indexEl = data.findIndex(item => item.newsId == postData.postId);
-  //       const arr = [
-  //         ...data.slice(0, indexEl),
-  //         editObject(data[indexEl]),
-  //         ...data.slice(indexEl + 1),
-  //       ];
-  //       console.log('d');
-  //       console.log(arr);
-  //       return arr;
-  //     });
-  //     console.log('df');
-  //   }
-  // }, [props.countLikePost]);
+  const changeCountLikesPost = newsId => {
+    let indexEl = data.findIndex(item => item.newsId == newsId);
+    const arr = [
+      ...data.slice(0, indexEl),
+      {
+        ...data[indexEl],
+        news: {
+          ...data[indexEl].news,
+          countLikes: props.countLikePost.countLikes,
+        },
+      },
+      ...data.slice(indexEl + 1),
+    ];
+    return arr;
+  };
 
   const handleAddLike = (sourceId, newsId) => {
     props.putLike(sourceId, newsId, 'post');
-    // setPostData({sourceId: sourceId, postId: newsId});
+    setPostIdLike(newsId);
   };
 
   const handleDeleteLike = (sourceId, newsId) => {
     props.deleteLike(sourceId, newsId, 'post');
-    // setPostData({sourceId: sourceId, postId: newsId});
+    setPostIdLike(newsId);
   };
 
   return (
@@ -176,7 +182,7 @@ const HomeScreen = props => {
       navigation={props.navigation}
       data={data}
       isLoading={isLoading}
-      handleLoadMore={() => handleLoadMore()}
+      handleLoadMore={handleLoadMore}
       putLike={handleAddLike}
       deleteLike={handleDeleteLike}
     />

@@ -4,7 +4,6 @@ const defaultState = {
   news: {},
   error: '',
   isFetching: true,
-  nextFrom: '',
 };
 
 export default function getNewsReducer(state = defaultState, action) {
