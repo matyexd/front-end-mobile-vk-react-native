@@ -26,10 +26,11 @@ const PostItem = ({
   postPhotos,
   putNewsLike,
   deleteNewsLike,
+  setCountLike,
+  setIsLike,
 }) => {
-  console.log(countLike);
   const [imgActive, onchange] = useSlider();
-  const [isLikes, setIsLikes] = useState(userLike);
+  // const [isLikes, setIsLikes] = useState(userLike);
   const [countLikeAfterFetching, setCountLikeAfterFetching] =
     useState(countLike);
 
@@ -38,15 +39,38 @@ const PostItem = ({
   }, [countLike]);
 
   const handleLike = () => {
-    if (!isLikes) {
-      setIsLikes(true);
+    if (!userLike) {
+      // setIsLikes(true);
       putNewsLike(sourceId, newsId);
       setCountLikeAfterFetching(countLikeAfterFetching + 1);
     } else {
-      setIsLikes(false);
+      // setIsLikes(false);
       deleteNewsLike(sourceId, newsId);
       setCountLikeAfterFetching(countLikeAfterFetching - 1);
     }
+  };
+
+  const pressOnPost = (countLike, isLike) => {
+    setIsLike(isLike ? true : false);
+    setCountLike(countLike);
+    navigation.navigate('Post', {
+      sourceId: sourceId,
+      newsId: newsId,
+      datePost: datePost,
+      textPost: textPost,
+      countComments: countComments,
+      countLike: countLike,
+      userLike: userLike,
+      nameOwnerPost: nameOwnerPost,
+      avatar: avatar,
+      postPhotos: postPhotos,
+      putNewsLikeI() {
+        putNewsLike(this.sourceId, this.newsId);
+      },
+      deleteNewsLikeI() {
+        deleteNewsLike(this.sourceId, this.newsId);
+      },
+    });
   };
 
   return (
@@ -68,19 +92,7 @@ const PostItem = ({
       <View>
         <TouchableOpacity
           activeOpacity={0.9}
-          onPress={() =>
-            navigation.navigate('Post', {
-              sourceId: sourceId,
-              newsId: newsId,
-              datePost: datePost,
-              textPost: textPost,
-              countComments: countComments,
-              countLike: countLike,
-              nameOwnerPost: nameOwnerPost,
-              avatar: avatar,
-              postPhotos: postPhotos,
-            })
-          }>
+          onPress={() => pressOnPost(countLike, userLike)}>
           {textPost.length > 0 && (
             <UiText color={'#C3B8E0'} style={{marginTop: height(15)}}>
               {textPost}
@@ -103,27 +115,15 @@ const PostItem = ({
           <TouchableOpacity onPress={() => handleLike()}>
             <UiListElement
               iconName={'likeicon'}
-              textColor={'white'}
+              textColor={userLike ? 'red' : 'white'}
               textWidth={600}
-              iconStyle={isLikes && {backgroundColor: 'white'}}>
+              iconStyle={userLike && {color: 'red'}}>
               {countLikeAfterFetching}
             </UiListElement>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.7}
-            onPress={() =>
-              navigation.navigate('Post', {
-                sourceId: sourceId,
-                newsId: newsId,
-                datePost: datePost,
-                textPost: textPost,
-                countComments: countComments,
-                countLike: countLike,
-                nameOwnerPost: nameOwnerPost,
-                avatar: avatar,
-                postPhotos: postPhotos,
-              })
-            }>
+            onPress={() => pressOnPost(countLike)}>
             <UiListElement
               iconName={'chat'}
               textColor={'white'}

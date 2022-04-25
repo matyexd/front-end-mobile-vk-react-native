@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {
   UiText,
   UiListElement,
@@ -10,7 +10,22 @@ import {
 } from '@ui-kit/';
 import {height, width} from '@utils/Responsive';
 
-const PostContent = ({postItem}) => {
+const PostContent = ({postItem, infoLikePost}) => {
+  const [isLikes, setIsLikes] = useState(infoLikePost.isLike);
+
+  // console.log(postItem);
+  // console.log(newCountLike);
+
+  const handleLike = () => {
+    if (!isLikes) {
+      setIsLikes(true);
+      postItem.putNewsLikeI();
+    } else {
+      setIsLikes(false);
+      postItem.deleteNewsLikeI();
+    }
+  };
+
   return (
     <View>
       <View style={styles.postInfo}>
@@ -38,12 +53,15 @@ const PostContent = ({postItem}) => {
         </View>
 
         <View style={styles.bottomPostMenu}>
-          <UiListElement
-            iconName={'likeicon'}
-            textColor={'white'}
-            textWidth={600}>
-            {postItem.countLike}
-          </UiListElement>
+          <TouchableOpacity onPress={() => handleLike()}>
+            <UiListElement
+              iconName={'likeicon'}
+              textColor={infoLikePost.isLike ? 'red' : 'white'}
+              textWidth={600}
+              iconStyle={infoLikePost.isLike && {color: 'red'}}>
+              {infoLikePost.countLikes}
+            </UiListElement>
+          </TouchableOpacity>
           <UiIcon iconName="bookmark" iconColor="white" />
         </View>
 

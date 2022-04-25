@@ -1,4 +1,10 @@
-import {PUT_LIKE, DELETE_LIKE, SET_COUNT_LIKE} from '@type/likes';
+import {
+  PUT_LIKE,
+  DELETE_LIKE,
+  SET_COUNT_LIKE,
+  SET_LIKE,
+  SET_IS_LIKE,
+} from '@type/likes';
 
 export const putLike = (ownerId, itemId, type) => ({
   type: PUT_LIKE,
@@ -13,6 +19,16 @@ export const deleteLike = (ownerId, itemId, type) => ({
 export const setLike = payload => ({
   type: SET_COUNT_LIKE,
   payload: payload,
+});
+
+export const setCountLike = count => ({
+  type: SET_LIKE,
+  payload: count,
+});
+
+export const setIsLike = isLike => ({
+  type: SET_IS_LIKE,
+  payload: isLike,
 });
 
 export const fetchPutLikeAPI = ({ownerId, itemId, type}) => {

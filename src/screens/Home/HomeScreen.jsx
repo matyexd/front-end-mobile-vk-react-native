@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Home} from '@components/Home';
 import {connect} from 'react-redux';
 import {getNews, putNewsLike} from '@action/newsAction';
-import {deleteLike, putLike} from '@action/likeAction';
+import {deleteLike, putLike, setCountLike, setIsLike} from '@action/likeAction';
 
 const HomeScreen = props => {
   const filterData = newsData => {
@@ -144,12 +144,11 @@ const HomeScreen = props => {
   // поставить лайк или удалить лайк
   // ПОДГРУЗКА ЛАЙКОВ С СЕРВЕРА
   useEffect(() => {
-    // console.log(props.countLikePost.countLikes);
     if (postIdLike > 0) {
       setData(changeCountLikesPost(postIdLike));
       setPostIdLike(0);
     }
-  }, [props.countLikePost]);
+  }, [props.countLikePost.countLikes]);
 
   const changeCountLikesPost = newsId => {
     let indexEl = data.findIndex(item => item.newsId == newsId);
@@ -160,6 +159,7 @@ const HomeScreen = props => {
         news: {
           ...data[indexEl].news,
           countLikes: props.countLikePost.countLikes,
+          userLike: data[indexEl].news.userLike ? 0 : 1,
         },
       },
       ...data.slice(indexEl + 1),
@@ -169,11 +169,13 @@ const HomeScreen = props => {
 
   const handleAddLike = (sourceId, newsId) => {
     props.putLike(sourceId, newsId, 'post');
+    props.setIsLike(true);
     setPostIdLike(newsId);
   };
 
   const handleDeleteLike = (sourceId, newsId) => {
     props.deleteLike(sourceId, newsId, 'post');
+    props.setIsLike(false);
     setPostIdLike(newsId);
   };
 
@@ -185,6 +187,8 @@ const HomeScreen = props => {
       handleLoadMore={handleLoadMore}
       putLike={handleAddLike}
       deleteLike={handleDeleteLike}
+      setCountLike={props.setCountLike}
+      setIsLike={props.setIsLike}
     />
   );
 };
@@ -203,6 +207,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(putLike(ownerId, itemId, type)),
     deleteLike: (ownerId, itemId, type) =>
       dispatch(deleteLike(ownerId, itemId, type)),
+    setCountLike: (count, isLike) => dispatch(setCountLike(count, isLike)),
+    setIsLike: isLike => dispatch(setIsLike(isLike)),
   };
 };
 

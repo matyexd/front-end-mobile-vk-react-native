@@ -21,7 +21,8 @@ const Home = ({
   handleLoadMore,
   putLike,
   deleteLike,
-  newCountLike,
+  setCountLike,
+  setIsLike,
 }) => {
   const renderHeader = () => {
     return (
@@ -62,6 +63,8 @@ const Home = ({
         postPhotos={item.news.imagesNews}
         putNewsLike={putLike}
         deleteNewsLike={deleteLike}
+        setCountLike={setCountLike}
+        setIsLike={setIsLike}
       />
     );
   }, []);

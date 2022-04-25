@@ -179,6 +179,7 @@ const PostScreen = props => {
       comments={dataComments}
       isLoading={isLoading}
       handleLoadMore={() => handleLoadMore()}
+      infoLikePost={props.infoLikePost}
     />
   );
 };
@@ -186,6 +187,7 @@ const PostScreen = props => {
 const mapStateToProps = store => {
   return {
     commentsData: store.getCommentsReducer,
+    infoLikePost: store.getCountLikeReducer,
   };
 };
 

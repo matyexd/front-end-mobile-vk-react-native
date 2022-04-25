@@ -26,7 +26,14 @@ import {CommentItem, CommentAnswer} from './Comments';
 import useButtonToBottom from '@hooks/useButtonToBottom';
 import PostContent from './PostContent/PostContent';
 
-const Post = ({navigation, postItem, comments, isLoading, handleLoadMore}) => {
+const Post = ({
+  navigation,
+  postItem,
+  comments,
+  isLoading,
+  handleLoadMore,
+  infoLikePost,
+}) => {
   const {showButtonBottom, scrollViewRef, EndButtonHandler, isShowButton} =
     useButtonToBottom();
   const headerContent = () => {
@@ -44,7 +51,7 @@ const Post = ({navigation, postItem, comments, isLoading, handleLoadMore}) => {
           <View style={styles.flexElement}></View>
         </View>
 
-        <PostContent postItem={postItem} />
+        <PostContent postItem={postItem} infoLikePost={infoLikePost} />
       </View>
     );
   };
