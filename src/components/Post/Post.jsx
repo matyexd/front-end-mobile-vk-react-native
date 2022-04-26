@@ -33,6 +33,7 @@ const Post = ({
   isLoading,
   handleLoadMore,
   infoLikePost,
+  handleLoadAllComments,
 }) => {
   const {showButtonBottom, scrollViewRef, EndButtonHandler, isShowButton} =
     useButtonToBottom();
@@ -112,6 +113,7 @@ const Post = ({
     <SafeAreaView style={styles.app}>
       <View style={styles.container}>
         <FlatList
+          // ref={scrollViewRef}
           ListHeaderComponent={headerContent}
           data={comments}
           renderItem={renderItem}
@@ -124,7 +126,7 @@ const Post = ({
         {showButtonBottom && (
           <UiScrollButton
             style={{bottom: height(100)}}
-            onPress={EndButtonHandler}
+            onPress={() => handleLoadAllComments()}
           />
         )}
 
@@ -163,4 +165,4 @@ const styles = StyleSheet.create({
   flexElement: {flex: 1},
 });
 
-export default memo(Post);
+export default Post;

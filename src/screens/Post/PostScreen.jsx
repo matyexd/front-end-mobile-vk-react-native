@@ -42,6 +42,9 @@ const PostScreen = props => {
 
         obj.avaOwnerComment = commentObject.photo_100;
       }
+    } else if (comment.from_id == 0) {
+      obj.nameOwnerComment = 'Пользователь удален';
+      obj.avaOwnerComment = 'https://via.placeholder.com/100';
     } else {
       const commentObject = groupsComments.find(
         group => group.id == Math.abs(comment.from_id),
@@ -54,6 +57,8 @@ const PostScreen = props => {
     }
 
     // если это ответ на коммент, форматируем имя в начале
+    if (comment.text) {
+    }
     obj.textComment =
       comment.parents_stack.length == 0
         ? comment.text
@@ -98,7 +103,6 @@ const PostScreen = props => {
     allComments = [];
 
     comments.map(comment => {
-      if (comment.from_id == 0) return;
       const obj = filterItemComment(comment);
 
       objCom = {
@@ -118,12 +122,15 @@ const PostScreen = props => {
     setCountPages(
       Math.ceil(props.commentsData.comments.response?.current_level_count / 20),
     );
+    // console.log(allComments[allComments.length - 1].idComment);
+    const nextValue = allComments[allComments.length - 1].idComment;
     setLastComment(allComments.length > 19 ? allComments.pop().idComment : '');
 
     return {
       isFetching: props.commentsData.isFetching,
       error: props.commentsData.error,
       allComments: allComments,
+      nextValue: nextValue,
     };
   };
 
@@ -138,11 +145,12 @@ const PostScreen = props => {
   // тригерится на изменения данных в строре
   useEffect(() => {
     const commentsInfo = filterComments();
+    console.log(commentsInfo.isFetching);
     if (!commentsInfo.isFetching) {
       setDataComments(dataComments.concat(commentsInfo.allComments));
       setIsLoading(false);
     }
-  }, [props.commentsData]);
+  }, [props.commentsData.comments]);
 
   // перввый рендер
   useEffect(() => {
@@ -172,6 +180,36 @@ const PostScreen = props => {
     }
   };
 
+  // загрузить все комментарии
+
+  const [showAllComments, setShowAllComments] = useState(false);
+
+  useEffect(() => {
+    if (
+      countPages > page &&
+      showAllComments &&
+      !props.commentsData.isFetching
+    ) {
+      console.log('countPages: ' + countPages);
+      console.log('page: ' + page);
+      console.log('Я гей: ' + lastComment);
+      setIsLoading(true);
+      setPage(page + 1);
+      const dataForRequest = {
+        ownerId: props.route.params.sourceId,
+        postId: props.route.params.newsId,
+        startCommentId: filterComments().nextValue,
+      };
+      props.getComments(dataForRequest);
+    } else {
+      // setIsLoading(false);
+    }
+  });
+
+  const handleLoadAllComments = () => {
+    setShowAllComments(true);
+  };
+
   return (
     <Post
       navigation={props.navigation}
@@ -180,6 +218,7 @@ const PostScreen = props => {
       isLoading={isLoading}
       handleLoadMore={() => handleLoadMore()}
       infoLikePost={props.infoLikePost}
+      handleLoadAllComments={handleLoadAllComments}
     />
   );
 };
