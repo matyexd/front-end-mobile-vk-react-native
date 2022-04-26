@@ -10,20 +10,14 @@ import {
 } from '@ui-kit/';
 import {height, width} from '@utils/Responsive';
 
-const PostContent = ({postItem, infoLikePost}) => {
-  const [isLikes, setIsLikes] = useState(infoLikePost.isLike);
-
-  // console.log(postItem);
-  // console.log(newCountLike);
-
+const PostContent = ({postItem, addInfoPost, getAddInfoPost}) => {
   const handleLike = () => {
-    if (!isLikes) {
-      setIsLikes(true);
-      postItem.putNewsLikeI();
+    if (!addInfoPost.userLike) {
+      postItem.putNewsLikeI(postItem.sourceId, postItem.newsId);
     } else {
-      setIsLikes(false);
-      postItem.deleteNewsLikeI();
+      postItem.deleteNewsLikeI(postItem.sourceId, postItem.newsId);
     }
+    getAddInfoPost(postItem.sourceId, postItem.newsId);
   };
 
   return (
@@ -56,10 +50,10 @@ const PostContent = ({postItem, infoLikePost}) => {
           <TouchableOpacity onPress={() => handleLike()}>
             <UiListElement
               iconName={'likeicon'}
-              textColor={infoLikePost.isLike ? 'red' : 'white'}
+              textColor={addInfoPost.userLike ? 'red' : 'white'}
               textWidth={600}
-              iconStyle={infoLikePost.isLike && {color: 'red'}}>
-              {infoLikePost.countLikes}
+              iconStyle={addInfoPost.userLike && {color: 'red'}}>
+              {addInfoPost.countLikes}
             </UiListElement>
           </TouchableOpacity>
           <UiIcon iconName="bookmark" iconColor="white" />
@@ -67,7 +61,7 @@ const PostContent = ({postItem, infoLikePost}) => {
 
         <View style={styles.countComments}>
           <UiText width={700} color="white">
-            {postItem.countComments} комментариев
+            {addInfoPost.countComments} комментариев
           </UiText>
         </View>
 

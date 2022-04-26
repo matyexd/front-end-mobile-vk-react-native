@@ -6,6 +6,8 @@ import getNewsReducer from './getNewsReducer';
 import getCommentsReducer from './getCommentsReducer';
 import getGroupsUser from './getGroupsUser';
 import getCountLikeReducer from './getCountLikeReducer';
+import putCommentPostReducer from './putCommentPostReducer';
+import getPostReducer from './getPostReducer';
 
 export const rootReducers = combineReducers({
   getInfoUserReducer,
@@ -15,4 +17,6 @@ export const rootReducers = combineReducers({
   getCommentsReducer,
   getGroupsUser,
   getCountLikeReducer,
+  putCommentPostReducer,
+  getPostReducer,
 });

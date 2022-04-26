@@ -4,7 +4,7 @@ import {StyleSheet, ViewPropTypes, Text, View, TextInput} from 'react-native';
 import {height, sp, width} from '@utils/Responsive';
 import {UiIcon} from '@ui-kit/';
 
-const UiInput = ({onChangeText, placeholder, iconName}) => {
+const UiInput = ({onChangeText, placeholder, iconName, value}) => {
   return (
     <View style={styles.searchSection}>
       <UiIcon
@@ -15,8 +15,9 @@ const UiInput = ({onChangeText, placeholder, iconName}) => {
       <TextInput
         style={styles.input}
         placeholder={placeholder}
-        onChangeText={onChangeText}
+        onChangeText={val => onChangeText(val)}
         placeholderTextColor="#8672BB"
+        value={value}
       />
     </View>
   );

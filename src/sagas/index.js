@@ -5,6 +5,8 @@ import {getPhotoWatcher} from './getPhotoUserSaga';
 import {getNewsWatcher} from './getNewsSaga';
 import {getCommentsWatcher} from './getCommentsSaga';
 import {putLikeWatcher, deleteLikeWatcher} from './likeSaga';
+import {putCommentPostWatcher} from './putCommentPostSaga';
+import {getPostWatcher} from './getPostSaga';
 
 export function* rootSaga() {
   yield all([
@@ -15,5 +17,7 @@ export function* rootSaga() {
     getCommentsWatcher(),
     putLikeWatcher(),
     deleteLikeWatcher(),
+    putCommentPostWatcher(),
+    getPostWatcher(),
   ]);
 }

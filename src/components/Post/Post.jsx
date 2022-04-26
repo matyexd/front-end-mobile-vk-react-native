@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState, memo} from 'react';
+import React from 'react';
 import {
   View,
   StyleSheet,
@@ -7,36 +7,30 @@ import {
   ScrollView,
   FlatList,
 } from 'react-native';
-import {
-  UiText,
-  UiIcon,
-  UiProfileInfo,
-  UiImagePost,
-  UiListElement,
-  UiDivider,
-  UiComment,
-  UiImageAvatar,
-  UiInput,
-  UiScrollButton,
-  UiLoader,
-} from '@ui-kit';
+import {UiText, UiIcon, UiInput, UiScrollButton, UiLoader} from '@ui-kit';
 import {width, height} from '@utils/Responsive';
-import images from '@assets/images';
 import {CommentItem, CommentAnswer} from './Comments';
-import useButtonToBottom from '@hooks/useButtonToBottom';
 import PostContent from './PostContent/PostContent';
 
 const Post = ({
   navigation,
   postItem,
+  addInfoPost,
+  getAddInfoPost,
   comments,
   isLoading,
   handleLoadMore,
-  infoLikePost,
-  handleLoadAllComments,
+  // handleLoadAllComments,
+  buttonDown,
+  setInputComment,
+  sendMessage,
+  inputComment,
 }) => {
-  const {showButtonBottom, scrollViewRef, EndButtonHandler, isShowButton} =
-    useButtonToBottom();
+  const handleButtonDown = () => {
+    // handleLoadAllComments();
+    buttonDown.EndButtonHandler();
+  };
+
   const headerContent = () => {
     return (
       <View>
@@ -52,7 +46,11 @@ const Post = ({
           <View style={styles.flexElement}></View>
         </View>
 
-        <PostContent postItem={postItem} infoLikePost={infoLikePost} />
+        <PostContent
+          postItem={postItem}
+          addInfoPost={addInfoPost}
+          getAddInfoPost={getAddInfoPost}
+        />
       </View>
     );
   };
@@ -113,7 +111,7 @@ const Post = ({
     <SafeAreaView style={styles.app}>
       <View style={styles.container}>
         <FlatList
-          // ref={scrollViewRef}
+          ref={buttonDown.scrollViewRef}
           ListHeaderComponent={headerContent}
           data={comments}
           renderItem={renderItem}
@@ -123,12 +121,12 @@ const Post = ({
         />
 
         {/* Опуститься вниз всех комментариев */}
-        {showButtonBottom && (
+        {
           <UiScrollButton
             style={{bottom: height(100)}}
-            onPress={() => handleLoadAllComments()}
+            onPress={() => handleButtonDown()}
           />
-        )}
+        }
 
         {/* Ввод комментария */}
         <View
@@ -137,8 +135,14 @@ const Post = ({
             flexDirection: 'row',
             alignItems: 'center',
           }}>
-          <UiInput placeholder="Комментарий" />
-          <TouchableOpacity style={{marginLeft: width(20)}}>
+          <UiInput
+            placeholder="Комментарий"
+            onChangeText={setInputComment}
+            value={inputComment}
+          />
+          <TouchableOpacity
+            style={{marginLeft: width(20)}}
+            onPress={() => sendMessage()}>
             <UiIcon iconName="paperairpline" iconColor="white" />
           </TouchableOpacity>
         </View>

@@ -2,6 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {Post} from '@components/Post';
 import {connect} from 'react-redux';
 import {getComments, clearStore} from '@action/commentsAction';
+import useButtonToBottom from '@hooks/useButtonToBottom';
+import {clearStorePutComment, putComment} from '@action/putCommentAction';
+import {clearPostStore, getPost} from '@action/postAction';
 
 const PostScreen = props => {
   const formatAnswerComment = text => {
@@ -18,7 +21,7 @@ const PostScreen = props => {
   const groupsComments = props.commentsData.comments.response?.groups;
 
   // возвращает объект одного комментария
-  const filterItemComment = comment => {
+  const filterItemComment = (comment, prof = '') => {
     const obj = {
       idComment: 0,
       nameOwnerComment: '',
@@ -32,7 +35,8 @@ const PostScreen = props => {
     obj.idComment = comment.id;
 
     if (comment.from_id > 0) {
-      const commentObject = profileComments.find(
+      const profileComments1 = prof ? prof : profileComments;
+      const commentObject = profileComments1.find(
         profile => profile.id == comment.from_id,
       );
 
@@ -122,15 +126,17 @@ const PostScreen = props => {
     setCountPages(
       Math.ceil(props.commentsData.comments.response?.current_level_count / 20),
     );
-    // console.log(allComments[allComments.length - 1].idComment);
-    const nextValue = allComments[allComments.length - 1].idComment;
+    // const nextValue =
+    //   allComments.length > 19
+    //     ? allComments[allComments.length - 1].idComment
+    //     : '';
     setLastComment(allComments.length > 19 ? allComments.pop().idComment : '');
 
     return {
       isFetching: props.commentsData.isFetching,
       error: props.commentsData.error,
       allComments: allComments,
-      nextValue: nextValue,
+      // nextValue: nextValue,
     };
   };
 
@@ -138,14 +144,13 @@ const PostScreen = props => {
 
   const [dataComments, setDataComments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [countPages, setCountPages] = useState(1);
+  const [countPages, setCountPages] = useState(0);
   const [page, setPage] = useState(1);
   const [lastComment, setLastComment] = useState('');
 
   // тригерится на изменения данных в строре
   useEffect(() => {
     const commentsInfo = filterComments();
-    console.log(commentsInfo.isFetching);
     if (!commentsInfo.isFetching) {
       setDataComments(dataComments.concat(commentsInfo.allComments));
       setIsLoading(false);
@@ -154,6 +159,7 @@ const PostScreen = props => {
 
   // перввый рендер
   useEffect(() => {
+    props.getPost(props.route.params.sourceId, props.route.params.newsId);
     setIsLoading(true);
     const dataForRequest = {
       ownerId: props.route.params.sourceId,
@@ -163,6 +169,8 @@ const PostScreen = props => {
     props.getComments(dataForRequest);
     return () => {
       props.clearStore();
+      props.clearStorePutComment();
+      props.clearPostStore();
     };
   }, []);
 
@@ -182,43 +190,76 @@ const PostScreen = props => {
 
   // загрузить все комментарии
 
-  const [showAllComments, setShowAllComments] = useState(false);
+  // const [showAllComments, setShowAllComments] = useState(false);
+
+  // useEffect(() => {
+  //   if (
+  //     countPages > page &&
+  //     showAllComments &&
+  //     !props.commentsData.isFetching
+  //   ) {
+  //     console.log('1234');
+  //     setIsLoading(true);
+  //     setPage(page + 1);
+  //     const dataForRequest = {
+  //       ownerId: props.route.params.sourceId,
+  //       postId: props.route.params.newsId,
+  //       startCommentId: filterComments().nextValue,
+  //     };
+  //     props.getComments(dataForRequest);
+  //   } else if (page == countPages) {
+  //   }
+  // });
+
+  // const handleLoadAllComments = () => {
+  //   setShowAllComments(true);
+  // };
+
+  // кнопка вниз
+  const buttonDown = useButtonToBottom();
+
+  // добавить комментарий
+
+  const [inputComment, setInputComment] = useState('');
+
+  const sendMessage = () => {
+    if (inputComment) {
+      props.putComment(
+        props.route.params.sourceId,
+        props.route.params.newsId,
+        inputComment,
+      );
+    }
+  };
 
   useEffect(() => {
-    if (
-      countPages > page &&
-      showAllComments &&
-      !props.commentsData.isFetching
-    ) {
-      console.log('countPages: ' + countPages);
-      console.log('page: ' + page);
-      console.log('Я гей: ' + lastComment);
-      setIsLoading(true);
-      setPage(page + 1);
-      const dataForRequest = {
-        ownerId: props.route.params.sourceId,
-        postId: props.route.params.newsId,
-        startCommentId: filterComments().nextValue,
-      };
-      props.getComments(dataForRequest);
-    } else {
-      // setIsLoading(false);
+    if (props.sentComment.comment.response) {
+      const myComment = filterItemComment(
+        props.sentComment.comment.response.items[0],
+        props.sentComment.comment.response.profiles,
+      );
+      setDataComments([...dataComments, myComment]);
+      setInputComment('');
+      props.getPost(props.route.params.sourceId, props.route.params.newsId);
     }
-  });
+  }, [props.sentComment]);
 
-  const handleLoadAllComments = () => {
-    setShowAllComments(true);
-  };
+  console.log(props.post);
 
   return (
     <Post
       navigation={props.navigation}
       postItem={props.route.params}
+      addInfoPost={props.post}
+      getAddInfoPost={props.getPost}
       comments={dataComments}
       isLoading={isLoading}
       handleLoadMore={() => handleLoadMore()}
-      infoLikePost={props.infoLikePost}
-      handleLoadAllComments={handleLoadAllComments}
+      // handleLoadAllComments={handleLoadAllComments}
+      buttonDown={buttonDown}
+      setInputComment={setInputComment}
+      sendMessage={sendMessage}
+      inputComment={inputComment}
     />
   );
 };
@@ -226,14 +267,20 @@ const PostScreen = props => {
 const mapStateToProps = store => {
   return {
     commentsData: store.getCommentsReducer,
-    infoLikePost: store.getCountLikeReducer,
+    sentComment: store.putCommentPostReducer,
+    post: store.getPostReducer,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    getPost: (ownerId, postId) => dispatch(getPost(ownerId, postId)),
     getComments: dataForRequest => dispatch(getComments(dataForRequest)),
     clearStore: () => dispatch(clearStore()),
+    putComment: (ownerId, postId, message, commentReplyId) =>
+      dispatch(putComment(ownerId, postId, message, commentReplyId)),
+    clearStorePutComment: () => dispatch(clearStorePutComment()),
+    clearPostStore: () => dispatch(clearPostStore()),
   };
 };
 
