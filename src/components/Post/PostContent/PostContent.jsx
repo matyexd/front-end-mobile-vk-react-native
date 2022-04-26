@@ -11,10 +11,19 @@ import {
 import {height, width} from '@utils/Responsive';
 
 const PostContent = ({postItem, addInfoPost, getAddInfoPost}) => {
+  const [countLikesAfterFetching, setCountLikesAfterFetching] = useState(
+    addInfoPost.countLikes,
+  );
+  const [isLike, setIsLike] = useState(addInfoPost.userLike);
+
   const handleLike = () => {
     if (!addInfoPost.userLike) {
+      setIsLike(1);
+      setCountLikesAfterFetching(countLikesAfterFetching + 1);
       postItem.putNewsLikeI(postItem.sourceId, postItem.newsId);
     } else {
+      setIsLike(0);
+      setCountLikesAfterFetching(countLikesAfterFetching - 1);
       postItem.deleteNewsLikeI(postItem.sourceId, postItem.newsId);
     }
     getAddInfoPost(postItem.sourceId, postItem.newsId);
@@ -50,10 +59,10 @@ const PostContent = ({postItem, addInfoPost, getAddInfoPost}) => {
           <TouchableOpacity onPress={() => handleLike()}>
             <UiListElement
               iconName={'likeicon'}
-              textColor={addInfoPost.userLike ? 'red' : 'white'}
+              textColor={isLike ? 'red' : 'white'}
               textWidth={600}
-              iconStyle={addInfoPost.userLike && {color: 'red'}}>
-              {addInfoPost.countLikes}
+              iconStyle={isLike && {color: 'red'}}>
+              {countLikesAfterFetching}
             </UiListElement>
           </TouchableOpacity>
           <UiIcon iconName="bookmark" iconColor="white" />

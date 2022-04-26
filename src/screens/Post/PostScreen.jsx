@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Post} from '@components/Post';
 import {connect} from 'react-redux';
 import {getComments, clearStore} from '@action/commentsAction';
@@ -243,8 +243,6 @@ const PostScreen = props => {
       props.getPost(props.route.params.sourceId, props.route.params.newsId);
     }
   }, [props.sentComment]);
-
-  console.log(props.post);
 
   return (
     <Post

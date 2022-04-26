@@ -20,14 +20,12 @@ const Post = ({
   comments,
   isLoading,
   handleLoadMore,
-  // handleLoadAllComments,
   buttonDown,
   setInputComment,
   sendMessage,
   inputComment,
 }) => {
   const handleButtonDown = () => {
-    // handleLoadAllComments();
     buttonDown.EndButtonHandler();
   };
 

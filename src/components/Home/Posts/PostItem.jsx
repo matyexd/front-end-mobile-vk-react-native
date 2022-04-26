@@ -30,7 +30,6 @@ const PostItem = ({
   setIsLike,
 }) => {
   const [imgActive, onchange] = useSlider();
-  // const [isLikes, setIsLikes] = useState(userLike);
   const [countLikeAfterFetching, setCountLikeAfterFetching] =
     useState(countLike);
 
@@ -40,11 +39,9 @@ const PostItem = ({
 
   const handleLike = () => {
     if (!userLike) {
-      // setIsLikes(true);
       putNewsLike(sourceId, newsId);
       setCountLikeAfterFetching(countLikeAfterFetching + 1);
     } else {
-      // setIsLikes(false);
       deleteNewsLike(sourceId, newsId);
       setCountLikeAfterFetching(countLikeAfterFetching - 1);
     }

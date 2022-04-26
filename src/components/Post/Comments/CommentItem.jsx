@@ -1,5 +1,5 @@
 import React, {memo} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {UiText, UiListElement, UiImageAvatar, UiImageComment} from '@ui-kit';
 import images from '@assets/images';
 import {width, height} from '@utils/Responsive';
@@ -39,9 +39,11 @@ const CommentItem = ({name, ava, text, date, countLikes, imageComment}) => {
           <UiText size={12} color={'#8672BB'}>
             {date}
           </UiText>
-          <UiText size={12} color={'white'} style={styles.answerTextElement}>
-            Ответить
-          </UiText>
+          <TouchableOpacity>
+            <UiText size={12} color={'white'} style={styles.answerTextElement}>
+              Ответить
+            </UiText>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
