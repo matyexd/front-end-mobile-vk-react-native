@@ -1,7 +1,6 @@
 import React, {memo} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {UiText, UiListElement, UiImageAvatar, UiImageComment} from '@ui-kit';
-import images from '@assets/images';
 import {width, height} from '@utils/Responsive';
 
 const CommentAnswer = ({name, ava, text, date, countLikes, imageComment}) => {

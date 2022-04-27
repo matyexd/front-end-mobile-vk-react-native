@@ -4,7 +4,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
-  ScrollView,
   FlatList,
 } from 'react-native';
 import {UiText, UiIcon, UiInput, UiScrollButton, UiLoader} from '@ui-kit';

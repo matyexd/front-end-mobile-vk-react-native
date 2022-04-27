@@ -1,14 +1,7 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
-import {height, width} from '@utils';
-import {
-  UiText,
-  UiIcon,
-  UiListElement,
-  UiDivider,
-  UiModalButton,
-  UiModalElementsButton,
-} from '@ui-kit';
+import {View, StyleSheet} from 'react-native';
+import {width} from '@utils';
+import {UiDivider, UiModalButton, UiModalElementsButton} from '@ui-kit';
 
 const PopUpMenu = ({setShowModalMenu}) => {
   return (

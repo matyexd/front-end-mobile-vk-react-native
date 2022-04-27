@@ -47,8 +47,9 @@ const PostScreen = props => {
         obj.avaOwnerComment = commentObject.photo_100;
       }
     } else if (comment.from_id == 0) {
-      obj.nameOwnerComment = 'Пользователь удален';
+      obj.nameOwnerComment = 'Комментарий удален';
       obj.avaOwnerComment = 'https://via.placeholder.com/100';
+      obj.textComment = 'сообщение было удалено';
     } else {
       const commentObject = groupsComments.find(
         group => group.id == Math.abs(comment.from_id),
@@ -61,12 +62,11 @@ const PostScreen = props => {
     }
 
     // если это ответ на коммент, форматируем имя в начале
-    if (comment.text) {
-    }
-    obj.textComment =
-      comment.parents_stack.length == 0
-        ? comment.text
-        : formatAnswerComment(comment.text);
+    if (obj.textComment == '')
+      obj.textComment =
+        comment.parents_stack.length == 0
+          ? comment.text
+          : formatAnswerComment(comment.text);
     obj.dateComment = new Date(comment.date * 1000).toLocaleString();
     obj.countLikes = comment.likes?.count;
 
@@ -124,19 +124,21 @@ const PostScreen = props => {
     });
 
     setCountPages(
-      Math.ceil(props.commentsData.comments.response?.current_level_count / 20),
+      Math.ceil(
+        props.commentsData.comments.response?.current_level_count /
+          Number(process.env['COMMENT_LOADING_COUNT']),
+      ),
     );
-    // const nextValue =
-    //   allComments.length > 19
-    //     ? allComments[allComments.length - 1].idComment
-    //     : '';
-    setLastComment(allComments.length > 19 ? allComments.pop().idComment : '');
+    setLastComment(
+      allComments.length > Number(process.env['COMMENT_LOADING_COUNT']) - 1
+        ? allComments.pop().idComment
+        : '',
+    );
 
     return {
       isFetching: props.commentsData.isFetching,
       error: props.commentsData.error,
       allComments: allComments,
-      // nextValue: nextValue,
     };
   };
 
@@ -188,33 +190,6 @@ const PostScreen = props => {
     }
   };
 
-  // загрузить все комментарии
-
-  // const [showAllComments, setShowAllComments] = useState(false);
-
-  // useEffect(() => {
-  //   if (
-  //     countPages > page &&
-  //     showAllComments &&
-  //     !props.commentsData.isFetching
-  //   ) {
-  //     console.log('1234');
-  //     setIsLoading(true);
-  //     setPage(page + 1);
-  //     const dataForRequest = {
-  //       ownerId: props.route.params.sourceId,
-  //       postId: props.route.params.newsId,
-  //       startCommentId: filterComments().nextValue,
-  //     };
-  //     props.getComments(dataForRequest);
-  //   } else if (page == countPages) {
-  //   }
-  // });
-
-  // const handleLoadAllComments = () => {
-  //   setShowAllComments(true);
-  // };
-
   // кнопка вниз
   const buttonDown = useButtonToBottom();
 
@@ -253,7 +228,6 @@ const PostScreen = props => {
       comments={dataComments}
       isLoading={isLoading}
       handleLoadMore={() => handleLoadMore()}
-      // handleLoadAllComments={handleLoadAllComments}
       buttonDown={buttonDown}
       setInputComment={setInputComment}
       sendMessage={sendMessage}

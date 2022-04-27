@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {
   UiText,
@@ -8,7 +8,7 @@ import {
   UiProfileInfo,
   UiIcon,
 } from '@ui-kit/';
-import {height, width} from '@utils/Responsive';
+import {height} from '@utils/Responsive';
 
 const PostContent = ({postItem, addInfoPost, getAddInfoPost}) => {
   const [countLikesAfterFetching, setCountLikesAfterFetching] = useState(

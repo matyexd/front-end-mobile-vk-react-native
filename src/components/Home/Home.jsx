@@ -1,16 +1,14 @@
 import React, {useCallback} from 'react';
 import {
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   View,
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import {UiIcon, UiText} from '@ui-kit';
+import {UiIcon} from '@ui-kit';
 import {width, height} from '@utils/Responsive';
 
-import Posts from './Posts/Posts';
 import {UiLoader} from '@ui-kit/loader';
 import PostItem from './Posts/PostItem';
 
